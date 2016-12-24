@@ -68,7 +68,9 @@ def bllip_parse(input_file, output_file):
         while True:
             sent = sents.readline()
             print sent
-            parses.append(rrp.simple_parse(str(sent)))
+            parse = rrp.simple_parse(str(sent))
+            print parse
+            parses.append(parse)
             if not sent: break  # EOF
     return parses
 
