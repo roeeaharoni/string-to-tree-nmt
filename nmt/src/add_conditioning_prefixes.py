@@ -68,12 +68,12 @@ def bllip_parse(input_file, output_file):
         while True:
             sent = sents.readline()
             print sent
-            parses.append(rrp.simple_parse(sent))
+            parses.append(rrp.simple_parse(str(sent)))
             if not sent: break  # EOF
     return parses
 
 
-
+# acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en', '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en')
 def fr_en_TSS_exp():
 
     # get file paths
