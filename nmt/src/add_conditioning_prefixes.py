@@ -23,7 +23,7 @@ BPE_OPERATIONS = 89500
 
 
 def main ():
-
+    get_shi_parse_tree_for_tokenized_wmt()
     return
 
     TSS = get_TSS_from_tree(
@@ -52,6 +52,47 @@ def main ():
     # add_TSS_prefix(src_file, target_file, syntax_file, output_file)
 
 
+def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3/8m.train.trainwords',
+                                         trees_file='../data/shi/Eng_Parse_3/8m.train.trainline',
+                                         wmt_file= '../data/WMT16/en-de/train/corpus.parallel.tok.en'):
+    text2tree = {}
+
+    # read syntax trees and matching sentences
+    with codecs.open(sentences_file, encoding='utf8') as sents:
+        with codecs.open(trees_file, encoding='utf8') as trees:
+            i = 0
+            print 'reading parsed sentences and matching trees...'
+            while True:
+
+                i += 1
+                sent = sents.readline()
+                tree = trees.readline()
+                text2tree[sent] = tree
+
+
+                if i%10000==0:
+                    print 'read {} trees'.format(i)
+                if not sent: break  # EOF
+    i = 0
+    found = 0
+    with codecs.open(wmt_file, encoding='utf8') as sents:
+        with codecs.open(wmt_file + '.parsed2', mode='w', encoding='utf8') as output:
+            while True:
+                i += 1
+                if i % 100000 == 0:
+                    print 'looked for {} trees from training corpora, found {} so far'.format(i,found)
+
+                sent = sents.readline()
+                if sent in text2tree:
+                    found += 1
+                    output.write(text2tree[sent])
+                else:
+                    print u'missing tree for: {}\n'.format(sent)
+                    output.write('MISSING\n')
+
+                if not sent: break  # EOF
+
+
 def TODO():
     train_moses_truecase('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en',
                          '/Users/roeeaharoni/git/research/nmt/models/en-de.en.truecase.model')
@@ -70,6 +111,7 @@ def bllip_parse(input_file, output_file):
             print sent
             parse = rrp.simple_parse(str(sent))
             print parse
+            print '\n\n'
             parses.append(parse)
             if not sent: break  # EOF
     return parses
