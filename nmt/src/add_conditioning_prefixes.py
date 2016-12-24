@@ -67,7 +67,8 @@ def bllip_parse(input_file, output_file):
     with codecs.open(input_file, encoding='utf8') as sents:
         while True:
             sent = sents.readline()
-            parses.append('<s> ' + rrp.simple_parse(sent) + ' </s>')
+            print sent
+            parses.append(rrp.simple_parse(sent))
             if not sent: break  # EOF
     return parses
 
