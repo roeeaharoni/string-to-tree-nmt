@@ -7,12 +7,13 @@ import os
 # tokenize with moses scripts - done
 # count words per output sentence - done
 # run BPE on both sides -
-# extract TSS prefix
+# extract TSS prefix - done
 # write train versions (BPE2BPE): with output length, with output TSS, with both, without anything
-# 4 models for 2 language pairs - totals in 8 models, 1 week per model - 8 weeks
+# 4 models for 2 language pairs - totals in 8 models, 1 week per model - 8 weeks (one week if takeover)
 # can be run in one week on all NLP GPUs / use cyber GPUs?
 # start with fr-en TSS, fr-en len
 # process is: tokenize -> clean --> truecase --> BPE --> add prefixes --> build dictionaries --> train --> evaluate
+
 
 MOSES_HOME = '/Users/roeeaharoni/git/mosesdecoder'
 BPE_HOME = '/Users/roeeaharoni/git/subword-nmt'
@@ -20,17 +21,60 @@ NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
 BPE_OPERATIONS = 89500
 
 
+def main ():
+
+
+
+    return
+
+    TSS = get_TSS_from_tree(
+        'TOP (S (NP DT NN )NP (VP VBZ (NP (NP NN )NP (PP IN (NP DT NNP NNP NNP )NP )PP )NP )VP . )S )TOP')
+
+    TSS = get_TSS_prefixes('/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Fre_4M/xing.train.txt.tok.fr',
+                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Fre_4M/xing.train.txt.tok.en',
+                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Parse_3/9m.train.trainline',
+                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Parse_3/9m.train.trainwords',
+                         'bla.out')
+
+    All_TSS = list(set([" ".join(s) for s in TSS]))
+
+    return
+
+    fr_en_TSS_exp()
+
+    en_he_len_exp()
+
+
+    # src_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
+    # target_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
+    # output_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.TSS.en'
+    # syntax_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainline'
+
+    # add_TSS_prefix(src_file, target_file, syntax_file, output_file)
+
+
+def TODO():
+    train_moses_truecase('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en',
+                         '/Users/roeeaharoni/git/research/nmt/models/en-de.en.truecase.model')
+
+    train_moses_truecase('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.de',
+                         '/Users/roeeaharoni/git/research/nmt/models/en-de.en.truecase.model')
+
+
+
 def fr_en_TSS_exp():
 
     # get file paths
-    train_src = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.train.txt.tok.fr'
-    train_target = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.train.txt.tok.en'
+    prefix = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing'
 
-    dev_src = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.dev.txt.tok.fr'
-    dev_target = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.dev.txt.tok.en'
+    train_src = prefix + '.train.txt.tok.fr'
+    train_target = prefix + '.train.txt.tok.en'
 
-    test_src = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.test.txt.tok.fr'
-    test_target = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.test.txt.tok.en'
+    dev_src = prefix + '.dev.txt.tok.fr'
+    dev_target = prefix + '.dev.txt.tok.en'
+
+    test_src = prefix + '.test.txt.tok.fr'
+    test_target = prefix + '.test.txt.tok.en'
 
     in_lang = 'fr'
     out_lang = 'en'
@@ -50,113 +94,94 @@ def fr_en_TSS_exp():
 
     # clean
     for f in ['train', 'dev', 'test']:
-        input_corpus_prefix_path = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing.{}.txt.tok'
-        output_corpus_prefix_path = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean'
+        input_corpus_prefix_path = prefix + '.{}.txt.tok'
+        output_corpus_prefix_path = prefix + '.{}.txt.tok.clean'
         moses_clean(input_corpus_prefix_path.format(f), output_corpus_prefix_path.format(f), 'fr', 'en')
 
-    train_src_clean = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.fr'
-    train_target_clean = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.en'
+    train_src_clean = prefix + '.train.txt.tok.clean.fr'
+    train_target_clean = prefix + '.train.txt.tok.clean.en'
 
     # train src truecase
-    src_tc_model_path = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.fr.tcmodel'
+    src_tc_model_path = prefix + '.train.txt.tok.clean.fr.tcmodel'
     src_tc_model_path = train_moses_truecase(train_src_clean, src_tc_model_path)
 
     # apply src truecase
     for f in ['train', 'dev', 'test']:
-        apply_moses_truecase('/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.fr'.format(f),
-                             '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.fr'.format(f),
+        apply_moses_truecase(prefix + '.{}.txt.tok.clean.fr'.format(f),
+                             prefix + '.{}.txt.tok.clean.true.fr'.format(f),
                              src_tc_model_path)
 
     # train target truecase
-    trg_tc_model_path = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.en.tcmodel'
+    trg_tc_model_path = prefix + '.train.txt.tok.clean.en.tcmodel'
     trg_tc_model_path = train_moses_truecase(train_target_clean, trg_tc_model_path)
 
     # apply target truecase
     for f in ['train', 'dev', 'test']:
         apply_moses_truecase(
-            '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.en'.format(f),
-            '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.en'.format(f),
+            prefix + '.{}.txt.tok.clean.en'.format(f),
+            prefix + '.{}.txt.tok.clean.true.en'.format(f),
             trg_tc_model_path)
 
     # BPE
 
     # train bpe
-    clean_src_train_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.true.en'
-    clean_target_train_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.true.en'
-    bpe_model_path = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.train.txt.tok.clean.true.fr_en.bpe'
+    clean_src_train_file = prefix + '.train.txt.tok.clean.true.en'
+    clean_target_train_file = prefix + '.train.txt.tok.clean.true.en'
+    bpe_model_path = prefix + '.train.txt.tok.clean.true.fr_en.bpe'
     bpe_model_path = train_BPE(clean_src_train_file, clean_target_train_file, BPE_OPERATIONS, bpe_model_path)
 
     # apply bpe
     for l in ['fr', 'en']:
         for f in ['train', 'dev', 'test']:
             apply_BPE(
-                '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.{}'.format(f, l),
-                '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.bpe.{}'.format(f, l),
+                prefix + '.{}.txt.tok.clean.true.{}'.format(f, l),
+                prefix + '.{}.txt.tok.clean.true.bpe.{}'.format(f, l),
                 bpe_model_path)
 
     # add len prefixes
     for f in ['train', 'dev', 'test']:
-        src_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.bpe.fr'.format(f)
+        src_file = prefix + '.{}.txt.tok.clean.true.bpe.fr'.format(f)
         with codecs.open(src_file, encoding='utf8') as src:
             src_lines = src.readlines()
 
         output_lengths = get_binned_lengths(
-            '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.en'.format(f))
+            prefix + '.{}.txt.tok.clean.true.en'.format(f))
 
         new_src_lines = []
         for i, length in enumerate(output_lengths):
             new_src_lines.append('TL{} '.format(length) + src_lines[i])
 
-        output_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.bpe.len.fr'.format(f)
+        output_file = prefix + '.{}.txt.tok.clean.true.bpe.len.fr'.format(f)
         with codecs.open(output_file, 'w', encoding='utf8') as predictions:
             for i, line in enumerate(new_src_lines):
                 predictions.write(u'{}'.format(line))
 
     # add TSS prefixes
     for f in ['train', 'dev', 'test']:
-        src_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.bpe.fr'.format(
-            f)
+
+        src_file = prefix + '.{}.txt.tok.clean.true.bpe.fr'.format(f)
+
         with codecs.open(src_file, encoding='utf8') as src:
             src_lines = src.readlines()
 
-        output_lengths = get_binned_lengths(
-            '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.en'.format(
-                f))
+        output_TSS_prefixes = get_TSS_prefixes(
+            prefix + '.{}.txt.tok.clean.true.en'.format(f))
 
         new_src_lines = []
         for i, length in enumerate(output_lengths):
             new_src_lines.append('TL{} '.format(length) + src_lines[i])
 
-        output_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/model/xing.{}.txt.tok.clean.true.bpe.len.fr'.format(
+        output_file = prefix + '.{}.txt.tok.clean.true.bpe.len.fr'.format(
             f)
         with codecs.open(output_file, 'w', encoding='utf8') as predictions:
             for i, line in enumerate(new_src_lines):
                 predictions.write(u'{}'.format(line))
-
-
-
-
 
     # build dictionaries
 
     # train
 
     # evaluate
-
-
-def main ():
-
-    fr_en_TSS_exp()
-
-    en_he_len_exp()
-
-
-    # src_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
-    # target_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
-    # output_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.TSS.en'
-    # syntax_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainline'
-
-    # add_TSS_prefix(src_file, target_file, syntax_file, output_file)
 
 
 def en_he_len_exp():
@@ -236,23 +261,146 @@ def build_nematus_dictionary(train_src_bpe_file_path, train_target_bpe_file_path
     os.system(command_string)
 
 
-def add_TSS_prefix(src_file, target_file, syntax_file, output_file):
-    # TOP (S (NP DT NN ) NP (VP VBZ (NP (NP NN )NP (PP IN (NP DT NNP NNP NNP )NP )PP )NP )VP. )S )TOP
-    # This site is part of The Imaging Source Network.
+def get_TSS_from_tree(tree):
+
+    tokens = tree.split()
+    depth = 0
+    depth2labels = {}
+    for token in tokens:
+        if depth not in depth2labels:
+            depth2labels[depth] = []
+
+        if '(' in token:
+            depth2labels[depth].append(token.replace('(',''))
+            depth += 1
+
+        if ')' in token:
+            depth -=1
+
+    return depth2labels[2]
+
+
+
+def get_TSS_prefixes(src_file, target_file, trees_file, sentences_file, output_file):
+
+    # Top-level Syntactic Sequence:
+
+    #####NP#### #################VP##################
+
+    # POS tags:
+
+    #  DT   NN  VBZ NN  IN  DT   NNP     NNP    NNP
+
+    # sentence:
+
+    # This site is part of The Imaging Source Network .
+
+    # constituency tree:
+
+    # TOP (S (NP DT NN )NP (VP VBZ (NP (NP NN )NP (PP IN (NP DT NNP NNP NNP )NP )PP )NP )VP . )S )TOP
+
+    # to visualize: (S (NP DT NN ) (VP VBZ (NP (NP NN ) (PP IN (NP DT NNP NNP NNP ) ) ) ) . )
+
+    # should return:
+
+    # ['NP', 'VP']
 
     new_src_lines = []
+    text2tree = {}
 
-    with codecs.open(syntax_file, encoding='utf8') as src:
-        tree_lines = src.readlines()
+    # read syntax trees and matching sentences
+    with codecs.open(sentences_file, encoding='utf8') as sents:
+        with codecs.open(trees_file, encoding='utf8') as trees:
+            i = 0
+            print 'reading parsed sentences and matching trees...'
+            while True and i < 1000:
+                i += 1
+                sent = sents.readline()
+                tree = trees.readline()
+                text2tree[sent] = tree
+                if not sent: break  # EOF
+                # sent_lines = sent.readlines()
+                # sent_lines = [next(sent) for x in xrange(600000)]
+            # tree_lines = trees.readlines()
+            # tree_lines = [next(trees) for x in xrange(600000)]
+            # for i, treeline in enumerate(tree_lines):
+            #     text2tree[sent_lines[i]] = treeline
 
+    TSS_strings = []
+    TSS_with_lex_trees = []
+    TSS_with_clean_trees = []
+    text2lextree = {}
+    for text in text2tree:
+
+        # get the raw tree
+        TSS = get_TSS_from_tree(text2tree[text])
+
+        # clean the tree for visualization
+        clean_tree = []
+        for s in text2tree[text].split():
+            if ')' in s:
+                clean_tree.append(')')
+            else:
+                clean_tree.append(s)
+
+        # clean the tree and add words for visualization
+        lex_tree = []
+        words = text.split()
+        i = 0
+        for s in text2tree[text].split():
+            if ')' in s:
+                lex_tree.append(')')
+            else:
+                if '(' in s:
+                    lex_tree.append(s)
+                else:
+                    # pos, replace with word
+                    lex_tree.append('(' + s)
+                    lex_tree.append(words[i])
+                    lex_tree.append(')')
+                    i += 1
+
+        text2lextree[text] = ' '.join(lex_tree)
+
+        TSS_with_lex_trees.append(' '.join(TSS) + '_____' + ' '.join(lex_tree))
+        TSS_strings.append(' '.join(TSS))
+        TSS_with_clean_trees.append(' '.join(clean_tree))
+
+    from collections import Counter
+
+    TSS_counter = Counter(TSS_strings)
+    x = TSS_counter.most_common()
+    TSS_distinct = list(set(TSS_strings))
+
+    # read parallel data
     with codecs.open(src_file, encoding='utf8') as src:
         with codecs.open(target_file, encoding='utf8') as trgt:
-            src_lines = src.readlines()
-            trgt_lines = trgt.readlines()
-            for i, line in enumerate(trgt_lines):
-                # extract TSS
-                # write TSS + src
-    return
+            print 'reading source sentences...'
+            # src_lines = src.readlines()
+            src_lines = [next(src) for x in xrange(100000)]
+
+            print 'reading target sentences...'
+            # trgt_lines = trgt.readlines()
+            trgt_lines = [next(trgt) for x in xrange(100000)]
+
+    print 'looking for trees...'
+    found = 0
+    total = 0
+    TSS_strings = []
+    for i, line in enumerate(trgt_lines):
+        total += 1
+        if line in text2tree:
+            # found the tree for the sentence
+            found += 1
+            print text2tree[line], '\n', line, '\n\n'
+
+            tree = text2tree[line]
+            TSS = get_TSS_from_tree(tree)
+            TSS_strings.append(' '.join(TSS))
+
+    print 'found trees for {} out of {} sentences'.format(found, total)
+    return TSS_strings
+
 
 def add_length_prefix(src_file, target_file, output_file):
     len_histogram = defaultdict(int)
@@ -313,6 +461,12 @@ def get_binned_lengths(target_file, bin_size = 5):
         print 'sanity check:'
         print 'len is {} for: {}'.format(binned_lens[i], trgt_lines[i])
     return binned_lens
+
+
+def billip_parse():
+    from bllipparser import RerankingParser
+    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+    rrp.simple_parse("It's that easy.")
 
 
 if __name__ == '__main__':
