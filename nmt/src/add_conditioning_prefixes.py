@@ -2,6 +2,7 @@ import codecs
 from collections import defaultdict
 import os
 
+
 # TODO:
 # write a pipeline that does all:
 # tokenize with moses scripts - done
@@ -22,8 +23,6 @@ BPE_OPERATIONS = 89500
 
 
 def main ():
-
-
 
     return
 
@@ -59,6 +58,18 @@ def TODO():
 
     train_moses_truecase('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.de',
                          '/Users/roeeaharoni/git/research/nmt/models/en-de.en.truecase.model')
+
+
+def bllip_parse(input_file, output_file):
+    from bllipparser import RerankingParser
+    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+    parses = []
+    with codecs.open(input_file, encoding='utf8') as sents:
+        while True:
+            sent = sents.readline()
+            parses.append(rrp.simple_parse(sent))
+            if not sent: break  # EOF
+    return parses
 
 
 
@@ -463,10 +474,6 @@ def get_binned_lengths(target_file, bin_size = 5):
     return binned_lens
 
 
-def billip_parse():
-    from bllipparser import RerankingParser
-    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
-    rrp.simple_parse("It's that easy.")
 
 
 if __name__ == '__main__':
