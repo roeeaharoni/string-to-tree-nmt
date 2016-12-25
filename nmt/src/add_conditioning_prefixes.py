@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import codecs
 from collections import defaultdict
 import os
+import yoav_trees
 
 
 # TODO:
@@ -23,7 +26,17 @@ BPE_OPERATIONS = 89500
 
 
 def main ():
+
+
+
+    return
+
+    convert_tree('(S1 (S (S (NP (PRP I)) (VP (VBP declare) (VP (VBN resumed) (NP (NP (DT the) (NN session)) (PP (IN of) (NP (DT the) (NNP European) (NNP Parliament))) (VP (VBN adjourned) (PP (IN on) (NP (NNP Friday) (CD 17))) (NP (NNP December) (CD 1999))))))) (, ,) (CC and) (S (NP (PRP I)) (VP (MD would) (VP (VB like) (ADVP (RB once) (RB again)) (S (VP (TO to) (VP (VB wish) (NP (PRP you)) (NP (NP (DT a) (JJ happy) (JJ new) (NN year)) (PP (IN in) (NP (DT the) (NN hope) (SBAR (IN that) (S (NP (PRP you)) (VP (VBD enjoyed) (NP (DT a) (JJ pleasant) (JJ festive) (NN period)))))))))))))) (. .)))')
+
+    return
+
     get_shi_parse_tree_for_tokenized_wmt()
+
     return
 
     TSS = get_TSS_from_tree(
@@ -54,7 +67,7 @@ def main ():
 
 def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3/8m.train.trainwords',
                                          trees_file='../data/shi/Eng_Parse_3/8m.train.trainline',
-                                         wmt_file= '../data/WMT16/en-de/train/corpus.parallel.tok.en'):
+                                         wmt_file= '/Users/roeeaharoni/Google Drive/de-en-wmt16/corpus.parallel.tok.en'):
     text2tree = {}
 
     # read syntax trees and matching sentences
@@ -67,30 +80,145 @@ def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3
                 i += 1
                 sent = sents.readline()
                 tree = trees.readline()
-                text2tree[sent] = tree
+                # text2tree[sent.lower().replace(' ','').replace(u'-','').replace(u'–','')] = tree
+                text2tree[clean_sent(sent)] = tree
+                if 'which has been running for four years , is being continued and extended' in sent:
+                    print sent
 
+                if 'When you repeatedly come up against the limits of the domain you are operating in' in sent:
+                    print sent
+
+                if 'Gradual Software and callas software today' in sent:
+                    print sent
+
+                if 'Puma Flipper Valentines Day Wmns' in sent:
+                    print sent
+
+                if 'Keep all partitions and use existing free space' in sent:
+                    print sent
 
                 if i%10000==0:
                     print 'read {} trees'.format(i)
                 if not sent: break  # EOF
+    # return
     i = 0
     found = 0
     with codecs.open(wmt_file, encoding='utf8') as sents:
-        with codecs.open(wmt_file + '.parsed2', mode='w', encoding='utf8') as output:
+        with codecs.open(wmt_file + '.parsed', mode='w', encoding='utf8') as output:
             while True:
                 i += 1
                 if i % 100000 == 0:
+                    print '#' * 100
                     print 'looked for {} trees from training corpora, found {} so far'.format(i,found)
-
+                    print '#' * 100
                 sent = sents.readline()
-                if sent in text2tree:
+
+                cleaned_sent = clean_sent(sent)
+
+                if cleaned_sent in text2tree:
                     found += 1
-                    output.write(text2tree[sent])
+                    output.write(text2tree[cleaned_sent])
                 else:
-                    print u'missing tree for: {}\n'.format(sent)
+                    print u'{} missing tree for: {}\n'.format(i, sent)
                     output.write('MISSING\n')
 
-                if not sent: break  # EOF
+                if not sent: # EOF
+                    print 'looked for {} trees from training corpora, found {} total'.format(i, found)
+                    print '(missing {} tress)'.format(i - found)
+                    break
+
+
+def clean_sent(sent):
+    return sent.replace('`', '') \
+        .replace('...','') \
+        .replace(u'…','') \
+        .replace(u'„','') \
+        .replace(u'´', '') \
+        .replace(u'»','') \
+        .replace(u'«', '') \
+        .replace('{', '') \
+        .replace('}', '') \
+        .replace('-LCB-','') \
+        .replace('-RCB-', '') \
+        .replace('_', '') \
+        .replace('&quot;', '') \
+        .replace('&apos;', '') \
+        .replace('@/@', '') \
+        .replace('/', '') \
+        .replace('-LRB-', '') \
+        .replace('-RRB-', '') \
+        .replace('-LSB-', '') \
+        .replace('-RSB-', '') \
+        .replace('(','') \
+        .replace(')','') \
+        .replace('&#91;','') \
+        .replace('&#93;', '') \
+        .replace(u'-', '') \
+        .replace(u'–', '') \
+        .replace(' ','') \
+        .lower()
+
+
+
+def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
+    # initialize bllip
+    from bllipparser import RerankingParser
+    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+
+    # read syntax trees and matching sentences
+    with codecs.open(sentences_file, encoding='utf8') as sents:
+        with codecs.open(trees_file, encoding='utf8') as trees:
+            with codecs.open(trees_file + '.fixed', mode='w', encoding='utf8') as output:
+                i = 0
+                print 'reading parsed sentences and matching trees...'
+                while True:
+                    i += 1
+                    sent = sents.readline()
+                    tree = trees.readline()
+                    if tree == 'MISSING':
+                        parsed = rrp.simple_parse(sent)
+                        output.write(convert_tree(parsed))
+                    else:
+                        output.write(tree)
+
+                    if not sent: break  # EOF
+    return
+
+
+# converts bllip tree (lexicalized, no labels on closing brackets) to xing tree (unlexicalized, labels on closing brac.)
+def convert_tree(bllip_tree):
+    # example:
+
+    # bllip:
+    # '(S1 (S (S (NP (PRP I)) (VP (VBP declare) (VP (VBN resumed) (NP (NP (DT the) (NN session)) (PP (IN of) (NP (DT the) (NNP European) (NNP Parliament))) (VP (VBN adjourned) (PP (IN on) (NP (NNP Friday) (CD 17))) (NP (NNP December) (CD 1999))))))) (, ,) (CC and) (S (NP (PRP I)) (VP (MD would) (VP (VB like) (ADVP (RB once) (RB again)) (S (VP (TO to) (VP (VB wish) (NP (PRP you)) (NP (NP (DT a) (JJ happy) (JJ new) (NN year)) (PP (IN in) (NP (DT the) (NN hope) (SBAR (IN that) (S (NP (PRP you)) (VP (VBD enjoyed) (NP (DT a) (JJ pleasant) (JJ festive) (NN period)))))))))))))) (. .)))'
+
+    # xing shi:
+    # '(TOP (S (S (NP PRP )NP (VP VBP (VP VBN (NP (NP DT NN )NP (PP IN (NP DT NNP NNP )NP )PP (VP VBN (PP IN (NP NNP CD )NP )PP (NP NNP CD )NP )VP )NP )VP )VP )S , CC (S (NP PRP )NP (VP MD (VP VB (ADVP RB RB )ADVP (S (VP TO (VP VB (NP PRP )NP (NP (NP DT JJ JJ NN )NP (PP IN (NP DT NN (SBAR IN (S (NP PRP )NP (VP VBD (NP DT JJ JJ NN )NP )VP )S )SBAR )NP )PP )NP )VP )VP )S )VP )VP )S . )S )TOP'
+
+    # remove words and turn into POS terminals:
+    root = yoav_trees.Tree.from_sexpr(bllip_tree)
+    removed_leaves = remove_leaves(root)
+    removed_leaves.label = 'TOP'
+
+    tokens = str(removed_leaves).split()
+    print 'tree tokens: {}'.format(len(tokens))
+    print tokens
+    print 'sent tokens (tree leaves): {}'.format(len(removed_leaves.leaves()))
+    print [str(l) for l in removed_leaves.leaves()]
+
+    print removed_leaves.viz()
+    return str(removed_leaves)
+
+def remove_leaves(tree):
+
+    non_leaves = []
+    for child in tree.children:
+        if not child.isleaf():
+            non_leaves.append(remove_leaves(child))
+    if len(non_leaves) == 0:
+        non_leaves = None
+    return yoav_trees.Tree(tree.label, non_leaves)
+
 
 
 def TODO():
@@ -114,10 +242,11 @@ def bllip_parse(input_file, output_file):
             print '\n\n'
             parses.append(parse)
             if not sent: break  # EOF
+    # acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en', '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en')
     return parses
 
 
-# acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en', '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en')
+
 def fr_en_TSS_exp():
 
     # get file paths
