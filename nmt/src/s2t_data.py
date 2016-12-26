@@ -17,7 +17,7 @@ import codecs
 from collections import defaultdict
 import os
 import yoav_trees
-import docopt
+import docopt as docopt
 
 
 # TODO:
