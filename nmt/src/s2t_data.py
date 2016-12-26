@@ -17,7 +17,7 @@ import codecs
 from collections import defaultdict
 import os
 import yoav_trees
-import docopt as docopt
+import docopt as do
 
 
 # TODO:
@@ -41,7 +41,7 @@ BPE_OPERATIONS = 89500
 
 def main ():
     # get input file path
-    arguments = docopt(__doc__)
+    arguments = do.docopt(__doc__)
     if arguments['--input']:
         input_file_path = arguments['--input']
     else:
