@@ -164,26 +164,31 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     # read syntax trees and matching sentences
     with codecs.open(sentences_file, encoding='utf8') as sents:
         with codecs.open(trees_file, encoding='utf8') as trees:
-            with codecs.open(trees_file + '.fixed', mode='w', encoding='utf8') as output:
-                i = 0
-                print 'reading parsed sentences and matching trees...'
-                while True:
-                    i += 1
-                    sent = sents.readline()
-                    tree = trees.readline()
-                    if 'MISSING' in tree:
-                        try:
-                            parsed = rrp.simple_parse(str(sent))
-                            output.write(convert_tree(parsed) + '\n')
-                            fixed += 1
-                        except:
-                            output.write('MISSING\n')
-                            failed += 1
-                    else:
-                        output.write(tree)
+            with codecs.open(trees_file + '.fixed', mode='w', encoding='utf8') as trees_output:
+                with codecs.open(sentences_file + '.fixed', mode='w', encoding='utf8') as sents_output:
+                    i = 0
+                    print 'reading parsed sentences and matching trees...'
+                    while True:
+                        i += 1
+                        if i % 100000 == 0:
+                            print '*'*100 + 'went through {} lines'.format(i) + '*'*100
+                        sent = sents.readline()
+                        tree = trees.readline()
+                        if 'MISSING' in tree:
+                            sents_output.write(sent)
+                            try:
+                                parsed = rrp.simple_parse(str(sent))
+                                trees_output.write(convert_tree(parsed) + '\n')
+                                fixed += 1
+                            except:
+                                trees_output.write('MISSING\n')
+                                print 'failed to parse missing tree'
+                                failed += 1
+                        # else:
+                        #     trees_output.write(tree)
 
-                    if not sent: break  # EOF
-                print 'parsed {} missing trees, failed to parse {} missing trees'.format(fixed, failed)
+                        if not sent: break  # EOF
+                    print 'parsed {} missing trees, failed to parse {} missing trees'.format(fixed, failed)
     return
 
 
@@ -202,13 +207,12 @@ def convert_tree(bllip_tree):
     removed_leaves = remove_leaves(root)
     removed_leaves.label = 'TOP'
 
-    tokens = str(removed_leaves).split()
-    print 'tree tokens: {}'.format(len(tokens))
-    print tokens
-    print 'sent tokens (tree leaves): {}'.format(len(removed_leaves.leaves()))
-    print [str(l) for l in removed_leaves.leaves()]
-
-    print removed_leaves.viz()
+    # tokens = str(removed_leaves).split()
+    # print 'tree tokens: {}'.format(len(tokens))
+    # print tokens
+    # print 'sent tokens (tree leaves): {}'.format(len(removed_leaves.leaves()))
+    # print [str(l) for l in removed_leaves.leaves()]
+    # print removed_leaves.viz()
     return str(removed_leaves)
 
 def remove_leaves(tree):
