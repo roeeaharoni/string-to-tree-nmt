@@ -171,7 +171,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                     sent = sents.readline()
                     tree = trees.readline()
                     if 'MISSING' in tree:
-                        parsed = rrp.simple_parse(sent)
+                        parsed = rrp.simple_parse(str(sent))
                         output.write(convert_tree(parsed))
                         fixed += 1
                     else:
