@@ -1,9 +1,23 @@
 # -*- coding: utf-8 -*-
 
+"""code for processing corpora for string-to-tree nmt
+
+Usage:
+  s2t_data.py [--input INPUT][--trees TREES]
+
+Arguments:
+
+Options:
+  -h --help                     show this help message and exit
+  --input INPUT                 input file path
+  --trees TREES                 trees file path
+"""
+
 import codecs
 from collections import defaultdict
 import os
 import yoav_trees
+import docopt
 
 
 # TODO:
@@ -26,44 +40,23 @@ BPE_OPERATIONS = 89500
 
 
 def main ():
+    # get input file path
+    arguments = docopt(__doc__)
+    if arguments['--input']:
+        input_file_path = arguments['--input']
+    else:
+        print 'no input file specified'
+        return
 
+    if arguments['--trees']:
+        trees_file_path = arguments['--trees']
+    else:
+        print 'no trees file specified'
+        return
 
-
-    return
-
-    convert_tree('(S1 (S (S (NP (PRP I)) (VP (VBP declare) (VP (VBN resumed) (NP (NP (DT the) (NN session)) (PP (IN of) (NP (DT the) (NNP European) (NNP Parliament))) (VP (VBN adjourned) (PP (IN on) (NP (NNP Friday) (CD 17))) (NP (NNP December) (CD 1999))))))) (, ,) (CC and) (S (NP (PRP I)) (VP (MD would) (VP (VB like) (ADVP (RB once) (RB again)) (S (VP (TO to) (VP (VB wish) (NP (PRP you)) (NP (NP (DT a) (JJ happy) (JJ new) (NN year)) (PP (IN in) (NP (DT the) (NN hope) (SBAR (IN that) (S (NP (PRP you)) (VP (VBD enjoyed) (NP (DT a) (JJ pleasant) (JJ festive) (NN period)))))))))))))) (. .)))')
-
-    return
-
-    get_shi_parse_tree_for_tokenized_wmt()
-
-    return
-
-    TSS = get_TSS_from_tree(
-        'TOP (S (NP DT NN )NP (VP VBZ (NP (NP NN )NP (PP IN (NP DT NNP NNP NNP )NP )PP )NP )VP . )S )TOP')
-
-    TSS = get_TSS_prefixes('/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Fre_4M/xing.train.txt.tok.fr',
-                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Fre_4M/xing.train.txt.tok.en',
-                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Parse_3/9m.train.trainline',
-                         '/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Parse_3/9m.train.trainwords',
-                         'bla.out')
-
-    All_TSS = list(set([" ".join(s) for s in TSS]))
+    complete_missing_parse_tress_with_bllip(input_file_path, trees_file_path)
 
     return
-
-    fr_en_TSS_exp()
-
-    en_he_len_exp()
-
-
-    # src_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
-    # target_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainwords'
-    # output_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.TSS.en'
-    # syntax_file = '/Users/roeeaharoni/git/research/nmt/data/Eng_Parse_3/8m.train.trainline'
-
-    # add_TSS_prefix(src_file, target_file, syntax_file, output_file)
-
 
 def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3/8m.train.trainwords',
                                          trees_file='../data/shi/Eng_Parse_3/8m.train.trainline',
@@ -165,6 +158,8 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
 
+    fixed = 0
+
     # read syntax trees and matching sentences
     with codecs.open(sentences_file, encoding='utf8') as sents:
         with codecs.open(trees_file, encoding='utf8') as trees:
@@ -178,10 +173,12 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                     if tree == 'MISSING':
                         parsed = rrp.simple_parse(sent)
                         output.write(convert_tree(parsed))
+                        fixed += 1
                     else:
                         output.write(tree)
 
                     if not sent: break  # EOF
+                print 'parsed {} missing trees'.format(fixed)
     return
 
 
