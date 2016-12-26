@@ -159,6 +159,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
 
     fixed = 0
+    failed = 0
 
     # read syntax trees and matching sentences
     with codecs.open(sentences_file, encoding='utf8') as sents:
@@ -171,14 +172,18 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                     sent = sents.readline()
                     tree = trees.readline()
                     if 'MISSING' in tree:
-                        parsed = rrp.simple_parse(str(sent))
-                        output.write(convert_tree(parsed) + '\n')
-                        fixed += 1
+                        try:
+                            parsed = rrp.simple_parse(str(sent))
+                            output.write(convert_tree(parsed) + '\n')
+                            fixed += 1
+                        except:
+                            output.write('MISSING\n')
+                            failed += 1
                     else:
                         output.write(tree)
 
                     if not sent: break  # EOF
-                print 'parsed {} missing trees'.format(fixed)
+                print 'parsed {} missing trees, failed to parse {} missing trees'.format(fixed, failed)
     return
 
 
