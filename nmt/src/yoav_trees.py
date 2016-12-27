@@ -38,11 +38,11 @@ class Tree(object):
 
     def __str__(self):
         if self.children is None: return self.label
-        return "(%s %s )%s" % (self.label, " ".join([str(c) for c in self.children]), self.label)
+        return "(%s %s)" % (self.label, " ".join([str(c) for c in self.children]))
 
-    def viz(self):
+    def nonter_closing(self):
         if self.children is None: return self.label
-        return "(%s %s)" % (self.label, " ".join([c.viz() for c in self.children]))
+        return "(%s %s )%s" % (self.label, " ".join([c.nonter_closing() for c in self.children]), self.label)
 
     def isleaf(self): return self.children==None
 

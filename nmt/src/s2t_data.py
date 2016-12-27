@@ -18,6 +18,7 @@ from collections import defaultdict
 import os
 import yoav_trees
 import docopt as do
+import apply_bpe as apply_bpe
 
 
 # TODO:
@@ -40,6 +41,38 @@ BPE_OPERATIONS = 89500
 
 
 def main ():
+
+    apply_BPE_on_trees(
+        '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-bpe.model',
+        '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en',
+        '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final',
+        '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.bped')
+
+    return
+
+    tree = '(TOP (FRAG (NP NNP NNP )NP , (PP IN (NP (NP DT NN )NP (PP IN (NP NN )NP )PP )NP )PP . )FRAG )TOP'
+    tree_simple_closing = ' '.join([t if ')' not in t else ')' for t in tree.split()])
+    parsed = yoav_trees.Tree.from_sexpr(tree_simple_closing)
+    # tree_simple_closing_lex =
+    sent = 'Madam President , on a point of order .'
+
+
+    bpe = apply_bpe.BPE('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-bpe.model')
+
+    # bped = bpe_leaves(, bpe)
+
+    print str(bped)
+    print 'parsed:'
+    # print 'OG: \n' + str(yoav_trees.Tree.from_sexpr(tree))
+    print 'SIMPLE->parse->nonter: \n' + yoav_trees.Tree.from_sexpr(tree_simple_closing).nonter_closing()
+    # print 'LEX: \n' + str(yoav_trees.Tree.from_sexpr(tree_simple_closing_lex))
+    return
+
+    # fill_missing_trees('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en',
+    #                    '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2',
+    #                    '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.fixed',
+    #                    '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.fixed')
+
     # get input file path
     arguments = do.docopt(__doc__)
     if arguments['--input']:
@@ -57,6 +90,111 @@ def main ():
     complete_missing_parse_tress_with_bllip(input_file_path, trees_file_path)
 
     return
+
+def fill_missing_trees(words_file_path, trees_file_path, missing_words_file_path,
+                       missing_trees_file_path):
+    text2tree = {}
+    with codecs.open(missing_words_file_path, encoding='utf8') as fixed_sents:
+        with codecs.open(missing_trees_file_path, encoding='utf8') as fixed_trees:
+            while True:
+                sent = fixed_sents.readline()
+                tree = fixed_trees.readline()
+                text2tree[sent] = tree
+                if not sent: break  # EOF
+
+    i = 0
+    j = 0
+    with codecs.open(words_file_path, encoding='utf8') as sents:
+        with codecs.open(trees_file_path, encoding='utf8') as trees:
+            with codecs.open(trees_file_path +'.final', 'w', encoding='utf8') as final:
+                while True:
+                    if j%100000 ==0:
+                        print 'went through {} lines'.format(j)
+                    j+=1
+                    sent = sents.readline()
+                    tree = trees.readline()
+                    if 'MISSING' in tree:
+                        final.write(text2tree[sent])
+                        print 'fixed'
+                        i+=1
+                    else:
+                        final.write(tree)
+                    if not sent: break  # EOF
+    print 'fixed {} trees'.format(i)
+    return
+
+
+def apply_BPE_on_trees(BPE_model_path, words_file_path, trees_file_path, bped_trees_file_path):
+    # load bpe model
+    bpe = apply_bpe.BPE(BPE_model_path)
+
+    i = 0
+    too_many_pos = 0
+    perfect_cover = 0
+    failed = 0
+    with codecs.open(words_file_path, encoding='utf8') as sents:
+        with codecs.open(trees_file_path, encoding='utf8') as trees:
+            with codecs.open(bped_trees_file_path, 'w', encoding='utf8') as output:
+                while True:
+                    if i % 100000 == 0:
+                        print 'went through {} lines.\nperfect cover:{}\ntoo many POS:{}\nfailed: {}\n'.format(
+                                                                               i,
+                                                                               perfect_cover,
+                                                                               too_many_pos,
+                                                                               failed)
+                    i += 1
+                    sent = sents.readline()
+                    tree = trees.readline()
+                    words = sent.split()
+                    tree_toks = tree.split()
+                    word_count = 0
+                    lex_tree = []
+                    # print sent
+                    # print tree
+                    sent_len = len(words)
+                    for t in tree_toks:
+                        if '(' in t:
+                            lex_tree.append(t)
+                        else:
+                            if ')' in t:
+                                lex_tree.append(')')
+                            else:
+                                if word_count < sent_len:
+                                    lex_tree.append(words[word_count])
+                                else:
+                                    # print 'too many POS'
+                                    too_many_pos+=1
+                                word_count+=1
+                    if word_count == sent_len:
+                        perfect_cover += 1
+                    lex_tree = ' '.join(lex_tree)
+                    try:
+                        parsed = yoav_trees.Tree('TOP').from_sexpr(lex_tree)
+                        bped = bpe_leaves(parsed, bpe)
+                        bped_str = bped.nonter_closing() + '\n'
+                        output.write(bped_str)
+                    except:
+                        failed += 1
+                        output.write('MISSING\n')
+                    if not sent: break  # EOF
+
+
+
+# applied only on root or non terminals
+def bpe_leaves(tree, bpe):
+
+    bped_children = []
+    for child in tree.children:
+        if child.isleaf():
+            segs = bpe.segment(child.label).strip().split()
+            for seg in segs:
+                bped_children.append(yoav_trees.Tree(seg, None))
+        else:
+            bped_children.append(bpe_leaves(child, bpe))
+
+    return yoav_trees.Tree(tree.label, bped_children)
+
+
 
 def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3/8m.train.trainwords',
                                          trees_file='../data/shi/Eng_Parse_3/8m.train.trainline',
@@ -183,7 +321,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                                 print 'parsed missing tree'
                             except:
                                 trees_output.write('MISSING\n')
-                                print 'failed to parse missing tree'
+                                print 'failed to parse missing tree for: {}'.format(sent)
                                 failed += 1
                         # else:
                         #     trees_output.write(tree)
@@ -193,8 +331,8 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     return
 
 
-# converts bllip tree (lexicalized, no labels on closing brackets) to xing tree (unlexicalized, labels on closing brac.)
 def convert_tree(bllip_tree):
+    # converts bllip tree (lexicalized, no labels on closing brackets) to xing tree (unlexicalized, labels on closing brac.)
     # example:
 
     # bllip:
@@ -203,18 +341,13 @@ def convert_tree(bllip_tree):
     # xing shi:
     # '(TOP (S (S (NP PRP )NP (VP VBP (VP VBN (NP (NP DT NN )NP (PP IN (NP DT NNP NNP )NP )PP (VP VBN (PP IN (NP NNP CD )NP )PP (NP NNP CD )NP )VP )NP )VP )VP )S , CC (S (NP PRP )NP (VP MD (VP VB (ADVP RB RB )ADVP (S (VP TO (VP VB (NP PRP )NP (NP (NP DT JJ JJ NN )NP (PP IN (NP DT NN (SBAR IN (S (NP PRP )NP (VP VBD (NP DT JJ JJ NN )NP )VP )S )SBAR )NP )PP )NP )VP )VP )S )VP )VP )S . )S )TOP'
 
-    # remove words and turn into POS terminals:
     root = yoav_trees.Tree.from_sexpr(bllip_tree)
+
+    # remove words and turn into POS terminals (=remove leaves):
     removed_leaves = remove_leaves(root)
     removed_leaves.label = 'TOP'
+    return removed_leaves.nonter_closing()
 
-    # tokens = str(removed_leaves).split()
-    # print 'tree tokens: {}'.format(len(tokens))
-    # print tokens
-    # print 'sent tokens (tree leaves): {}'.format(len(removed_leaves.leaves()))
-    # print [str(l) for l in removed_leaves.leaves()]
-    # print removed_leaves.viz()
-    return str(removed_leaves)
 
 def remove_leaves(tree):
 
@@ -225,7 +358,6 @@ def remove_leaves(tree):
     if len(non_leaves) == 0:
         non_leaves = None
     return yoav_trees.Tree(tree.label, non_leaves)
-
 
 
 def TODO():
@@ -251,7 +383,6 @@ def bllip_parse(input_file, output_file):
             if not sent: break  # EOF
     # acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en', '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en')
     return parses
-
 
 
 def fr_en_TSS_exp():
