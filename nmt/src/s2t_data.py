@@ -43,13 +43,16 @@ BPE_OPERATIONS = 89500
 
 
 def main():
+    base_path = '/Users/roeeaharoni'
+    # base_path = '/home/nlp/aharonr6'
+
     # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de',
     #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en',
     #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model')
     # return
 
     # create lexicalized trees based on truecased data for train
-    true_bpe_model = '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model'
+    true_bpe_model = base_path + '/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model'
     # text_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
     # trees_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final'
     # divide_file(text_path)
@@ -71,8 +74,6 @@ def main():
     #             trees_path + '.true.bped')
     # return
 
-    base_path = '/Users/roeeaharoni'
-    # base_path = '/home/nlp/aharonr6'
     # parse with bllip
 
     # dev
