@@ -39,4 +39,23 @@ looked for 4215807 trees from training corpora, found 4180027 total
 looked for 4215807 trees from training corpora, found 4181486 total
 
 
+went through 1000000 lines.
+perfect cover:932650
+too many POS:81210
+failed: 233
+
+went through 1000000 lines.
+perfect cover:918728
+too many POS:126977
+failed: 544
+
+went through 1000000 lines.
+perfect cover:952146
+too many POS:39036
+failed: 574
+
+went through 1000000 lines.
+perfect cover:952628
+too many POS:29511
+failed: 101
 

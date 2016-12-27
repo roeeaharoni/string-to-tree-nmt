@@ -19,6 +19,8 @@ import os
 import yoav_trees
 import docopt as do
 import apply_bpe as apply_bpe
+import traceback
+
 from multiprocessing import Pool
 
 # TODO:
@@ -74,9 +76,10 @@ def main():
 
     # dev
     dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.en'
-    dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.parsed.en'
+    dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.parsed.en.fixed'
     complete_missing_parse_tress_with_bllip(dev_true_en_file, dev_true_en_parsed_file)
     apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file, dev_true_en_parsed_file + '.bped')
+    return
 
     # test
     test_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.en'
@@ -406,6 +409,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                                 trees_output.write('MISSING\n')
                                 print u'failed to parse missing tree for: {}'.format(sent)
                                 print str(e)
+                                traceback.print_exc()
                                 failed += 1
                         # else:
                         #     trees_output.write(tree)
