@@ -78,9 +78,9 @@ def main():
 
     # dev
     dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.en'
-    dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.parsed.en.fixed'
+    dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.parsed.en'
     complete_missing_parse_tress_with_bllip(dev_true_en_file, dev_true_en_parsed_file)
-    apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file+'.fixed', dev_true_en_parsed_file + '.bped')
+    apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file + '.fixed', dev_true_en_parsed_file + '.bped')
     return
 
     # test
