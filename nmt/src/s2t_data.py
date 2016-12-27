@@ -43,8 +43,8 @@ BPE_OPERATIONS = 89500
 
 
 def main():
-    base_path = '/Users/roeeaharoni'
-    # base_path = '/home/nlp/aharonr6'
+    # base_path = '/Users/roeeaharoni'
+    base_path = '/home/nlp/aharonr6'
 
     # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de',
     #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en',
@@ -403,7 +403,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                         if 'MISSING' in tree:
                             sents_output.write(sent)
                             try:
-                                parsed = rrp.simple_parse(str(sent))
+                                parsed = rrp.simple_parse(sent.encode('utf-8'))
                                 trees_output.write(convert_tree(parsed) + '\n')
                                 fixed += 1
                                 print 'parsed missing tree'
