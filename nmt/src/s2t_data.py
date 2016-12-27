@@ -72,6 +72,7 @@ def main():
     # return
 
     base_path = '/Users/roeeaharoni'
+    # base_path = '/home/nlp/aharonr6'
     # parse with bllip
 
     # dev
