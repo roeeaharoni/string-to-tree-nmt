@@ -404,7 +404,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                                 print 'parsed missing tree'
                             except:
                                 trees_output.write('MISSING\n')
-                                print 'failed to parse missing tree for: {}'.format(sent)
+                                print u'failed to parse missing tree for: {}'.format(sent)
                                 failed += 1
                         # else:
                         #     trees_output.write(tree)
