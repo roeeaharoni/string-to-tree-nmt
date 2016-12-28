@@ -84,11 +84,26 @@ def main():
     # return
 
     # test
-    test_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.en'
-    test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.parsed.en'
-    complete_missing_parse_tress_with_bllip(test_true_en_file, test_true_en_parsed_file)
-    apply_bpe_on_trees(true_bpe_model, test_true_en_file, test_true_en_parsed_file + '.fixed', test_true_en_parsed_file + '.bped')
+    # test_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.en'
+    # test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.parsed.en'
+    # complete_missing_parse_tress_with_bllip(test_true_en_file, test_true_en_parsed_file)
+    # apply_bpe_on_trees(true_bpe_model, test_true_en_file, test_true_en_parsed_file + '.fixed', test_true_en_parsed_file + '.bped')
+    #
+    # return
 
+    # re run bllip missing on final.true.bped
+
+    sents = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
+    trees = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped'
+
+    # try to parse the missing trees
+    complete_missing_parse_tress_with_bllip(sents, trees)
+
+    # lexicalize and bpe the missing trees
+    apply_bpe_on_trees(true_bpe_model, sents + '.fixed', trees +'.fixed', trees +'.fixed.bped')
+
+    # add the missing trees to the main file
+    fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
     return
 
     # TODO: eval script
@@ -263,11 +278,20 @@ def apply_bpe_on_trees(bpe_model_path, words_file_path, trees_file_path, bped_tr
                             bped = bpe_leaves(parsed, bpe)
                             bped_str = bped.nonter_closing() + '\n'
                             output.write(bped_str)
-                    except:
+                    except Exception as e:
                         failed += 1
                         output.write('MISSING\n')
+                        print str(e)
+                        traceback.print_exc()
+
                     if not sent:
                         break  # EOF
+
+    print 'Done!\nwent through {} lines.\nperfect cover:{}\ntoo many POS:{}\nfailed: {}\n'.format(
+        i,
+        perfect_cover,
+        too_many_pos,
+        failed)
 
 
 # applied only on root or non terminals
