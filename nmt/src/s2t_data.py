@@ -67,7 +67,8 @@ def trees_sanity(tok_sentences, bped_trees):
                     missing +=1
                 else:
                     try:
-                        parsed = yoav_trees.Tree('TOP').from_sexpr(tree)
+                        cleaned = ' '.join([')' if ')' in t else t for t in tree.split()])
+                        parsed = yoav_trees.Tree('TOP').from_sexpr()
                         if len(parsed.leaves()) != tok_amount:
                             uneven += 1
                     except Exception as e:
