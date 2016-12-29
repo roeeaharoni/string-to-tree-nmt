@@ -52,7 +52,10 @@ def trees_sanity(tok_sentences, bped_trees):
         with codecs.open(bped_trees, encoding='utf8') as trees:
             while True:
                 if total%100000 == 0:
-                    print 'missing:{}\nfailed:{}\nuneven:{}\ntotal:{}'
+                    print 'missing:{}\nfailed:{}\nuneven:{}\ntotal:{}'.format(missing,
+                                                                              failed,
+                                                                              uneven,
+                                                                              total)
                 total += 1
                 sent = sents.readline()
                 tree = trees.readline()
