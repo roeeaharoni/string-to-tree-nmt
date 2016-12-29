@@ -42,10 +42,42 @@ NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
 BPE_OPERATIONS = 89500
 
 
+def trees_sanity(tok_sentences, bped_trees):
+    # TODO: how many missing, how bad is overPOS/underPOS…
+    missing = 0
+    uneven = 0
+    failed = 0
+    total = 0
+    with codecs.open(tok_sentences, encoding='utf8') as sents:
+        with codecs.open(bped_trees, encoding='utf8') as trees:
+            while True:
+                total += 1
+                sent = sents.readline()
+                tree = trees.readline()
+
+                tokens = sent.split()
+                tok_amount = len(tokens)
+
+                if 'MISSING' in tree:
+                    missing +=1
+                else:
+                    try:
+                        parsed = yoav_trees.Tree('TOP').from_sexpr(tree)
+                        if len(parsed.leaves()) != tok_amount:
+                            uneven += 1
+                    except Exception as e:
+                        failed +=1
+                if not sent:
+                    break  # EOF
+    print 'missing:{}\nfailed:{}\nuneven:{}\ntotal:{}'
+
 def main():
     # base_path = '/Users/roeeaharoni'
     base_path = '/home/nlp/aharonr6'
-
+    bped_trees= '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
+    tok_sentences = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
+    trees_sanity(tok_sentences, bped_trees)
+    return
     # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de',
     #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en',
     #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model')
@@ -93,23 +125,18 @@ def main():
 
     # re run bllip missing on final.true.bped
 
-    sents = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
-    trees = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped'
-
-    # try to parse the missing trees
-    complete_missing_parse_tress_with_bllip(sents, trees)
-
-    # lexicalize and bpe the missing trees
-    apply_bpe_on_trees(true_bpe_model, sents + '.fixed', trees +'.fixed', trees +'.fixed.bped')
-
-    # add the missing trees to the main file
-    fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
-    return
-
-    # TODO: eval script
-    # only differences from current eval is:
-    # strip trees
-    # check if valid trees
+    # sents = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
+    # trees = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped'
+    #
+    # # try to parse the missing trees
+    # complete_missing_parse_tress_with_bllip(sents, trees)
+    #
+    # # lexicalize and bpe the missing trees
+    # apply_bpe_on_trees(true_bpe_model, sents + '.fixed', trees +'.fixed', trees +'.fixed.bped')
+    #
+    # # add the missing trees to the main file
+    # fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
+    # return
 
     # get input file path
     arguments = do.docopt(__doc__)
