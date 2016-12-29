@@ -80,7 +80,7 @@ def main():
     # base_path = '/Users/roeeaharoni'
     base_path = '/home/nlp/aharonr6'
     bped_trees= '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
-    tok_sentences = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
+    tok_sentences = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en.bpe'
     trees_sanity(tok_sentences, bped_trees)
     return
     # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de',
