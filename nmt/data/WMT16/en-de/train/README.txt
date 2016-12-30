@@ -59,3 +59,11 @@ perfect cover:952628
 too many POS:29511
 failed: 101
 
+avg. sent len:26
+avg. tree len:68
+missing:744
+failed:0
+uneven:70117
+total:4215807
+
+
