@@ -53,7 +53,7 @@ def trees_sanity(tok_sentences, bped_trees):
     with codecs.open(tok_sentences, encoding='utf8') as sents:
         with codecs.open(bped_trees, encoding='utf8') as trees:
             while True:
-                if total%100000 == 0:
+                if total%100000 == 0 and total != 0:
                     print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}'.format(
                         tok_len_sum / total,
                         tree_len_sum / total,
