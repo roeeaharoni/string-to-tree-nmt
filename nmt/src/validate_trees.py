@@ -24,21 +24,23 @@ def main():
     total = 0
     with codecs.open(dev_target, encoding='utf-8') as trees:
         with codecs.open(dev_target_sents, 'w', encoding='utf-8') as sents:
-            while True:
-                tree = trees.readline()
-                if not tree:
-                    break  # EOF
-                total += 1
-                try:
-                    parsed = yoav_trees.Tree('Top').from_sexpr(tree)
-                    valid_trees += 1
-                    sent = ' '.join(parsed.leaves())
-                except Exception as e:
-                    sent = [t for t in tree.split() if '(' not in t and ')' not in t]
-                sents.write(sent + '\n')
+            with codecs.open(valid_trees_log, 'a', encoding='utf-8') as log:
+                while True:
+                    tree = trees.readline()
+                    if not tree:
+                        break  # EOF
+                    total += 1
+                    try:
+                        parsed = yoav_trees.Tree('Top').from_sexpr(tree)
+                        valid_trees += 1
+                        sent = ' '.join(parsed.leaves())
+                    except Exception as e:
+                        sent = [t for t in tree.split() if '(' not in t and ')' not in t]
+                    sents.write(sent + '\n')
+                    log.write(str(valid_trees) + '\n')
 
 
-    # postprocess stripped trees
+    # postprocess stripped trees (remove bpe, de-truecase)
     postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
 
