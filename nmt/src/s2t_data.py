@@ -48,6 +48,8 @@ def trees_sanity(tok_sentences, bped_trees):
     uneven = 0
     failed = 0
     total = 0
+    tree_len_sum = 0
+    tok_len_sum = 0
     with codecs.open(tok_sentences, encoding='utf8') as sents:
         with codecs.open(bped_trees, encoding='utf8') as trees:
             while True:
@@ -62,6 +64,8 @@ def trees_sanity(tok_sentences, bped_trees):
 
                 tokens = sent.split()
                 tok_amount = len(tokens)
+                tok_len_sum += tok_amount
+                tree_len_sum += len(tree.split())
 
                 if 'MISSING' in tree:
                     missing +=1
@@ -75,7 +79,9 @@ def trees_sanity(tok_sentences, bped_trees):
                         failed +=1
                 if not sent:
                     break  # EOF
-    print 'missing:{}\nfailed:{}\nuneven:{}\ntotal:{}'
+
+    print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}'\
+        .format(tok_len_sum/total, tree_len_sum/total, missing, failed, uneven, total)
 
 def main():
     # base_path = '/Users/roeeaharoni'

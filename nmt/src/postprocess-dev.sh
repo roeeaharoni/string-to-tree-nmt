@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 base_path=/home/nlp/aharonr6
 

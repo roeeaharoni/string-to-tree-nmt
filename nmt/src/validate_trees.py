@@ -12,7 +12,7 @@ def main():
     valid_trees_log = model_prefix + '.valid_trees_log'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu,on_unused_input=warn python {}/nematus/translate.py \
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=1,on_unused_input=warn python {}/nematus/translate.py \
      -m {}.dev.npz \
      -i {} \
      -o {} \
