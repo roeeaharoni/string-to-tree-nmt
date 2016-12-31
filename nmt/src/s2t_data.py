@@ -35,9 +35,13 @@ from multiprocessing import Pool
 # start with fr-en TSS, fr-en len
 # process is: tokenize -> clean --> truecase --> BPE --> add prefixes --> build dictionaries --> train --> evaluate
 
-# TTS TODO: histogram of tree lengths, read vinyals seq2seq parsing paper, check results
-# TTS TODO: write more in TTS abstract, finish morphology acl version, check how to manipulate decoder
+# TTS TODO: histogram of tree lengths
+# TTS TODO: read vinyals seq2seq parsing paper, check results
+# TTS TODO: write more in TTS abstract
 # TTS TODO: use amunmt decoder? NTH
+# TTS TODO: check how to manipulate decoder
+
+# TODO: finish morphology acl version
 
 
 MOSES_HOME = '/Users/roeeaharoni/git/mosesdecoder'
