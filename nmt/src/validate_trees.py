@@ -17,8 +17,10 @@ def main():
      -m {}.dev.npz \
      -i {} \
      -o {} \
-     -k 12 -n -p 1'.format(nematus, model_prefix, dev_src, dev_target)
+     -k 12 -n -p 2 -v'.format(nematus, model_prefix, dev_src, dev_target)
     os.system(decode_command)
+
+    print 'finished translating {}'.format(dev_src)
 
     # validate and strip trees
     valid_trees = 0
