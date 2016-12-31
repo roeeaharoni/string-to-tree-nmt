@@ -18,8 +18,8 @@ def main():
      -i {} \
      -o {} \
      -k 1 -n -p 1 -v'.format(nematus, model_prefix, dev_src, dev_target)
-    # TODO: return to beam of 12
-    os.system(decode_command)
+    # TODO: return to beam of 12, bring back decode command
+    # os.system(decode_command)
 
     print 'finished translating {}'.format(dev_src)
 
