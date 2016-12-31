@@ -7,9 +7,9 @@ def main():
     base_path = '/home/nlp/aharonr6'
     nematus = base_path + '/git/nematus'
     model_prefix = base_path + '/git/research/nmt/models/de_en_stt_model.npz'
-    dev_src = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de.100'
-    dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.100.output.trees.dev'
-    dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.100.output.sents.dev'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de.bpe.100'
+    dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.trees.dev'
+    dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
