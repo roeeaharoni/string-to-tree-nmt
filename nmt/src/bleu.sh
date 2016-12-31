@@ -36,6 +36,7 @@ if [ "$BLEU" > "$BEST"]; then
     BETTER="1"
 else
     BETTER="0"
+fi
 echo 'checked if better'
 
 echo "BLEU = $BLEU"
