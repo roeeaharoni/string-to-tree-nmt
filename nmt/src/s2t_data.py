@@ -27,13 +27,17 @@ from multiprocessing import Pool
 # write a pipeline that does all:
 # tokenize with moses scripts - done
 # count words per output sentence - done
-# run BPE on both sides -
+# run BPE on both sides - done
 # extract TSS prefix - done
 # write train versions (BPE2BPE): with output length, with output TSS, with both, without anything
 # 4 models for 2 language pairs - totals in 8 models, 1 week per model - 8 weeks (one week if takeover)
 # can be run in one week on all NLP GPUs / use cyber GPUs?
 # start with fr-en TSS, fr-en len
 # process is: tokenize -> clean --> truecase --> BPE --> add prefixes --> build dictionaries --> train --> evaluate
+
+# TTS TODO: histogram of tree lengths, read vinyals seq2seq parsing paper, check results
+# TTS TODO: write more in TTS abstract, finish morphology acl version, check how to manipulate decoder
+# TTS TODO: use amunmt decoder? NTH
 
 
 MOSES_HOME = '/Users/roeeaharoni/git/mosesdecoder'

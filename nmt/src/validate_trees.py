@@ -3,6 +3,7 @@ import codecs
 import yoav_trees
 
 def main():
+    print 'validating trees...'
     base_path = '/home/nlp/aharonr6'
     nematus = base_path + '/git/nematus'
     model_prefix = base_path + '/git/research/nmt/models/de_en_stt_model.npz'
@@ -12,7 +13,7 @@ def main():
     valid_trees_log = model_prefix + '.valid_trees_log'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=1,on_unused_input=warn python {}/nematus/translate.py \
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu2,lib.cnmem=1,on_unused_input=warn python {}/nematus/translate.py \
      -m {}.dev.npz \
      -i {} \
      -o {} \
