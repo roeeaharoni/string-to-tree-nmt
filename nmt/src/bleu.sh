@@ -32,12 +32,12 @@ BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 
 echo 'extracted current BLEU'
 
 echo 'check if better...'
-if [ "$BLEU" > "$BEST"]; then
+if [ "$BLEU" > "$BEST" ]; then
     BETTER="1"
 else
     BETTER="0"
 fi
-echo 'checked if better'
+echo "checked if better: $BETTER"
 
 echo "BLEU = $BLEU"
 
