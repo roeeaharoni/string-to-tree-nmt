@@ -21,7 +21,7 @@ ref=$base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en
 dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.output.sents.dev.postprocessed.dev
 
 # get BLEU
-BEST=`cat ${prefix}_best_bleu || echo 0`
+BEST=`cat ${prefix}_best_bleu` || echo 0
 $mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target >> ${prefix}_bleu_scores
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
 BETTER=`echo "$BLEU > $BEST" | bc`
