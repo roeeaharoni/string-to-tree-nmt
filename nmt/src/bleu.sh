@@ -19,10 +19,18 @@ ref=$base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en.10
 
 dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.sents.dev.postprocessed
 
-# get BLEU
+# get prev best BLEU
 BEST=`cat ${model_prefix}_best_bleu` || echo 0
+echo 'got prev BLEU'
+
+# write current BLEU
 $mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target >> ${model_prefix}_bleu_scores
+echo 'wrote current BLEU'
+
+# extract current BLEU
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
+echo 'extracted current BLEU'
+
 BETTER=`echo "$BLEU > $BEST" | bc`
 
 echo "BLEU = $BLEU"
