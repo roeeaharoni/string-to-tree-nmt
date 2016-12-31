@@ -31,6 +31,7 @@ echo 'wrote current BLEU'
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
 echo 'extracted current BLEU'
 
+echo 'check if better...'
 BETTER=`echo "$BLEU > $BEST" | bc`
 echo 'checked if better'
 
