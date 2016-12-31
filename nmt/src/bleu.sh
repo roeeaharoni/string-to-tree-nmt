@@ -15,9 +15,9 @@ device=gpu
 model_prefix=$base_path/git/research/nmt/models/de_en_stt_model.npz
 
 # dev ref file
-ref=$base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en.100
+ref=$base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en
 
-dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.sents.dev.postprocessed
+dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed
 
 # get prev best BLEU
 BEST=`cat ${model_prefix}_best_bleu || echo 0`
