@@ -32,9 +32,11 @@ BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 
 echo 'extracted current BLEU'
 
 BETTER=`echo "$BLEU > $BEST" | bc`
+echo 'checked if better'
 
 echo "BLEU = $BLEU"
 
+echo 'checking if to save...'
 # save model with highest BLEU
 if [ "$BETTER" = "1" ]; then
   echo "new best; saving"
