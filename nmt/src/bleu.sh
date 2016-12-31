@@ -31,14 +31,19 @@ echo "wrote current BLEU to: ${model_prefix}_bleu_scores"
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
 echo "extracted current BLEU: $BLEU"
 
+BLEU = 1.1
+BEST = 1.01
 # check if to save as best model
 echo 'check if better...'
-if [ "$BLEU" -gt "$BEST" ]; then
+echo "current: $BLEU"
+echo "best: $BEST"
+
+#if [ "$BLEU" -gt "$BEST" ]; then
+if (( $(echo "$BLEU > $BEST" |bc -l) )); then
     echo "new best; saving"
     echo $BLEU > ${model_prefix}_best_bleu
     cp ${model_prefix}.dev.npz ${model_prefix}.npz.best_bleu
+    echo "improved! saved best in: ${model_prefix}.npz.best_bleu"
 else
-    echo "current: $BLEU"
-    echo "best: $BEST"
     echo "no improvement"
 fi
