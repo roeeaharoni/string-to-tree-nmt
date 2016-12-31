@@ -21,11 +21,11 @@ dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.
 
 # get prev best BLEU
 BEST=`cat ${model_prefix}_best_bleu` || echo 0
-echo 'got prev best BLEU: $BEST'
+echo "got prev best BLEU: $BEST"
 
 # write current BLEU
 $mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target >> ${model_prefix}_bleu_scores
-echo 'wrote current BLEU to ${model_prefix}_bleu_scores'
+echo "wrote current BLEU to ${model_prefix}_bleu_scores"
 
 # extract current BLEU
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
