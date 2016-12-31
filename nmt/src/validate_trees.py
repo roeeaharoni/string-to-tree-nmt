@@ -8,8 +8,8 @@ def main():
     nematus = base_path + '/git/nematus'
     model_prefix = base_path + '/git/research/nmt/models/de_en_stt_model.npz'
     dev_src = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de.100'
-    dev_target = dev_src + '.output.trees.dev'
-    dev_target_sents = dev_src + '.output.sents.dev'
+    dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.100.output.trees.dev'
+    dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.100.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
@@ -17,7 +17,8 @@ def main():
      -m {}.dev.npz \
      -i {} \
      -o {} \
-     -k 12 -n -p 1 -v'.format(nematus, model_prefix, dev_src, dev_target)
+     -k 1 -n -p 1 -v'.format(nematus, model_prefix, dev_src, dev_target)
+    # TODO: return to beam of 12
     os.system(decode_command)
 
     print 'finished translating {}'.format(dev_src)
