@@ -31,8 +31,8 @@ echo "wrote current BLEU to: ${model_prefix}_bleu_scores"
 BLEU=`$mosesdecoder/scripts/generic/multi-bleu.perl $ref < $dev_target | cut -f 3 -d ' ' | cut -f 1 -d ','`
 echo "extracted current BLEU: $BLEU"
 
-BLEU = 1.1
-BEST = 1.01
+BLEU=1.1
+BEST=1.01
 # check if to save as best model
 echo 'check if better...'
 echo "current: $BLEU"
