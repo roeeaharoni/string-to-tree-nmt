@@ -7,7 +7,7 @@ def main():
     base_path = '/home/nlp/aharonr6'
     nematus = base_path + '/git/nematus'
     model_prefix = base_path + '/git/research/nmt/models/de_en_stt_model.npz'
-    dev_src = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de.100'
     dev_target = dev_src + '.output.trees.dev'
     dev_target_sents = dev_src + '.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
@@ -46,6 +46,7 @@ def main():
     # postprocess stripped trees (remove bpe, de-truecase)
     postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
+    print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
 
     # '/home/nlp/aharonr6/git/research/nmt/models/newstest2015-deen-src.tok.true.de.output.sents.dev.postprocessed.dev'
 
