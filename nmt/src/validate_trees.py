@@ -38,7 +38,7 @@ def main():
                         valid_trees += 1
                         sent = ' '.join(parsed.leaves())
                     except Exception as e:
-                        sent = [t for t in tree.split() if '(' not in t and ')' not in t]
+                        sent = ' '.join([t for t in tree.split() if '(' not in t and ')' not in t])
                     sents.write(sent + '\n')
                     log.write(str(valid_trees) + '\n')
 
