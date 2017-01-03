@@ -18,4 +18,5 @@ $base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.
 --optimizer adadelta \
 --alpha_c 0.0 \
 --clip_c 1.0 \
---maxlen 150
+--maxlen 150 \
+--reload
