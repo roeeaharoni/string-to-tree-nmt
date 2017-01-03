@@ -43,7 +43,7 @@ def main():
                     except Exception as e:
                         sent = ' '.join([t for t in tree.split() if '(' not in t and ')' not in t])
                     sents.write(sent + '\n')
-                    log.write(str(valid_trees) + '\n')
+    log.write(str(valid_trees) + '\n')
 
 
     # postprocess stripped trees (remove bpe, de-truecase)
