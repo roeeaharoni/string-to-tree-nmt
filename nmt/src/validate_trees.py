@@ -14,13 +14,15 @@ def main():
     dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'
     dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
+    alignments_path = base_path + '/git/research/nmt/models/dev_alignmnets.txt'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu2,lib.cnmem=1,on_unused_input=warn python {}/nematus/translate.py \
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
      -m {}.dev.npz \
      -i {} \
      -o {} \
-     -k 12 -n -p 1 -v'.format(nematus, model_prefix, dev_src, dev_target)
+     -a {} \
+     -k 12 -n -p 5 -v'.format(nematus, model_prefix, dev_src, dev_target, alignments_path)
     os.system(decode_command)
 
     print 'finished translating {}'.format(dev_src)
