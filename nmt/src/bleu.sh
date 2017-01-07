@@ -15,7 +15,7 @@ device=gpu
 model_prefix=$base_path/git/research/nmt/models/de_en_stt_model.npz
 
 # dev ref file
-ref=$base_path/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en
+ref=$base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en
 
 dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed
 

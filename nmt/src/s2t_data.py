@@ -24,8 +24,8 @@ import traceback
 from multiprocessing import Pool
 
 # TODO:
-# write a pipeline that does all:
-# tokenize with moses scripts - done
+# write a pipeline that does:
+# tokenization with moses scripts - done
 # count words per output sentence - done
 # run BPE on both sides - done
 # extract TSS prefix - done
@@ -35,13 +35,8 @@ from multiprocessing import Pool
 # start with fr-en TSS, fr-en len
 # process is: tokenize -> clean --> truecase --> BPE --> add prefixes --> build dictionaries --> train --> evaluate
 
-# TTS TODO: histogram of tree lengths
-# TTS TODO: read vinyals seq2seq parsing paper, check results
-# TTS TODO: write more in TTS abstract
-# TTS TODO: use amunmt decoder? NTH
-# TTS TODO: check how to manipulate decoder
-
-# TODO: finish morphology acl version
+# TTS TODO: use amunmt decoder? nice to have
+# TTS TODO: check how to manipulate decoder in nematus
 
 
 MOSES_HOME = '/Users/roeeaharoni/git/mosesdecoder'
@@ -49,16 +44,17 @@ BPE_HOME = '/Users/roeeaharoni/git/subword-nmt'
 NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
 BPE_OPERATIONS = 89500
 
-
-def trees_sanity(tok_sentences, bped_trees):
-    # TODO: how many missing, how bad is overPOS/underPOS…
+# count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
+def trees_sanity(bped_sentences, bped_trees):
     missing = 0
     uneven = 0
     failed = 0
     total = 0
     tree_len_sum = 0
     tok_len_sum = 0
-    with codecs.open(tok_sentences, encoding='utf8') as sents:
+    tree_len_hist = defaultdict(int)
+    sent_len_hist = defaultdict(int)
+    with codecs.open(bped_sentences, encoding='utf8') as sents:
         with codecs.open(bped_trees, encoding='utf8') as trees:
             while True:
                 if total%100000 == 0 and total != 0:
@@ -77,7 +73,11 @@ def trees_sanity(tok_sentences, bped_trees):
                 tokens = sent.split()
                 tok_amount = len(tokens)
                 tok_len_sum += tok_amount
-                tree_len_sum += len(tree.split())
+                sent_len_hist[tok_amount] += 1
+
+                tree_len = len(tree.split())
+                tree_len_sum += tree_len
+                tree_len_hist[tree_len] += 1
 
                 if 'MISSING' in tree:
                     missing +=1
@@ -91,26 +91,33 @@ def trees_sanity(tok_sentences, bped_trees):
                         failed +=1
                 if not sent:
                     break  # EOF
+    print '#########Tree len hist#########'
+    for key in sorted(tree_len_hist.keys()):
+        print key, tree_len_hist[key]
+
+    print '#########Sent len hist#########'
+    for key in sorted(sent_len_hist.keys()):
+        print key, sent_len_hist[key]
 
     print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}'\
         .format(tok_len_sum/total, tree_len_sum/total, missing, failed, uneven, total)
 
 def main():
-    # base_path = '/Users/roeeaharoni'
-    base_path = '/home/nlp/aharonr6'
-    bped_trees= '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
-    tok_sentences = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en.bpe'
-    trees_sanity(tok_sentences, bped_trees)
+    base_path = '/Users/roeeaharoni'
+    # base_path = '/home/nlp/aharonr6'
+    bped_trees= base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
+    bped_sentences = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'
+    trees_sanity(bped_sentences, bped_trees)
     return
-    # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de',
-    #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en',
-    #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model')
+    # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de',
+    #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en',
+    #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model')
     # return
 
     # create lexicalized trees based on truecased data for train
-    true_bpe_model = base_path + '/git/research/nmt/data/WMT16/en-de/train/de-en-true-bpe.model'
-    # text_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
-    # trees_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final'
+    true_bpe_model = base_path + '/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model'
+    # text_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
+    # trees_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final'
     # divide_file(text_path)
     # divide_file(trees_path)
 
@@ -133,15 +140,15 @@ def main():
     # parse with bllip
 
     # dev
-    # dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.en'
-    # dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.parsed.en'
+    # dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.en'
+    # dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en'
     # complete_missing_parse_tress_with_bllip(dev_true_en_file, dev_true_en_parsed_file)
     # apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file + '.fixed', dev_true_en_parsed_file + '.bped')
     # return
 
     # test
-    # test_true_en_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.en'
-    # test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.parsed.en'
+    # test_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.en'
+    # test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.parsed.en'
     # complete_missing_parse_tress_with_bllip(test_true_en_file, test_true_en_parsed_file)
     # apply_bpe_on_trees(true_bpe_model, test_true_en_file, test_true_en_parsed_file + '.fixed', test_true_en_parsed_file + '.bped')
     #
@@ -149,8 +156,8 @@ def main():
 
     # re run bllip missing on final.true.bped
 
-    # sents = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
-    # trees = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped'
+    # sents = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
+    # trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped'
     #
     # # try to parse the missing trees
     # complete_missing_parse_tress_with_bllip(sents, trees)
@@ -183,26 +190,26 @@ def main():
 def truecase_de_en():
     base_path = '/Users/roeeaharoni'
 
-    en_tc_model_path = base_path + '/git/research/nmt/models/en-de.en.truecase.model'
-    en_train_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en'
-    en_train_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.en'
-    en_dev_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en.tok'
-    en_dev_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.tok.true.en'
-    en_test_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.en.tok'
-    en_test_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-ref.tok.true.en'
+    en_tc_model_path = base_path + '/git/research/nmt/models/de-en.en.truecase.model'
+    en_train_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en'
+    en_train_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
+    en_dev_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en.tok'
+    en_dev_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.en'
+    en_test_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.en.tok'
+    en_test_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.en'
 
     train_moses_truecase(en_train_tok_path, en_tc_model_path)
     apply_moses_truecase(en_train_tok_path, en_train_true_path, en_tc_model_path)
     apply_moses_truecase(en_dev_tok_path, en_dev_true_path, en_tc_model_path)
     apply_moses_truecase(en_test_tok_path, en_test_true_path, en_tc_model_path)
 
-    de_tc_model_path = base_path + '/git/research/nmt/models/en-de.de.truecase.model'
-    de_train_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.de'
-    de_train_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de'
-    de_dev_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.de.tok'
-    de_dev_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-src.tok.true.de'
-    de_test_tok_path = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-src.de.tok'
-    de_test_true_path = base_path + '/git/research/nmt/data/WMT16/en-de/test/newstest2016-deen-src.tok.true.de'
+    de_tc_model_path = base_path + '/git/research/nmt/models/de-en.de.truecase.model'
+    de_train_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.de'
+    de_train_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de'
+    de_dev_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.de.tok'
+    de_dev_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de'
+    de_test_tok_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.de.tok'
+    de_test_true_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.tok.true.de'
 
     train_moses_truecase(de_train_tok_path, de_tc_model_path)
     apply_moses_truecase(de_train_tok_path, de_train_true_path, de_tc_model_path)
@@ -548,8 +555,8 @@ def bllip_parse(input_file, output_file):
             parses.append(parse)
             if not sent:
                 break  # EOF
-    # acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en',
-    # '/home/nlp/aharonr6/git/research/nmt/data/WMT16/en-de/dev/newstest2015-deen-ref.en')
+    # acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
+    # '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en')
     return parses
 
 
