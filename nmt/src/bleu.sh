@@ -12,12 +12,12 @@ mosesdecoder=$base_path/git/mosesdecoder
 device=gpu
 
 # model prefix
-model_prefix=$base_path/git/research/nmt/models/de_en_stt_model.npz
+model_prefix=$base_path/git/research/nmt/models/de_en_stt/de_en_stt_model.npz
 
 # dev ref file
 ref=$base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en
 
-dev_target=$base_path/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed
+dev_target=$base_path/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed
 
 # get prev best BLEU
 BEST=`cat ${model_prefix}_best_bleu || echo 0`

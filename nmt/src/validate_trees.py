@@ -6,15 +6,12 @@ def main():
     print 'validating trees...'
     base_path = '/home/nlp/aharonr6'
     nematus = base_path + '/git/nematus'
-    model_prefix = base_path + '/git/research/nmt/models/de_en_stt_model.npz'
-    # dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe.100'
-    # dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.trees.dev'
-    # dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.100.output.sents.dev'
+    model_prefix = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz'
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
-    dev_target = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'
-    dev_target_sents = base_path + '/git/research/nmt/models/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'
+    dev_target = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'
+    dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
-    alignments_path = base_path + '/git/research/nmt/models/dev_alignmnets.txt'
+    alignments_path = base_path + '/git/research/nmt/models/de_en_stt/dev_alignmnets.txt'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
     decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
@@ -52,8 +49,6 @@ def main():
     postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
-
-    # '/home/nlp/aharonr6/git/research/nmt/models/newstest2015-deen-src.tok.true.de.output.sents.dev.postprocessed.dev'
 
     # get current BLEU, compare to last best model, save as best if improved
     bleu_command = './bleu.sh'
