@@ -7,7 +7,7 @@ nematus=$base_path/git/nematus
 
 # train model with nematus
 THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=1 $nematus/nematus/nmt.py \
---datasets $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de \
+--datasets $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe \
 $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final \
 --dictionaries $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.json \
 $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final.json \

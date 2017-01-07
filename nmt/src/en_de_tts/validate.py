@@ -1,6 +1,5 @@
 import os
 import codecs
-import yoav_trees
 
 def main():
     print 'validating...'
