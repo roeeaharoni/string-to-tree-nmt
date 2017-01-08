@@ -10,7 +10,7 @@ def main():
 
     model_prefix = base_path + '/git/research/nmt/models/en_de_tts/en_de_tts_model.npz'
 
-    dev_src = base_path + '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en.bped'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en.bped'
 
     dev_target = base_path + '/git/research/nmt/models/en_de_tts/newstest2015-deen-ref.tok.true.parsed.en.bped.output.dev'
 
