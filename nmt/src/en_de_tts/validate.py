@@ -28,7 +28,7 @@ def main():
     print 'finished translating {}'.format(dev_src)
 
     # postprocess predictions (remove bpe, de-truecase)
-    postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target, dev_target)
+    postprocess_command = '../postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target, dev_target)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target, dev_target)
 
