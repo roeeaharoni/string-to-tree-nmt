@@ -11,7 +11,7 @@ def main():
     dev_target = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'
     dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'
     valid_trees_log = model_prefix + '.valid_trees_log'
-    alignments_path = base_path + '/git/research/nmt/models/de_en_stt/dev_alignmnets.txt'
+    alignments_path = base_path + '/git/research/nmt/models/de_en_stt/dev_alignments.txt'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
     decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \

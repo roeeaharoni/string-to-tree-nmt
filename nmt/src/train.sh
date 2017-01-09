@@ -6,7 +6,7 @@ base_path=/home/nlp/aharonr6
 nematus=$base_path/git/nematus
 
 # train model with nematus
-THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=1 $nematus/nematus/nmt.py \
+THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=0.8 $nematus/nematus/nmt.py \
 --datasets $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe \
 $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final \
 --dictionaries $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.json \
@@ -15,7 +15,8 @@ $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed
 --saveFreq 30000 \
 --validFreq 10000 \
 --dim_word 500 \
---dim 1024 --valid_datasets $base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe \
+--dim 1024 \
+--valid_datasets $base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe \
 $base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en.bped \
 --external_validation_script $base_path/git/research/nmt/src/validate_trees.sh \
 --optimizer adadelta \

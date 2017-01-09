@@ -8,9 +8,6 @@ nematus=$base_path/git/nematus
 # path to moses decoder: https://github.com/moses-smt/mosesdecoder
 mosesdecoder=$base_path/git/mosesdecoder
 
-# theano device, in case you do not want to compute on gpu, change it to cpu
-device=gpu
-
 # model prefix
 model_prefix=$base_path/git/research/nmt/models/de_en_stt/de_en_stt_model.npz
 
