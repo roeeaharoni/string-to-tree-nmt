@@ -31,7 +31,7 @@ if sys.version_info < (3, 0):
 import codecs
 
 class BPE(object):
-
+    # only change from rico is the following two lines: get codes path straight instead of as a parameter
     def __init__(self, codes_path, separator='@@'):
         
         with codecs.open(codes_path, encoding='utf-8') as codes:

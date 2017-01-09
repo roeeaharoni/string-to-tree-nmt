@@ -7,10 +7,10 @@ nematus=$base_path/git/nematus
 
 # train model with nematus
 THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=0.8 $nematus/nematus/nmt.py \
---datasets $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final \
-$base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe \
---dictionaries $base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final.json \
-$base_path/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.json \
+--datasets $base_path/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped.final \
+$base_path/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de.bpe \
+--dictionaries $base_path/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.en.parsed2.final.true.bped.final.json \
+$base_path/git/research/nmt/data/WMT16/en-de/train/corpus.parallel.tok.true.de.bpe.json \
 --model $base_path/git/research/nmt/models/en_de_tts/en_de_tts_model.npz \
 --saveFreq 30000 \
 --validFreq 10000 \
