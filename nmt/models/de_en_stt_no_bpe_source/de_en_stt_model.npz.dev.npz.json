@@ -1,0 +1,62 @@
+{
+  "map_decay_c": 0, 
+  "dropout_hidden": 0.2, 
+  "decoder": "gru_cond", 
+  "sort_by_length": true, 
+  "decay_c": 0, 
+  "dropout_source": 0, 
+  "model_version": 0.1, 
+  "clip_c": 1.0, 
+  "domain_interpolation_indomain_datasets": [
+    "indomain.en", 
+    "indomain.fr"
+  ], 
+  "max_epochs": 5000, 
+  "dispFreq": 1000, 
+  "finetune_only_last": false, 
+  "overwrite": false, 
+  "validFreq": 10000, 
+  "dropout_embedding": 0.2, 
+  "external_validation_script": "/home/nlp/aharonr6/git/research/nmt/src/validate_trees.sh", 
+  "dim_per_factor": [
+    500
+  ], 
+  "n_words_src": 84925, 
+  "saveto": "/home/nlp/aharonr6/git/research/nmt/models/de_en_stt_model.npz", 
+  "dropout_target": 0, 
+  "valid_batch_size": 10, 
+  "n_words": 78500, 
+  "optimizer": "adadelta", 
+  "alpha_c": 0.0, 
+  "batch_size": 40, 
+  "use_domain_interpolation": false, 
+  "lrate": 0.0001, 
+  "valid_datasets": [
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe", 
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en.bped"
+  ], 
+  "domain_interpolation_min": 0.1, 
+  "encoder": "gru", 
+  "shuffle_each_epoch": true, 
+  "dim": 1024, 
+  "use_dropout": false, 
+  "datasets": [
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de", 
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final"
+  ], 
+  "dim_word": 500, 
+  "sampleFreq": 10000, 
+  "patience": 10, 
+  "maxibatch_size": 20, 
+  "finetune": false, 
+  "factors": 1, 
+  "dictionaries": [
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.json", 
+    "/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final.json"
+  ], 
+  "reload_": true, 
+  "maxlen": 150, 
+  "finish_after": 10000000, 
+  "domain_interpolation_inc": 0.1, 
+  "saveFreq": 30000
+}
