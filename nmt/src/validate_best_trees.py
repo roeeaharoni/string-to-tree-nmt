@@ -10,7 +10,6 @@ def main():
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     dev_target = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev.best'
     dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.best'
-    valid_trees_log = model_prefix + '.valid_trees_log'
     alignments_path = base_path + '/git/research/nmt/models/de_en_stt/best_dev_alignments.txt'
 
     # decode: k - beam size, n - normalize scores by length, p - processes
@@ -29,20 +28,18 @@ def main():
     total = 0
     with codecs.open(dev_target, encoding='utf-8') as trees:
         with codecs.open(dev_target_sents, 'w', encoding='utf-8') as sents:
-            with codecs.open(valid_trees_log, 'a', encoding='utf-8') as log:
-                while True:
-                    tree = trees.readline()
-                    if not tree:
-                        break  # EOF
-                    total += 1
-                    try:
-                        parsed = yoav_trees.Tree('Top').from_sexpr(tree)
-                        valid_trees += 1
-                        sent = ' '.join(parsed.leaves())
-                    except Exception as e:
-                        sent = ' '.join([t for t in tree.split() if '(' not in t and ')' not in t])
-                    sents.write(sent + '\n')
-                log.write(str(valid_trees) + '\n')
+           while True:
+           	tree = trees.readline()
+                if not tree:
+                    break  # EOF
+                total += 1
+                try:
+                    parsed = yoav_trees.Tree('Top').from_sexpr(tree)
+                    valid_trees += 1
+                    sent = ' '.join(parsed.leaves())
+                except Exception as e:
+                    sent = ' '.join([t for t in tree.split() if '(' not in t and ')' not in t])
+                sents.write(sent + '\n')
 
 
     # postprocess stripped trees (remove bpe, de-truecase)
@@ -50,11 +47,7 @@ def main():
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     
-    return 
-   
-    # get current BLEU, compare to last best model, save as best if improved
-    bleu_command = './bleu.sh'
-    os.system(bleu_command)
+    return
 
 
 if __name__ == '__main__':
