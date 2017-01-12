@@ -46,7 +46,7 @@ def main():
 
 
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = './postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
 

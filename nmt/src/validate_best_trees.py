@@ -29,7 +29,7 @@ def main():
     with codecs.open(dev_target, encoding='utf-8') as trees:
         with codecs.open(dev_target_sents, 'w', encoding='utf-8') as sents:
            while True:
-           	tree = trees.readline()
+                tree = trees.readline()
                 if not tree:
                     break  # EOF
                 total += 1
@@ -43,7 +43,7 @@ def main():
 
 
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './postprocess-dev.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = './postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     
