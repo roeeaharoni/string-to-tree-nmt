@@ -17,6 +17,8 @@ ref=$base_path/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.de
 # dev predictions file
 dev_target=$base_path/git/research/nmt/models/en_de_tts/newstest2015-deen-ref.tok.true.parsed.en.bped.output.dev.postprocessed
 
+dev_alignments=$base_path/git/research/nmt/models/en_de_tts/dev_alignments.txt
+
 # get prev best BLEU
 BEST=`cat ${model_prefix}_best_bleu || echo 0`
 echo "prev best BLEU: $BEST"
@@ -38,6 +40,8 @@ if (( $(echo "$BLEU > $BEST" |bc -l) )); then
     echo "new best; saving"
     echo $BLEU > ${model_prefix}_best_bleu
     cp ${model_prefix}.dev.npz ${model_prefix}.npz.best_bleu
+    cp ${dev_target} ${dev_target}.best
+    cp ${dev_alignments} ${dev_alignments}.best
     echo "improved! saved best in: ${model_prefix}.npz.best_bleu"
 else
     echo "no improvement"
