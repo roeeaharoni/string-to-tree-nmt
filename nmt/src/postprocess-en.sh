@@ -9,6 +9,17 @@ mosesdecoder=$base_path/git/mosesdecoder
 # suffix of target language files
 lng=en
 
+# fix BPE split words
 sed 's/\@\@ //g' | \
+
+
+# detruecase
 $mosesdecoder/scripts/recaser/detruecase.perl | \
-$mosesdecoder/scripts/tokenizer/detokenizer.perl -l $lng
+
+# detokenize
+$mosesdecoder/scripts/tokenizer/detokenizer.perl -l $lng | \
+
+# fix quotation marks
+sed 's/``/"/g' | \
+sed 's/ '\'''\''/" /g'
+
