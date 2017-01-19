@@ -1,0 +1,292 @@
+line id: 23 (better reordering)
+
+src:
+Die Premierminister Indiens und Japans trafen sich in Tokio.
+
+ref:
+That's why I'm proud to introduce the Employee Empowerment Act with civil rights icon John Lewis.
+
+
+bpe2tree:
+That is why I am proud to present the Staff Regulations Act together with the civil rights representative of John Lewis.
+
+
+bpe2bpe:
+That is why I am proud, together with the civil rights activist John Lewis, that the Staff Regulations Act.
+
+
+
+line id: 30 (that militarised autocracy Hedki Tojos would be replaced... vs. the militarised autocracy would replace...)
+
+src:
+Als die Vereinigten Staaten nach dem Zweiten Weltkrieg Japan besetzte, ermutigten General Douglas Mac Arthur und sein Stab das Land dazu, eine Verfassung zu verabschieden, die sicherstellen solle, dass die militarisierte Autokratie Hedki Tojos durch Demokratie ersetzt würde.
+
+
+ref:
+When the United States occupied Japan after World War II, General Douglas MacArthur and his aides encouraged the country to adopt a constitution designed to assure that Hideki Tojo's militarized autocracy would be replaced with democracy.
+
+
+bpe2tree:
+When the United States occupied Japan after World War II, General Douglas Mac Arthur and his staff encouraged the country to adopt a constitution that would ensure that militarised autocracy Hedki Tojos would be replaced by democracy.
+
+
+bpe2bpe:
+When the United States occupied Japan after World War II, General Douglas Mac and his staff encouraged the country to adopt a constitution that would ensure that the militarised autocracy would replace Hedki Tojos with democracy.
+
+
+
+line id: 31 (better parenthesis prediction and better translation of text in parenthesis)
+
+src:
+In vollem Bewusstsein dessen, dass die Arbeiter und ihre Gewerkschaften bei der Schaffung eines neuen Japan eine Rolle einnahmen, verwendeten sie eine Sprache, die explizit anerkannte, dass "die Rechte der Arbeiter auf Vereinigung und gemeinsames Verhandeln und Handeln garantiert sind."
+
+
+ref:
+Fully aware that workers and their unions had a role to play in shaping the new Japan, they included language that explicitly recognized that "the right of workers to organize and to bargain and act collectively is guaranteed."
+
+
+bpe2tree:
+In full awareness of the fact that workers and their trade unions have a role to play in creating a new Japan, they used a language that explicitly recognised that "the rights of workers in unification and joint negotiation and action are guaranteed."
+
+
+bpe2bpe:
+In full awareness of the fact that the workers and their trade unions have a role in creating a new Japan, they used a language that explicitly acknowledged that "workers" rights to union and joint negotiation and action are guaranteed."
+
+
+
+line id: 39 (better reordering)
+
+src:
+Wie Pastor Martin Luther King Jr. vor fünfzig Jahren sagte:
+
+ref:
+As the Reverend Martin Luther King Jr. said fifty years ago:
+
+
+bpe2tree:
+As Pastor Martin Luther King Jr. said fifty years ago:
+
+
+bpe2bpe:
+As Pastor Martin Luther King Jr. fifty years ago said:
+
+
+line id: 41 (better tense, punctuation)
+
+src:
+Jetzt wissen alle, dass die Arbeiterbewegung die Stärke der Nation nicht einschränkte, sondern sie vergrößerte.
+
+ref:
+Now everyone knows that the labor movement did not diminish the strength of the nation but enlarged it.
+
+bpe2tree:
+Now, everyone knows that the labor movement did not limit the strength of the nation, but increased it.
+
+bpe2bpe:
+Now everyone knows that the labor movement does not constrain the strength of the nation, but enlarged it.
+
+
+
+line id: 42 (more reordering - production levels vs. levels of production)
+
+src:
+Durch die Anhebung des Lebensstandards von Millionen Menschen hat Arbeit auf wundersame Weise einen Markt für die Industrie geschaffen und die gesamte Nation auf unvorstellbare Produktionsniveaus angehoben.
+
+ref:
+By raising the living standards of millions, labor miraculously created a market for industry and lifted the whole nation to undreamed of levels of production.
+
+bpe2tree:
+By increasing the standard of living of millions of people, labor has created a market for industry and has increased the entire nation to unimaginable levels of production.
+
+bpe2bpe:
+By raising the living standards of millions of people, work has miraculously created a market for the industry and raised the entire nation towards unimaginable production levels.
+
+
+line id: 43 (redundant don't in bpe2bpe)
+
+src:
+Diejenigen, die die Arbeit angreifen, vergessen diese einfachen Wahrheiten, aber die Geschichte bewahrt sie.
+
+ref:
+Those who attack labor forget these simple truths, but history remembers them.
+
+bpe2tree:
+Those who attack the work forget these simple truths, but history preserves it.
+
+bpe2bpe:
+Those who attack the work don't forget those simple truths, but the story preserves them.
+
+
+
+line id: 61 (better reordering)
+
+src:
+Wenn alle übrigen Ärzte im Staat dazu gezwungen werden, keine Abtreibungen mehr durchzuführen, würde dieser Arzt aus Angst um seine Sicherheit die Operation nicht mehr durchführen, sagte die Gruppe.
+
+ref:
+If all other doctors in the state are forced to stop performing abortions, that doctor, fearful for his safety, would stop carrying out the procedure, the group said.
+
+bpe2tree:
+If all the other doctors in the state are forced not to carry out abortions, this doctor would no longer do the surgery out of fear of his safety.
+
+bpe2bpe:
+If all the other doctors in the state are forced to do no more abortions, this doctor for fear for his safety would no longer perform the surgery, the group said.
+
+
+
+line id: 73 (outside the city women vs. women who live outside the city)
+
+src:
+Obwohl die Studie nicht untersuchte, warum außerhalb der Stadt lebende Frauen mit höherer Wahrscheinlichkeit an Eierstockkrebs starben, vermutet Dr. Jordan eine verspätete Diagnose und den mangelnden Zugang zu den besten Behandlungszentren als mögliche Faktoren dafür.
+
+ref:
+Although the study was not designed to determine why women living outside the city were more likely to die from ovarian cancer, Dr Jordan suggested delayed diagnosis and inability to access best treatment might be factors.
+
+bpe2tree:
+Although the study did not investigate why women who live outside the city died of higher probability of cancer of eggs, Dr. Jordan suspected a belated diagnosis and the lack of access to the best treatment centers as possible factors.
+
+bpe2bpe:
+Although the study did not investigate why outside the city women died with a higher probability of ovarian cancer, Dr. Jordan assumed a delayed diagnosis and lack of access to the best treatment centers as possible factors for doing so.
+
+
+line id: 120 (Friday reordering, nice reordering of entire phrases)
+
+src:
+Die Ankläger legten am Freitag dem Büro des Staatsanwaltes von Mallorca Beweise für Erpressungen durch Polizisten und Angestellte der Stadt Calvià vor.
+
+ref:
+The claimants presented proof of extortion by policemen and Calvià Town Hall civil servants at Mallorca's public prosecutor's office on Friday.
+
+bpe2tree:
+On Friday, the prosecutor presented evidence of blackmail by police and employees of the city of Calvià to the office of the Public Prosecutor of Mallorca.
+
+bpe2bpe:
+The prosecutors filed evidence Friday of the attorney's office of Mallorca evidence of extortion by police officers and employees of the town of Calvià.
+
+
+line id: 122 (very large phrase reordering)
+
+src:
+Hauptkommissar José Antonio Navarro wurde nach Korruptionsvorwürfen gegen ihn von mehreren Geschäftsleuten aus Punta Ballena, der Straße, in der die meisten Bars und Nachtclubs von Magaluf liegen, in Untersuchungshaft genommen.
+
+ref:
+Chief Inspector José Antonio Navarro has been remanded in custody following corruption claims made against him by several businessmen from Punta Ballena, the street where most of Magaluf's bars and nightclubs are located.
+
+bpe2tree:
+After corruption charges against him by several businessmen from Punta Ballena, the street where most of the bars and night clubs of Magaluf lie in custody, the main Commissioner, José Antonio Navarro, was taken into custody detention.
+
+bpe2bpe:
+Chief Commissioner José Antonio Navarro has been remanded in custody after allegations of corruption against him by several businessmen from Punta Ballena, the road where most of the bars and nightclubs of Magaluf lie.
+
+
+
+line id: 129 (phrase reordering)
+
+src:
+Magaluf machte in diesem Sommer aufgrund eines viralen YouTube-Videos internationale Schlagzeilen, in dem ein 18jähriger britischer Tourist gezeigt wurde, der an 24 Männern während einer Sauftour Fellatio vollzog.
+
+ref:
+Magaluf made international headlines this summer as a result of a viral YouTube video which showed an 18-year-old British holidaymaker performing fellatio on 24 men during a pub crawl.
+
+bpe2tree:
+In this summer due to a viral YouTube video, Magaluf released international headlines in which an 18-year-old British tourist was shown to live in 24 men during a walk Fellatio.
+
+bpe2bpe:
+Magaluf made international headlines this summer because of a viral YouTube video, in which an 18th-century British tourist showed up to 24 men during a sacking Fellatio.
+
+
+
+line id: 147 (more reordering - in shortest time)
+
+src:
+Aber dahinter steckt eine Überlegung: Wenn das Kabel nicht wäre, würden in kürzester Zeit sämtliche Hörer herrenlos im Haus herumfliegen, und das wäre noch bedeutend mehr retro.
+
+ref:
+But it started me thinking: If the cable was not there, all the handsets would be lying scattered around the house in no time at all - and that would be even more retro.
+
+bpe2tree:
+But there is a thought behind it: If the cable would not be, it would be possible to fly all the listeners in the house in the shortest possible time, and that would be a lot more than that.
+
+bpe2bpe:
+But there is one reasoning behind this: If the cable was not, in the shortest time, all the listeners would be able to fly around the house and that would be much more retro.
+
+
+line id: 149 (better translation with reordering- tommorow-today)
+
+src:
+Nein, Tippfehler: elektronischen) Sektor die Regel, dass die Weltneuheit von heute der Elektroschrott von morgen ist, gekauft - veraltet.
+
+ref:
+No - a typing error - electronics) sector, the basic rule is that the latest wonder of today is electronic rubbish tomorrow - once bought, it's out of date.
+
+bpe2tree:
+No, typos: Electronic -RRB- sector is the rule that the novelty of today is the electric scrap of tomorrow - bought - outdated.
+
+bpe2bpe:
+No, typos: Electronic) is the rule that the world's novelty of tomorrow's electric waste is bought - outdated.
+
+
+
+line id: 153 (more reordering - the press office promises us vs.  promises us the press office.)
+
+src:
+Der Laie, der früher Waschmaschine und CD-Spieler blind beherrschte, begreift heute nicht einmal den Zweck der Geräte, die mit unfassbar eitlem Expertensprech vor ihm ausgebreitet werden: "Connected Home, Wearables, Health Care und Urban Technologies" verspricht uns die Pressestelle.
+
+ref:
+The layman, who once knew, blind, how to operate a washing machine and a CD-Player, is today faced with highfalutin expert talk about an array of gadgets, the purpose of which he doesn't even understand. "Connected Home, Wearables, Health Care and Urban Technologies," are what the press office promise us.
+
+bpe2tree:
+The avalanche that once blindly dominated washing machines and CD players nowadays does not even understand the purpose of the devices that will spread to him with untouchable expertise in front of him: "Connected Home, Wearables, Health Care and Urban Technologies" the press office promises us.
+
+bpe2bpe:
+The Laie, who has previously been blind to washing machines and CD players, does not even understand the purpose of the devices that are spread with unfathomable expert talk in front of him: "Connected Home, Wearables, Health Care and Urban Technologies" promises us the press office.
+
+
+
+line id: 199 (reordering - after...)
+
+src:
+Im Dezember 2013 reichte der Bundesrat nach langer Vorbereitung einen neuen Antrag in Karlsruhe ein.
+
+ref:
+In December 2013 the Bundesrat submitted a further banning action to the constitutional court, which is based in Karlsruhe, after spending a long time preparing the case.
+
+bpe2tree:
+In December 2013, the Federal Council submitted a new application in Karlsruhe after a long period of preparation.
+
+bpe2bpe:
+In December 2013, after long preparations, a new application was submitted in Karlsruhe.
+
+
+
+line id: 227 (better reordering - It was not)
+
+src:
+Von einer neun Meter breiten Straße war und ist nicht die Rede.
+
+ref:
+It was not - and will not be - a matter of a nine metre-wide road.
+
+bpe2tree:
+It was not part of a nine-metre road and did not speak.
+
+bpe2bpe:
+Of a nine metre long road, and is not the talk.
+
+
+line id: 246 (more reordering - not an easy to decide vs. the decision hasn't been easy)
+
+src:
+Die Entscheidung ist mir nicht leicht gefallen, sie ist über mehrere Monate gereift.
+
+ref:
+"It was not an easy decision to make, but I've been thinking about it for months.
+
+bpe2tree:
+It is not easy for me to decide, it is over several months.
+
+bpe2bpe:
+The decision hasn't been easy for me, it has matured over several months.
+
+
+
