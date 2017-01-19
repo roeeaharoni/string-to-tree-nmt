@@ -21,5 +21,11 @@ $mosesdecoder/scripts/tokenizer/detokenizer.perl -l $lng | \
 
 # fix quotation marks
 sed 's/``/"/g' | \
-sed 's/ '\'''\''/" /g'
+sed 's/ '\'''\''/" /g' | \
 
+# fix braces
+sed 's/-LRB- /(/g' | \
+sed 's/ -RRB-/)/g' | \
+
+# fix @/@
+sed 's/ @\/@ /\//g'
