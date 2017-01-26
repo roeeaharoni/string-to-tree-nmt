@@ -17,7 +17,7 @@ sed 's/\@\@ //g' | \
 $mosesdecoder/scripts/recaser/detruecase.perl | \
 
 # detokenize
-$mosesdecoder/scripts/tokenizer/detokenizer.perl -l $lng | \
+$mosesdecoder/scripts/tokenizer/detokenizer.perl -l $lng -penn | \
 
 # fix quotation marks
 sed 's/``/"/g' | \
