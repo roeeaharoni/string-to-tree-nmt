@@ -1,5 +1,6 @@
+import random
+
 import numpy
-import matplotlib.pyplot as plt
 import sys
 import os
 import json
@@ -9,7 +10,19 @@ import codecs
 from collections import defaultdict
 from collections import Counter
 from operator import itemgetter
+
+import matplotlib.pyplot as plt
 from matplotlib import gridspec
+
+from matplotlib.offsetbox import (TextArea, DrawingArea, OffsetImage,
+                                  AnnotationBbox)
+from matplotlib.cbook import get_sample_data
+
+import pydot
+
+import plotly
+
+import yoav_trees
 
 
 
@@ -25,11 +38,12 @@ from matplotlib import gridspec
 
 # http://stackoverflow.com/questions/14391959/heatmap-in-matplotlib-with-pcolor
 def plot_heat_map(attn_mtx, target_labels, source_labels, attn_mtx2=None, target_labels2=None, source_labels2=None,
-                  id=None):
+                  id=None, file=None, image=None):
+    plt.ioff()
 
     stripped_attn_mtx, stripped_target_labels = strip_tree(attn_mtx, target_labels)
 
-    if stripped_attn_mtx == None:
+    if attn_mtx2 == None:
         fig, ax = plt.subplots()
     else:
         gs = gridspec.GridSpec(2, 2)
@@ -89,41 +103,76 @@ def plot_heat_map(attn_mtx, target_labels, source_labels, attn_mtx2=None, target
 
         plt.xticks(rotation=45)
 
-    plt.show()
+    if file != None:
+        plt.savefig(file)
+        plt.close()
 
-    if attn_mtx2 is not None:
-        fig = plt.figure(figsize=(20, 10))
-        score = get_diagonal_subsequent_reordering_score(attn_mtx, source_labels, target_labels)
-        # ax3 = plt.subplot(224)
-        ax3 = fig.add_subplot(gs[:, :])
-        ax3.text(float(len(source_labels)) / 2, len(target_labels) + 1, 'bpe2bpe:{}'.format(score))
-        heatmap = ax3.pcolor(attn_mtx, cmap=plt.cm.Blues)
+        # plt.show()
+    else:
+        plt.show()
 
-        # put the major ticks at the middle of each cell
-        ax3.set_xticks(numpy.arange(attn_mtx.shape[1]) + 0.5, minor=False)
-        ax3.set_yticks(numpy.arange(attn_mtx.shape[0]) + 0.5, minor=False)
 
-        # without this I get some extra columns rows
-        # http://stackoverflow.com/questions/31601351/why-does-this-matplotlib-heatmap-have-an-extra-blank-column
-        ax3.set_xlim(0, int(attn_mtx.shape[1]))
-        ax3.set_ylim(0, int(attn_mtx.shape[0]))
+    # show first figure again separately
+    if attn_mtx2 is not None or image != None:
+        gs = gridspec.GridSpec(2, 2)
+        if image != None:
+            # fig = plt.figure(figsize=(20, 10))
+            # ax3 = fig.add_subplot(gs[:, :])
+            fig, ax3 = plt.subplots()
 
-        # want a more natural, table-like display
-        ax3.invert_yaxis()
-        ax3.xaxis.tick_top()
+            fn = get_sample_data(image, asfileobj=False)
+            arr_img = plt.imread(fn, format='png')
 
-        # source words -> column labels
-        ax3.set_xticklabels(source_labels, minor=False)
-        # target words -> row labels
-        ax3.set_yticklabels(target_labels, minor=False)
+            imagebox = OffsetImage(arr_img, zoom=0.6)
+            imagebox.image.axes = ax
 
-        plt.xticks(rotation=45)
+            xy = (0.5, 0.5)
+            ab = AnnotationBbox(imagebox, xy,
+                                xybox=(0, 0),
+                                xycoords='data',
+                                boxcoords="offset points",
+                                # pad=0.5
+                                )
 
-    # plt.tight_layout()
-    # if id and id > 1213:
-    #     print 'saved {} to file'.format(id)
-    #     plt.savefig('./plots/{}.png'.format(id-1))
-    plt.show()
+            ax3.add_artist(ab)
+            plt.close()
+
+        else:
+            fig = plt.figure(figsize=(20, 10))
+            score = get_diagonal_subsequent_reordering_score(attn_mtx, source_labels, target_labels)
+            # ax3 = plt.subplot(224)
+            ax3 = fig.add_subplot(gs[:, :])
+            ax3.text(float(len(source_labels)) / 2, len(target_labels) + 1, 'bpe2bpe:{}'.format(score))
+            heatmap = ax3.pcolor(attn_mtx, cmap=plt.cm.Blues)
+
+            # put the major ticks at the middle of each cell
+            ax3.set_xticks(numpy.arange(attn_mtx.shape[1]) + 0.5, minor=False)
+            ax3.set_yticks(numpy.arange(attn_mtx.shape[0]) + 0.5, minor=False)
+
+            # without this I get some extra columns rows
+            # http://stackoverflow.com/questions/31601351/why-does-this-matplotlib-heatmap-have-an-extra-blank-column
+            ax3.set_xlim(0, int(attn_mtx.shape[1]))
+            ax3.set_ylim(0, int(attn_mtx.shape[0]))
+
+            # want a more natural, table-like display
+            ax3.invert_yaxis()
+            ax3.xaxis.tick_top()
+
+            # source words -> column labels
+            ax3.set_xticklabels(source_labels, minor=False)
+            # target words -> row labels
+            ax3.set_yticklabels(target_labels, minor=False)
+
+            plt.xticks(rotation=45)
+
+            # plt.show()
+            plt.close()
+
+        # plt.tight_layout()
+        # if id and id > 1213:
+        #     print 'saved {} to file'.format(id)
+
+
     return
 
 
@@ -431,7 +480,7 @@ def compare_sentence_level_bleu():
     # large positive diffs = bpe is better
     out_format = u'id: {}\n\ndiff: {}\n\nsrc:\n{}\nref:\n{}\nstripped tree ({}):\n{}\ntree:\n{}\nbpe ({}):\n{} \n\n'
 
-    comparison_path = 'comparison.txt'
+    comparison_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/comparison.txt'
     with codecs.open(comparison_path, 'w', 'utf-8') as comparison_file:
         for i, d in enumerate(diffs):
             output = out_format.format(i,
@@ -475,14 +524,176 @@ def compare_sentence_level_bleu():
     #     print output
 
 
+def rec_get_subtree_indices(tree, initial_index):
+    leaves = tree.leaves()
+    index = initial_index
+    child_spans = []
+
+    if tree.children is None:
+        return []
+        # return [(initial_index, initial_index)]
+
+    if tree.children is not None:
+        for c in tree.children:
+            child_spans += rec_get_subtree_indices(c, index)
+            if c.leaves() is not None:
+                index += len(c.leaves())
+            else:
+                index += 1
+
+    return [(tree, initial_index, initial_index + len(leaves) - 1)] + child_spans
+
+
+
+def align_subtrees_to_spans(tree_target_labels):
+    parseable = []
+    for t in tree_target_labels:
+        if ')' in t:
+            parseable.append(')')
+        else:
+            parseable.append(t)
+    tree_string = ' '.join(parseable)
+    try:
+        tree = yoav_trees.Tree('TOP').from_sexpr(tree_string)
+        subtree_indices = rec_get_subtree_indices(tree, 0)
+    except Exception as e:
+        print 'invalid tree'
+        return []
+
+
+
+    # for st in subtree_indices:
+    #     print u'({},{}) {}'.format(st[1], st[2], st[0])
+
+    # print tree
+
+    # leaves = tree.leaves()
+    # for i in xrange(len(leaves)):
+    #     print i, ' ', leaves[i]
+
+    return subtree_indices
+
+
+def get_subtrees_with_reordering(file1):
+
+    count = 0
+    subtrees_with_reordering_scores = []
+    # go through tree attn matrices
+    while (file1):
+        count += 1
+        print count
+        sid, mma, linearized_tree, source_labels = read_alignment_matrix(file1)
+        if not linearized_tree:
+            break
+
+        no_tree_matrix, no_tree_target_labels = strip_tree(mma, linearized_tree)
+
+        subtrees = align_subtrees_to_spans(linearized_tree)
+
+        tree_distortion_scores = []
+        for sub in subtrees:
+            subtree = sub[0]
+            start_row_index = sub[1]
+            end_row_index = sub[2]
+            if start_row_index < end_row_index:
+                subtree_matrix = no_tree_matrix[start_row_index:end_row_index+1,:]
+                subtree_target_labels = no_tree_target_labels[start_row_index:end_row_index+1]
+                subtree_distortion_score = get_diagonal_subsequent_reordering_score(subtree_matrix,
+                                                                                    source_labels,
+                                                                                    subtree_target_labels)
+                tree_distortion_scores.append((subtree_distortion_score, subtree, start_row_index, end_row_index))
+                plot_tree_with_alignments(subtree, subtree_matrix, source_labels, subtree_target_labels)
+                # plot_heat_map(subtree_matrix, subtree_target_labels, source_labels)
+            # else:
+            #     print 'leaf'
+
+            subtrees_with_reordering_scores += tree_distortion_scores
+
+        line = file1.readline()
+        if not line:
+            break
+
+    return subtrees_with_reordering_scores
+    # in each tree
+
+    #   for each span (subtree)
+
+    #       measure reordering amount
+    #       return span, reordering amount
+
+    # create bins of reordering amount by span type 1-level - VP/NP/PP...
+
+    # create bins of reordering amount by span type 2-level - X -> Y Z
+
+    # create bins of reordering amount by tree depth
+
+
+    # what do we want to see (collins 2005):
+
+        # 1 Verb Initial - lots of reordering in VPs - verb (head) will move to the beginning of VP
+
+        # 2 Verb 2nd - reordering in general clauses (S's) - head will move to be after the complementizer ('that ...' etc.)
+
+        # 3 Move Subject - reoredering in S's - move subject to precede the head (verb)
+
+        # 4 Particles - reordering in VP's (or any clause) - move verb particle (on, off, up) to be before the verb
+
+        # 5 Infinitives - move infinite verbs *directly* after finite verbs - can't submit, will look into
+
+        # 6 Negation - could hand it in not -> could not hand it in
+
+    return
+
+
+def populate_pydot_graph(tree, graph, parentnode):
+    # node = pydot.Node(tree.label, style="filled", fillcolor="white", color="white")
+    # graph.add_node(node)
+
+    if tree.children != None:
+        for child in tree.children:
+            r = random.randint(0, 999999)
+            label = child.label
+            label = label.replace(',','COMMA')
+            if child.children == None:
+                fcolor = "navy"
+            else:
+                fcolor= "black"
+            child_node = pydot.Node(label + str(r),label=label, style="filled", fillcolor="white",
+                                    color="white",
+                                    fontcolor=fcolor)
+            graph.add_node(child_node)
+            graph.add_edge(pydot.Edge(parentnode, child_node))
+            graph = populate_pydot_graph(child, graph, child_node)
+
+    return graph
+
+
+def plot_tree_with_alignments(tree, alignments_mtx, input_labels, output_labels):
+    graph = pydot.Dot(graph_type='graph')
+    rootnode = pydot.Node(tree.label,label=tree.label, style="filled", fillcolor="white", color="white")
+    graph = populate_pydot_graph(tree, graph, rootnode)
+
+    try:
+        graph.write_png('tree.png')
+    except Exception as e:
+        print e
+
+    plot_heat_map(alignments_mtx, output_labels, input_labels, file='alignments.png', image='/Users/roeeaharoni/git/research/nmt/src/tree.png')
+    return
+
+
 def main(file1, file2):
     # compare_sentence_level_bleu()
 
-    inspect_alignment_matrices(file1, file2)
+    # inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
     # cnt2 = sorted(cnt2.items(), key=itemgetter(0))
+
+
+    subtrees = get_subtrees_with_reordering(file1)
+    sorted_subtrees = sorted(subtrees, key=itemgetter(0), reverse=True)
 
     return
 
