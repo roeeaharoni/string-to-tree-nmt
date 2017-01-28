@@ -12,7 +12,7 @@ def main():
 
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
 
-    dev_target = base_path + '/git/research/nmt/models/de_en_bpe/newstest2015-deen-ref.tok.true.de.bpe.output.dev'
+    dev_target = base_path + '/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev'
 
     alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/dev_alignments.txt'
 
