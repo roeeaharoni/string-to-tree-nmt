@@ -1090,3 +1090,227 @@ tree:
 
 bpe (BLEU = 0.00, 41.7/18.2/0.0/0.0 (BP=0.659, ratio=0.706, hyp_len=12, ref_len=17)):
 Domestic car owners may not be charged, however, under the Coalition Agreement.
+
+
+
+id: 1146 (better translation)
+
+diff: 28.05
+
+src:
+Mit die größte Schwierigkeit war der Perspektivwechsel von der Position eines Arztes zu der eines Patienten.
+
+ref:
+One of the hardest things was moving from the position of doctor to that of patient.
+
+stripped tree (BLEU = 28.05, 63.2/33.3/23.5/12.5 (BP=1.000, ratio=1.188, hyp_len=19, ref_len=16)):
+The greatest difficulty was the change of perspective from the position of a doctor to that of a patient.
+
+tree:
+(TOP (S (NP the greatest difficulty )NP (VP was (NP (NP the change )NP (PP of (NP perspective )NP )PP (PP (PP from (NP (NP the position )NP (PP of (NP a doctor )NP )PP )NP )PP (PP to (NP (NP that )NP (PP of (NP a patient )NP )PP )NP )PP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 50.0/5.9/0.0/0.0 (BP=1.000, ratio=1.125, hyp_len=18, ref_len=16)):
+With the greatest difficulty, the change of perspective was from a doctor's position on that of a patient.
+
+
+id: 223 (more reordering - in the middle of june)
+
+diff: 25.46
+
+src:
+So sei die Familie Medau bereits "Mitte Juni mündlich über das Ansinnen der Hochschule informiert worden.
+
+ref:
+He said that the Medau family "were informed about the plans of the college in the middle of June.
+
+stripped tree (BLEU = 25.46, 70.6/50.0/26.7/7.1 (BP=0.889, ratio=0.895, hyp_len=17, ref_len=19)):
+In the middle of June, the Medau family was verbally informed about the request of the university.
+
+tree:
+(TOP (S (PP in (NP (NP the middle )NP (PP of (NP June )NP )PP )NP )PP , (NP the Med@@ au family )NP (VP was (ADVP verb@@ ally )ADVP (VP informed (PP about (NP (NP the request )NP (PP of (NP the university )NP )PP )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 50.0/28.6/10.0/0.0 (BP=1.000, ratio=1.158, hyp_len=22, ref_len=19)):
+As a result, the Medau family had already been informed "in the middle of June orally about the idea of the university.
+
+
+
+id: 1669 (better syntax - which was served)
+
+diff: 25.43
+
+src:
+Daraufhin stieß der Funktionär aus Guangzhou mit Schäfer-Gümbel an - allerdings mit Rotwein, der zu dem Essen serviert wurde.
+
+ref:
+After that, the official from Guangzhou clicked glasses with Schäfer-Gümbel - albeit with red wine, which was served with dinner.
+
+stripped tree (BLEU = 25.43, 42.1/27.8/23.5/18.8 (BP=0.949, ratio=0.950, hyp_len=19, ref_len=20)):
+As a result, Guangzhou, which operated with Schäfer Gümbel, joined it with red wine, which was served to dinner.
+
+tree:
+(TOP (S (PP as (NP a result )NP )PP , (NP (NP Guangzhou )NP , (SBAR (WHNP which )WHNP (S (VP operated (PP with (NP Schä@@ fer Gü@@ mb@@ el )NP )PP )VP )S )SBAR , )NP (VP joined (NP it )NP (PP with (NP (NP red wine )NP , (SBAR (WHNP which )WHNP (S (VP was (VP served (PP to (NP dinner )NP )PP )VP )VP )S )SBAR )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 42.1/16.7/5.9/0.0 (BP=0.949, ratio=0.950, hyp_len=19, ref_len=20)):
+As a result, the official from Guangzhou, with shepherd Gümbel, met - but with red wine served to eat.
+
+
+id: 419 (more reordering - continue to occur)
+
+diff: 22.96
+
+src:
+Im Umland kommt es immer wieder zu blutigen Kämpfen mit der jemenitischen Armee.
+
+ref:
+In the surrounding areas of the town, bloody clashes with the Yemeni army have continued unabated.
+
+stripped tree (BLEU = 22.96, 61.5/41.7/27.3/10.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+In the surrounding area, bloody battles with the Yemeni army continue to occur.
+
+tree:
+(TOP (S (PP in (NP the surrounding area )NP )PP , (NP (NP bloody battles )NP (PP with (NP the Y@@ emen@@ i army )NP )PP )NP (VP continue (S (VP to (VP occur )VP )VP )S )VP . )S )TOP
+
+bpe (BLEU = 0.00, 53.8/33.3/18.2/0.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+In the surrounding area, there is always bloody fighting with the Yemeni army.
+
+
+
+
+id: 1448 (better reordering - more local)
+
+diff: 21.6
+
+src:
+Der Schützenverein "Tannenwald" Berngau feiert von 12. bis 14. September sein 50-jähriges Gründungsfest.
+
+ref:
+The gun club "Tannenwald" in Berngau is celebrating its 50th anniversary from 12th to 14th September.
+
+stripped tree (BLEU = 41.81, 84.6/50.0/45.5/40.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+The "Tannenwald" Berngau is celebrating its 50th anniversary from 12 to 14 September.
+
+tree:
+(TOP (S (NP the `` Tann@@ en@@ wald &apos;&apos; Bern@@ gau )NP (VP is (VP celebrating (NP its 50th anniversary )NP (PP from (NP (QP 12 to 14 )QP September )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 20.21, 69.2/33.3/18.2/10.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+From 12th to 14th September, the "Tannenwald" Berngau Festival celebrates its 50th anniversary.
+
+
+id: 251 (better translation)
+
+diff: 20.74
+
+src:
+Seine Ideen und Ansätze haben mich genauso begeistert, wie sie auch meine langjährigen Mitspieler und meine Nachfolger begeistern werden.
+
+ref:
+His ideas and approach to the game have always inspired me, as I am sure they will also inspire my long-term teammates and my successors, too.
+
+stripped tree (BLEU = 20.74, 54.5/33.3/20.0/10.5 (BP=0.834, ratio=0.846, hyp_len=22, ref_len=26)):
+His ideas and approaches have impressed me just as much, as they will also inspire my long-time fellow players and my successors.
+
+tree:
+(TOP (S (NP his ideas and approaches )NP (VP have (VP impressed (NP me )NP (ADVP just as much )ADVP , (SBAR as (S (NP they )NP (VP will (ADVP also )ADVP (VP inspire (NP (NP my long-time fellow players )NP and (NP my successors )NP )NP )VP )VP )S )SBAR )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 55.0/26.3/5.6/0.0 (BP=0.741, ratio=0.769, hyp_len=20, ref_len=26)):
+His ideas and ideas have been as enthusiastic about me as they will inspire my longtime players and my successors.
+
+
+id: 846 (better reordering - grateful...)
+
+diff: 20.71
+
+src:
+Sie war Cherie Blair und ihrer Stiftung dankbar für den Preis und die Möglichkeit, im Herbst 2004 nach London zu reisen.
+
+ref:
+She was grateful to 'Cherie Blair and her foundation for that award and the opportunity to go to London in autumn 2004.
+
+stripped tree (BLEU = 40.00, 70.8/52.2/36.4/19.0 (BP=1.000, ratio=1.091, hyp_len=24, ref_len=22)):
+She was grateful to Cherie Blair and her foundation for the prize and the opportunity to travel to London in the fall of 2004.
+
+tree:
+(TOP (S (NP she )NP (VP was (ADJP grateful (PP to (NP (NP Cher@@ ie Blair )NP and (NP her foundation )NP )NP )PP (PP for (NP (NP the prize )NP and (NP the opportunity (S (VP to (VP travel (PP to (NP London )NP )PP (PP in (NP (NP the fall )NP (PP of (NP 2004 )NP )PP )NP )PP )VP )VP )S )NP )NP )PP )ADJP )VP . )S )TOP
+
+bpe (BLEU = 19.29, 60.9/31.8/14.3/5.0 (BP=1.000, ratio=1.045, hyp_len=23, ref_len=22)):
+She was Cherie Blair and her foundation thankful for the prize and the ability to travel to London in the fall of 2004.
+
+
+id: 1262 (more reordering - UK...)
+
+diff: 20.69
+
+src:
+Ein Berufungsgericht bestätigt die erste erfolgreiche Personenschadensersatzklage in Großbritannien wegen Kontakts mit Asbest.
+
+ref:
+Court of Appeal confirms the first successful personal injury claim in Britain as a result of asbestos exposure.
+
+stripped tree (BLEU = 35.27, 63.2/44.4/29.4/18.8 (BP=1.000, ratio=1.056, hyp_len=19, ref_len=18)):
+A court of appeal confirms the UK's first successful appeal against asbestos as a result of contacts with asbestos.
+
+tree:
+(TOP (S (NP (NP a court )NP (PP of (NP appeal )NP )PP )NP (VP confirms (NP (NP (NP the UK &apos;s )NP first successful appeal )NP (PP against (NP asbestos )NP )PP )NP (PP as (NP (NP a result )NP (PP of (NP (NP contacts )NP (PP with (NP asbestos )NP )PP )NP )PP )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 14.58, 36.8/16.7/11.8/6.2 (BP=1.000, ratio=1.056, hyp_len=19, ref_len=18)):
+An appeals court confirms the first successful strike at personnel in the United Kingdom because of contact with asbestos.
+
+
+id: 872
+
+diff: 20.15
+
+src:
+Der Junge, dessen schreckliches Bild nach der Belagerung zum Symbol der Greuel von Beslan wurde
+
+ref:
+The boy whose shocking image after the siege came to define the horror of Beslan
+
+stripped tree (BLEU = 20.15, 56.2/26.7/14.3/7.7 (BP=1.000, ratio=1.067, hyp_len=16, ref_len=15)):
+The Young, whose terrible image after the siege became the symbol of the atrocities of Beslan
+
+tree:
+(TOP (NP (NP the Young )NP , (SBAR (WHNP (WHNP whose terrible image )WHNP (PP after (NP the siege )NP )PP )WHNP (S (VP became (NP (NP the symbol )NP (PP of (NP (NP the atrocities )NP (PP of (NP Beslan )NP )PP )NP )PP )NP )VP )S )SBAR )NP )TOP
+
+bpe (BLEU = 0.00, 68.8/33.3/14.3/0.0 (BP=1.000, ratio=1.067, hyp_len=16, ref_len=15)):
+The boy whose terrible image was revealed after the siege to symbolize the Greuel of Beslan
+
+
+id: 277 (different reordering - on sunday)
+
+diff: 20.05
+
+src:
+Die Burgmannstadt Horstmar erlebte am Sonntag eine Invasion niederländischer "Fietzenfahrer".
+
+ref:
+The city of Horstmar experienced an invasion of Dutch "Fietzen riders" on Sunday.
+
+stripped tree (BLEU = 50.09, 69.2/50.0/45.5/40.0 (BP=1.000, ratio=1.000, hyp_len=13, ref_len=13)):
+On Sunday, the Burgmannstadt town of Horstmar experienced an invasion of Dutch "Fietzenriders."
+
+tree:
+(TOP (S (PP on (NP Sunday )NP )PP , (NP (NP the Burg@@ mann@@ stadt town )NP (PP of (NP Hor@@ st@@ mar )NP )PP )NP (VP experienced (NP (NP an invasion )NP (PP of (NP Dutch `` Fi@@ etz@@ en@@ riders . )NP )PP )NP )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 30.04, 75.0/45.5/30.0/11.1 (BP=0.920, ratio=0.923, hyp_len=12, ref_len=13)):
+The Burgmannstadt Horstmar witnessed an invasion of Dutch "Fiber riders" on Sunday.
+
+
+id: 1398 (more reordering - explained)
+
+diff: 19.21
+
+src:
+Das Gebäude habe wahrscheinlich zu einer Villa Rustica, einem landwirtschaftlichen Gut, gehört, erläuterte die Archäologin Dr. Jennifer Morscheiser.
+
+ref:
+The building probably belonged to a Villa Rustica, an agricultural manor, archaeologist Dr. Jennifer Morscheiser explained.
+
+stripped tree (BLEU = 76.25, 88.2/81.2/73.3/64.3 (BP=1.000, ratio=1.062, hyp_len=17, ref_len=16)):
+The building probably belonged to a Villa Rustica, an agricultural commodity, the archaeologist Dr. Jennifer Morscheiser explained.
+
+tree:
+(TOP (S (S (NP the building )NP (ADVP probably )ADVP (VP belonged (PP to (NP (NP a Villa Rus@@ tica )NP , (NP an agricultural commodity )NP )NP )PP )VP )S , (NP the archae@@ ologist Dr. Jennifer Mor@@ schei@@ ser )NP (VP explained )VP . )S )TOP
+
+bpe (BLEU = 57.04, 70.6/56.2/53.3/50.0 (BP=1.000, ratio=1.062, hyp_len=17, ref_len=16)):
+The building probably belonged to a Villa Rustica, an agricultural commodity, explained the archaeologist Dr Jennifer Morscheiser.
