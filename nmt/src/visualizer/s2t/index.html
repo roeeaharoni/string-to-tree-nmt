@@ -1,0 +1,71 @@
+<html>
+<meta charset="utf-8">
+<title>Alignment Tree Viewer</title>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="parser.js"></script>
+<script src="d3Tree.minimal.js"></script>
+<script src="data.js"></script>
+<script type="text/javascript">
+function onSub() {
+	var textArea = document.getElementById("text");
+	textArea.style.color = "black";
+	var data = textArea.value;
+    var only_lex = document.getElementById("only-lex-checkbox").checked;
+	nodes = d3TreeAlign(TREES[+data],SOURCES[+data],ALIGNS[+data],BPES[+data],SBPES[+data],BPE_ALIGN[+data], only_lex)
+	return false;
+}
+function advance(i) {
+	var textArea = document.getElementById("text");
+	var data = textArea.value;
+    textArea.value = +(textArea.value) +i;
+    return onSub();
+}
+
+window.onload = function() {
+	var textArea = document.getElementById("text");
+	textArea.onfocus = function() {
+		textArea.style.color = "black";
+		if (textArea.value == "Enter your tree here...")
+			textArea.value = "1";
+	};
+	textArea.onblur = function() {
+		if (textArea.value == "") {
+			textArea.style.color = "grey";
+			textArea.value = "Enter your tree here...";
+		}
+	}
+    onSub();
+}
+</script>
+<link rel="stylesheet" type="text/css" href="tree-viewer.css">
+<!-- General stylesheet -->
+<link rel="stylesheet" media="all" href="../style.css" />
+<link rel="stylesheet" media="only screen and (max-width: 800px)" href="../mobile.style.css" />
+<body>
+<div class="wrapper">
+	<div id="info">
+		<h3>Alignment Tree Viewer</h3>
+	</div>
+	<div style="text-align: center;">
+    <div id="tree-container"></div>
+	<div id="input-text">
+		<!--Initialise the default text with grey -->
+		<textarea id="text" rows="1" style="color: grey;">1</textarea>
+	</div>
+	<div id="input-submit">
+			<input type="submit" id="next-button" value="Prev" onclick="return advance(-1);" />
+			<input type="submit" id="submit-button" value="View Tree" onclick="return onSub();" />
+			<input type="submit" id="next-button" value="Next" onclick="return advance(1);" />
+            Only Lex: <input type="checkbox" id="only-lex-checkbox" value="Only Lex" checked />
+	</div>
+	</div>
+	<!-- Fork me on GitHub button -->
+    <!--
+	<a href="https://github.com/christos-c/tree-viewer">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
+	</a>
+    -->
+</div>
+</body>
+</html>
