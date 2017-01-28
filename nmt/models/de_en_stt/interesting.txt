@@ -134,7 +134,7 @@ If all the other doctors in the state are forced to do no more abortions, this d
 
 
 
-line id: 73 (outside the city women vs. women who live outside the city)
+line id: 73 (more reordering - outside the city women vs. women who live outside the city)
 
 src:
 Obwohl die Studie nicht untersuchte, warum außerhalb der Stadt lebende Frauen mit höherer Wahrscheinlichkeit an Eierstockkrebs starben, vermutet Dr. Jordan eine verspätete Diagnose und den mangelnden Zugang zu den besten Behandlungszentren als mögliche Faktoren dafür.
@@ -274,7 +274,7 @@ bpe2bpe:
 Of a nine metre long road, and is not the talk.
 
 
-line id: 246 (more reordering - not an easy to decide vs. the decision hasn't been easy)
+line id: 246 (more reordering - not easy to take the decision vs. the decision hasn't been easy)
 
 src:
 Die Entscheidung ist mir nicht leicht gefallen, sie ist über mehrere Monate gereift.
@@ -283,10 +283,810 @@ ref:
 "It was not an easy decision to make, but I've been thinking about it for months.
 
 bpe2tree:
-It is not easy for me to decide, it is over several months.
+It is not easy for me to take the decision; it has been aged over several months.
 
 bpe2bpe:
 The decision hasn't been easy for me, it has matured over several months.
 
 
 
+line id: 242 (more reordering - the town had no vs. not possible from the town)
+
+src:
+Von Seiten der Stadt wollte man sich bisher nicht zu dem Vorhaben äußern.
+
+ref:
+Meanwhile, the town council refused to comment.
+
+bpe2tree:
+In the past, the town had no intention of expressing itself on the project.
+
+bpe2bpe:
+It was not possible to comment on the project from the point of view of the city.
+
+
+
+line id: 260 (more reordering - wear complaints vs. complaints of wear)
+
+src:
+Hierzu kommen einige andere verschleißbedingte Beschwerden.
+
+ref:
+I've also got some other minor issues related - wear and tear.
+
+bpe2tree:
+To achieve this, there are some other complaints of wear.
+
+bpe2bpe:
+In this connection, a number of other wearable complaints come about.
+
+
+
+line id: 271 (two reorderings vs. 1: april->domestic->fell->0.2 vs. domestic->fell->0.2->april)
+
+src:
+Das Bruttoinlandsprodukt sank von April bis Ende Juni 2014 im Vergleich zum Vorquartal um 0,2 Prozent.
+
+ref:
+The Gross Domestic Product sank from April to the end of June 2014 by 0.2 percent in comparison with the previous quarter.
+
+bpe2tree:
+From April to the end of June 2014, gross domestic product fell by 0.2% compared with the previous quarter.
+
+bpe2bpe:
+Gross domestic product fell 0.2 per cent from April to the end of June 2014 compared to the previous quarter.
+
+
+
+line id: 43 (better translation, polarity)
+
+src:
+Diejenigen, die die Arbeit angreifen, vergessen diese einfachen Wahrheiten, aber die Geschichte bewahrt sie.
+
+ref:
+Those who attack labor forget these simple truths, but history remembers them.
+
+bpe2tree:
+Those who attack the work forget these simple truths, but history preserves them.
+
+bpe2bpe:
+Those who attack the work don't forget those simple truths, but the story preserves them.
+
+
+
+line id: 1 (exaggerated reordering)
+
+src:
+Indiens neuer Premierminister Narendra Modi trifft bei seinem ersten wichtigen Auslandsbesuch seit seinem Wahlsieg im Mai seinen japanischen Amtskollegen Shinzo Abe in Toko, um wirtschaftliche und sicherheitspolitische Beziehungen zu besprechen.
+
+ref:
+India's new prime minister, Narendra Modi, is meeting his Japanese counterpart, Shinzo Abe, in Tokyo to discuss economic and security ties, on his first major foreign visit since winning May's election.
+
+bpe2tree:
+India's new Prime Minister, Narendra Modi, hits Shinzo Abe's Japanese counterpart Shinzo in Toko since his election victory in May to discuss economic and security relations.
+
+bpe2bpe:
+India's new prime minister, Narendra Modi, is taking his Japanese counterpart Shinzo Abe in Toko to discuss economic and security relations during his first major foreign visit since his victory in May.
+
+
+
+line id: 7 (more reordering - petrol->bathdate->125 vs. 125->gas station->bathdate)
+
+src:
+Verkehrspolizisten in Karratha versuchten heute morgen, ein blaues Motorrad zu stoppen, nachdem sie es dabei beobachtet hatten, wie es mit 125 km/h eine Tankstelle auf der Bathdate Road verließ.
+
+ref:
+Traffic police on patrol in Karratha this morning tried to pull over a blue motorcycle when they spotted it reaching 125km/h as it pulled out of a service station on Bathgate Road.
+
+bpe2tree:
+Traffic police in Karratha tried this morning to stop a blue motorcycle after they watched it as it left a petrol station on the Bathdate Road with 125 km @/@ h.
+
+bpe2bpe:
+Traffic police in Karratha were trying this morning to stop a blue motorbike after they watched it, as it left 125 mph at a gas station on the Bathdate Road.
+
+
+
+line id: 9 (more reordering - description of the driver vs. the drivers description)
+
+src:
+Das Motorrad sowie eine Person, die der Beschreibung des Fahrers entsprach wurden später bei einem Haus im Walcott Way in Bulgarra gesehen.
+
+ref:
+The motorcycle and a person matching the description of the rider was then spotted at a house on Walcott Way in Bulgarra.
+
+bpe2tree:
+The motorcycle and a person who corresponded to the description of the driver were seen later in a house in the Walcott Way in Bulgarra.
+
+bpe2bpe:
+The motorcycle as well as a person who described the driver's description were seen later at a house in the Walcott Way in Bulgarra.
+
+
+
+line id: 37 (more reordering - should be protected)
+
+src:
+Als dieses Land anderen Ländern dabei beriet, wie man zivile und demokratische Gesellschaften formen könne, erklärten Amerikaner, dass das Recht auf die Gründung einer Gewerkschaft - und darauf, dass diese Gewerkschaft dann an Kollektivverhandlungen als gleichwertiger Partner mit Unternehmen und Regierungsstellen teilnehmen dürfe - geschützt werden müsse.
+
+ref:
+When this country counseled other countries on how to forge civil and democratic societies, Americans explained that the right to organize a trade union - and to have that trade union engage in collective bargaining as an equal partner with corporations and government agencies - had to be protected.
+
+bpe2tree:
+When this country taught other countries how to shape civil and democratic societies, Americans said that the right to establish a union should be protected and that these unions should participate in collective bargaining as an equal partner with companies and government agencies.
+
+bpe2bpe:
+As this country berated other countries into how to shape civil and democratic societies, Americans declared that the right to the establishment of a union - and that this union should then participate in collective bargaining as an equal partner with businesses and government bodies - must be protected.
+
+
+
+line id: 48 (more reordering - on sunday, better translation)
+
+src:
+Ein US-Bundesrichter stoppte am Sonntag vorläufig die Umsetzung eines Gesetzes in Louisiana, von dem Anwälte sagen, dass es vermutlich zur Schließung aller fünf Abtreibungskliniken des Staates geführt hätte.
+
+ref:
+A U.S. federal judge on Sunday temporarily blocked enforcement of a Louisiana law that advocates say would likely have closed all five abortion clinics in the state.
+
+bpe2tree:
+On Sunday, on Sunday, a US regulator stopped the implementation of a law in Louisiana, where lawyers said that it would probably have led to the closure of all of the state's five abortion clinics.
+
+bpe2bpe:
+A U.S. federal judge temporarily halted the implementation of a law in Louisiana on Sunday, telling lawyers that it was likely to lead to closure of all of the state's five abortion clinics.
+
+
+
+line id: 1011 (better translation)
+
+src:
+Lawson wusste, dass den Ärzten die Diagnosen und Krankheiten wichtig sind, während die Behandelten überwiegend mit etwas ganz anderem beschäftigt sind: Schmerz.
+
+ref:
+Lawson understood that while doctors are captivated by diagnoses and diseases, those being treated are overwhelmingly concerned with something else entirely: pain.
+
+bpe2tree:
+Lawson knew that diagnoses and diseases are important to doctors, while the treated mainly deals with something quite different: Pain.
+
+bpe2bpe:
+Lawson knew that doctors are important to diagnoses and disease, while the treats are predominantly engaged with something quite another: Pain.
+
+
+
+line id: 1043 (better translation)
+
+src:
+Auch in den Krankenhäusern, in denen wir doch gesund werden sollen, sind schon als Ausgangsherde dieses tödlichen Karzinogens ausgemacht worden.
+
+ref:
+Even the hospitals that are meant to make us better have been reservoirs of this deadly carcinogen.
+
+bpe2tree:
+The hospitals in which we are supposed to be healthy have already been identified as the source of this deadly carcinogens.
+
+bpe2bpe:
+Even in the hospitals in which we are to be healthy, we have already been identified as the starting point for this deadly carcinogens.
+
+
+
+line id: 1076 (more reordering)
+
+src:
+Es ist weniger tödlich als andere Asbestformen, wird jedoch dennoch von der EU und der WHO als "großes Gesundheitsrisiko" mit möglicher Todesfolge angesehen.
+
+ref:
+It is less lethal than other forms of asbestos, but it's still considered a "major health hazard" that can kill by the EU and WHO.
+
+bpe2tree:
+It is less fatal than other forms of asbestos, but it is regarded as a "major health risk" by the EU and by the WHO, with possible death order.
+
+bpe2bpe:
+It is less lethal than other forms of asbestos, but it is nonetheless viewed by the EU and the WHO as "major health risk" with possible death row.
+
+
+line id: 1131 (more reordering)
+
+src:
+Asbest wurde aufgrund seiner fabelhaften isolierenden und flammhemmenden Eigenschaften häufig in Büros, Geschäften, Bibliotheken und Stadthallen verwendet.
+
+ref:
+Asbestos was frequently used in offices, shops, libraries and town halls for its marvellous insulating and flame-retarding properties.
+
+bpe2tree:
+Asbestos has often been used in offices, shops, libraries and cities because of its fabulous isolation and flame retardant properties.
+
+bpe2bpe:
+Because of its fabulous isolation and flame retardant properties, asbestos was often used in offices, shops, libraries and townspeople.
+
+
+line id: 1331 (better reordering - says)
+
+src:
+Während weiße Frauen nun die Themen Rasse und Geschlecht in den feministischen Mainstreamkreisen verbinden, sagt Angela Hattery, Professorin für Frauen und Geschlechterforschung an der George Mason University, dass ihre Vorgängerinnen das Gegenteil taten.
+
+ref:
+While white women are now combining issues of race and gender in mainstream feminist spheres, Angela Hattery, women and gender studies professor at George Mason University, says their predecessors did the opposite.
+
+bpe2tree:
+While white women are now combining race and sex in feminist mainstream circles, Angela Hattery, professor of women and gender at George Mason University, says that its predecessors did the opposite.
+
+bpe2bpe:
+While white women now combine the themes of race and gender in the feminist mainstream, says Angela Hattery, a professor of women and gender research at George Mason University that her predecessors did the opposite.
+
+
+line id: 1435 (more reordering- threatening)
+
+src:
+Zugleich droht der stark von internationalen Firmen abhängigen Region ein Imageschaden - mit weit reichenden Folgen.
+
+ref:
+At the same time, the image of the region, which is heavily reliant on international companies, is under threat, and this has far-reaching consequences.
+
+bpe2tree:
+At the same time, the region, which is heavily dependent on international firms, is threatening an image of images - with far-reaching consequences.
+
+bpe2bpe:
+At the same time, the region's heavily dependent region threatens an image of the image - with far-reaching consequences.
+
+
+
+line id: 1551 (both repeated "as a result")
+
+src:
+Die NATO wird durch die geplanten Stationierungen in Osteuropa infolge der Ukraine-Krise nicht ihre Vereinbarung mit Russland brechen.
+
+ref:
+NATO will not break their agreements with Russian as a result of their planned deployment to East Europe in response to the Ukrainian crisis.
+
+bpe2tree:
+NATO will not break with Russia as a result of the planned deployment in Eastern Europe as a result of the Ukraine crisis.
+
+bpe2bpe:
+NATO is not going to break its agreement with Russia as a result of the planned stationing in eastern Europe as a result of the Ukraine crisis.
+
+
+
+line id: 1569 (better translation, reordering)
+
+src:
+Ein Freibrief für alle komplizierten Details ist es aber nicht.
+
+ref:
+However, there is still no charter explaining all the complex details.
+
+bpe2tree:
+But it is not a carte blanche for all the complicated details.
+
+bpe2bpe:
+However, a carte blanche for all the complicated details is not.
+
+
+
+line id: 1580 (better translation, reordering)
+
+src:
+CSU-Chef Horst Seehofer warnte daraufhin davor, im Kabinett Mautkonzepte gegen den federführenden Minister zu entwickeln.
+
+ref:
+As a result, the leader of the CSU, Horst Seehofer, warned about developing toll concepts in the cabinet against the Minister in charge.
+
+bpe2tree:
+As a result, Horst Seehofer, head of the CSU, warned against developing toll concepts against the relevant minister in the Cabinet.
+
+bpe2bpe:
+In the cabinet, Horst Seehofer warned that in the cabinet, toll concepts should be developed against the leading minister.
+
+
+
+line id: 1586 (more reordering, better translation)
+
+src:
+Seehofer hatte wegen der Mautkritik aus Reihen der CDU Koalitionstreue verlangt.
+
+ref:
+Seehofer has demanded loyalty to the coalition following criticism of the tolls from members of the CDU.
+
+bpe2tree:
+As a result of toll criticism from the ranks of the CDU coalition, Seehofer had called for coalitions to be made.
+
+bpe2bpe:
+Seehofer had asked for tolls from rows from the CDU coalition.
+
+
+
+line id: 1599 (better translation)
+
+src:
+Erkrankte leiden auch an Taubheitsgefühlen oder Schmerzen. Die Krankheit ist unheilbar und fortschreitend, was bedeutet, dass die Symptome mit der Zeit schlimmer werden.
+
+ref:
+Sufferers can also experience numbness or pain and the condition is incurable and progressive, meaning symptoms get worse over time.
+
+bpe2tree:
+Disease is also affected by deafness and pain; the disease is incurable and progressive, meaning that the symptoms are getting worse over time.
+
+bpe2bpe:
+The disease is incurable and progressive, which means that the symptoms are worse.
+
+
+
+line id: 1663 (better translation)
+
+src:
+Immer wieder kam der Funktionär der regierenden Kommunistischen Partei Chinas im Laufe des Gesprächs auf dieses Anliegen der Zwölf-Millionen-Metropole zurück.
+
+ref:
+Time and time again throughout the conversation, the official of the ruling communist party in China came back to this wish of the twelve million people metropolis.
+
+bpe2tree:
+Time and again, the functional-level of the ruling Communist Party in China came back in the course of the call to this concern of the twelve-million metropolis.
+
+bpe2bpe:
+Time and again, China's ruling Communist Party came back to this concern of the twelve-million metropolis.
+
+
+line id: 1664 (better translation)
+
+src:
+Guangzhou, das in Deutschland auch Kanton genannt wird, sei eine der reichsten Städte Chinas, warb Li.
+
+ref:
+Guangzhou, which is also known as Canton in Germany, is one of the richest cities in China Li advertised.
+
+bpe2tree:
+Guangzhou, which is also known as the canton in Germany, is one of the richest cities in China.
+
+bpe2bpe:
+Guangzhou, also known in Germany, is one of China's richest cities, waiting Li.
+
+
+
+line id: 1686 (more reordering - xi jianping)
+
+src:
+Das Vorgehen gegen die Funktionäre aus Guangzhou ist Teil einer landesweiten Kampagne gegen die Korruption in Partei und Verwaltung, die von Staatschef Xi Jinping mit Härte durchgesetzt wird.
+
+ref:
+The action taken against the officials from Guangzhou is part of the nationwide campaign against corruption in parties and the administration, which was rigorously implemented by the head of state, Xi Jinping.
+
+bpe2tree:
+The action against Guangzhou officials is part of a nationwide campaign against the corruption in party and administration that Xi Jinping, Head of State, is imposing.
+
+bpe2bpe:
+The action against officials from Guangzhou is part of a nationwide campaign against corruption in party and administration backed by force by leader Xi Jinping.
+
+
+
+line id: 1702 (more reordering)
+
+src:
+Für Autos und Staubsauger, die ab heute in den Handel kommen, gelten künftig strengere Umweltstandards.
+
+ref:
+Strict environmental standards for the future shall apply to all cars and vacuum cleaners that go on sale as of today.
+
+bpe2tree:
+In future, stricter environmental standards will apply to cars and vacuum cleaners who are trading today.
+
+bpe2bpe:
+For cars and vacuum cleaners that are now in trade, stricter environmental standards will apply in the future.
+
+
+
+line id: 1752 (more reordering)
+
+src:
+Deshalb stehe einer Wiederholung der großen Party im kommenden Jahr nichts entgegen.
+
+ref:
+As such, nothing is going to stop them from repeating the big party next year.
+
+bpe2tree:
+This is why there is nothing like a repeat of the big party next year.
+
+bpe2bpe:
+That is why a repeat of the big party will be nothing against the coming year.
+
+
+
+line id: 1801 (more reordering- deals)
+
+src:
+Ausgesprochen unterschiedlich schienen bisher die Standpunkte, wie mit der Geschichte der Wolfratshauser Burg und einem möglichen Wiederaufbau umgegangen werden soll.
+
+ref:
+Their points of view are now markedly different with regard to how the history of Wolfratshausen castle and the possible reconstruction of it should be handled.
+
+bpe2tree:
+So far, positions have been very different, as is the way to deal with the history of the Wolfratshauser Castle and a possible reconstruction.
+
+bpe2bpe:
+There has been a lot of different views as to how the history of the Wolfratsher castle and possible reconstruction are to be dealt with.
+
+
+
+line id: 1811 (more reordering)
+
+src:
+Momentan zählt der Verein laut dem 74-Jährigen rund 40 Mitglieder.
+
+ref:
+At the moment, the club has around 40 members according to the 74 year old.
+
+bpe2tree:
+According to the 74-year-old association, the association is currently part of more than 40 members.
+
+bpe2bpe:
+At present, the club counts about 40 members, according to the 74-year-old.
+
+
+
+
+line id: 1818 (more reordering)
+
+src:
+Der Tölzer wolle an dem Projekt "aber sehr gerne weiter mitarbeiten".
+
+ref:
+The man from Tölz would, however, "like to continue working with them" on the project.
+
+bpe2tree:
+As part of the project, Tölzer wanted to continue working on the project.
+
+bpe2bpe:
+The Tölzer wanted to continue with the project "but very happy to continue working."
+
+
+
+line id: 1882 (more reordering - hollywood)
+
+src:
+Im Gegensatz zu den derzeit schwachen Kassenergebnissen der Hollywoodproduktionen erzielte Netflix in jüngster Zeit Umsätze mit den Streaming-Inhalten in Höhe von 1,2 Milliarden Dollar, fast doppelt so viel wie im vergangenen Jahr, in dem der Umsatz 837 Millionen Dollar betrug.
+
+ref:
+In contrast to Hollywood's current box office slump, Netflix recently saw revenue from its streaming content service reach $1.2bn, almost doubling last year's figure of $837m.
+
+bpe2tree:
+In contrast to Hollywood's currently weak performance in cash flow, Netflix has recently generated revenues of $1.2 billion, almost as much as last year, when sales accounted for $837 million.
+
+bpe2bpe:
+Unlike the currently weak cash returns of the Hollywood productions, Netflix recently posted sales with the streaming content of $1.2 billion, almost twice as much as last year, in which sales were $837 million.
+
+
+
+line id: 1885 (more reordering - summer)
+
+src:
+Aufgrund der im Sommer 2015 zu erwartenden potentiellen Kassenschlager, darunter Avengers: Age of Ultron, Minions und Jurassic World sind andere Vertreter der Filmindustrie jedoch optimistischer:
+
+ref:
+With summer 2015 set to usher in a slate of potential big box office hits, including Avengers: Age of Ultron, Minions and Jurassic World, other figures within the film industry are feeling more optimistic.
+
+bpe2tree:
+According to Age of Ultron, Minions and Jurassic World in summer 2015, other representatives of the film industry are more optimistic:
+
+bpe2bpe:
+In the summer of 2015, including Avengers: Age of Ultron, Minions, and Jurassic World, other representatives of the film industry are more optimistic:
+
+
+
+line id: 1894 (more reordering - geismar)
+
+src:
+Bei den Damen spielt der TTV Geismar in der Verbandsliga, die Torpedo-Zweite in der Landesliga.
+
+ref:
+For the women, TTV Geismar does play in the Verbandsliga, and the Torpedo's second team plays in the Landesliga.
+
+bpe2tree:
+TTV Geismar is a member of the Association for Women, Torpedo-Second in the National League.
+
+bpe2bpe:
+At the ladies, the TTV Geismar plays in the league table, the goal-line second in the National League.
+
+
+
+line id: 1899 (more reordering)
+
+src:
+In der Bezirksliga starten laufen Torpedo III und Sattenhausen/Wöllmarshausen auf.
+
+ref:
+In the regional league, Torpedo III and Sattenhausen/Wöllmarshausen are taking to the field.
+
+bpe2tree:
+Torpedo III and Sattenhausen/Wöllgraben run up in the district league.
+
+bpe2bpe:
+In the league table run Torpedo III and Sattenhausen/WöllMarschausen.
+
+
+
+line id: 1953 (more reordering, better translation)
+
+src:
+Als Schrammel am 13. Novmember 2010 zum bisher letzten Mal in einer Bundesligapartie getroffen hatte, war das noch für Ried.
+
+ref:
+13th of November 2010 was, until now, the last time that Schrammel had scored in a team from the Bundesliga, and that was with Ried.
+
+bpe2tree:
+When Schrammel met in a Bundesligapartie on 13 November 2010, that was still for Ried.
+
+bpe2bpe:
+As a scrum on Nov. 13 Nov. 13, 2010, to the last time in a federal ballpark, it was still for Ried.
+
+
+
+line id: 1955 (more reoredring)
+
+src:
+"Für mich ist das etwas ganz besonderes, ich bin ja aus dem Rapid-Nachwuchs", sagte Schrammel.
+
+ref:
+"That is something quite special for me, I am Rapid offspring", Schrammel said.
+
+bpe2tree:
+"For me this is something very special," said Mr Schrammel, who is in favour of me.
+
+bpe2bpe:
+"For me this is something very special, I'm from the rapid-offspring," Schrammel said.
+
+
+
+line id: 1962 (more reordering - stadium season)
+
+src:
+Barisic befand sogar, dass man "in vielen Spielen zuvor besser als heute" gewesen sei - gegen "die stärkste Mannschaft, die in dieser Saison in diesem Stadion gespielt hat".
+
+ref:
+Barisic even decided that the team had previously played "better in other games than today", and against "the strongest team to play in the stadium this season".
+
+bpe2tree:
+Barisic even found `in many games better than today '- against "the strongest team played in this stadium in this season."
+
+bpe2bpe:
+Barisic even found that "in many games before, you've been better than today" - against "the strongest team to have played this season in this stadium."
+
+
+
+line id: 1975 (better translation)
+
+src:
+Er mahnte freilich zu konzentriertem Weiterarbeiten: "Man darf das nicht immer schwarz und weiß sehen.
+
+ref:
+Of course, he spoke about focused and continued work: "You don't have to always see things black and white.
+
+bpe2tree:
+He warned, of course, that there is a need for concentration: `You must not always see that in black and white.
+
+bpe2bpe:
+But he warned about focusing further: "You cannot always see black and white.
+
+
+
+line id: 1998 (reoredring - meadows)
+
+src:
+Demnach sollen bis vor etwa 80 Jahren die Ziegenhirten ihre Tiere von Unterweißenbrunn aus auf die mühselig gerodeten und von Steinen befreiten Wiesen getrieben haben.
+
+ref:
+According to his research, up to around 80 years ago, the goat herders are said to have led their animals out of Unterweissenbrunn along the arduous, cleared and stoneless meadows.
+
+bpe2tree:
+Thus, until about 80 years ago, those who were living in the goat should have driven their animals from Unterweißenbrunn to the meadows which were laborious and freed from stones.
+
+bpe2bpe:
+As a result, up to 80 years ago, the goalkeepers were forced to take their animals from Unterweißenbrunn into the labyrinthine and uncontaminated meadows.
+
+
+
+
+line id: 2002 (more reordering - be careful)
+
+src:
+Beim Betreten der Steinansammlungen sollte man aber Vorsicht walten lassen, denn der von der Sonne aufgewärmte Basalt ist auch für Kreuzottern ein beliebter Aufenthaltsort.
+
+ref:
+One should exercise caution when treading over the mass of stone because the sun-warmed basalt is also a popular whereabouts for the European viper.
+
+bpe2tree:
+However, you should be careful when entering the stone collections, as the basalt heated by the sun is also a popular location for those who are tempted by the sun.
+
+bpe2bpe:
+When entering the buildings, you should be careful, because the basalt crushed by the sun is also a favourite place for cruises.
+
+
+
+
+line id: 2018 (more reordering - president)
+
+src:
+Gegenüber den konservativen Vertretern mit Kommissionspräsident Jean-Claude Juncker und dem als Ratspräsidenten nominierten Polen Donald Tusk werde, so die vorherrschende Meinung in Rom, damit ein politischer Ausgleich hergestellt.
+
+ref:
+In opposition to the conservative representatives, Commission President Jean-Claude Juncker and the Pole Donald Tusk, who was named as Council President, were voted in, so the prevailing opinion in Rome, in order to achieve a political balance.
+
+bpe2tree:
+Compared with the conservative representatives with the President of the Commission and with the Poland of Donald Tusk who were nominated as President of the Council, the prevailing opinion in Rome has resulted in a political balance.
+
+bpe2bpe:
+Against the Conservative representatives with Commission President Jean-Claude Juncker and the former President of the Council, Donald Tusk, the prevailing opinion in Rome will make political balance possible.
+
+
+
+line id: 2031 (better translation more reordering)
+
+src:
+Den Vorhaltungen in Brüssel, die neue EU-Außenbeauftragte habe zu wenig diplomatische Erfahrung, fehle es also an Substanz, wird in der PD gekontert.
+
+ref:
+The claims in Brussels that the new EU-Foreign Minister has too little diplomatic experience and therefore lacks clout, is rebutted by the PD.
+
+bpe2tree:
+Recruitment in Brussels, which has too little diplomatic experience in Brussels, which is something it lacks in substance, is being worked out in the PD.
+
+bpe2bpe:
+In Brussels, the new EU foreign envoy has too little diplomatic experience, so in the case of substance, there is a lack of substance.
+
+
+
+line id: 2090 (more reordering)
+
+src:
+Großbritannien sah bis zur Endphase der 150-jährigen Kolonialregierung in Hongkong keinerlei demokratische Elemente vor.
+
+ref:
+Britain made no mention of democracy for Hong Kong until the dying days of about 150 years of colonial rule.
+
+bpe2tree:
+Britain had no democratic elements until the final phase of the 150-year-old colonial government in Hong Kong.
+
+bpe2bpe:
+Until the end of the 150th century in Hong Kong, Britain did not foresee any democratic elements.
+
+
+
+line id: 2105 (more reordering)
+
+src:
+Die vor fünf Monaten annektierte Halbinsel im Schwarzen Meer ist der Heimathafen für den Großteil der russischen Marine sowie ein wichtiger Handelshafen und historische Küstenregion.
+
+ref:
+The Black Sea peninsula annexed five months ago is home to Russia's main naval fleet as well as commercial maritime facilities and historic coastal resorts.
+
+bpe2tree:
+The peninsula in the Black Sea, which was annexed five months ago, is the home port for most of the Russian navy, as well as an important commercial port and a historic coastal region.
+
+bpe2bpe:
+The peninsula, which was annexed five months ago in the Black Sea, is the home port for most of the Russian navy, as well as a major commercial port and historical coastal region.
+
+
+line id: 2107 (more reordering - in his speech)
+
+src:
+Der ukrainische Präsident Petro Poroshenko schlug bei seiner Rede zur Amtseinführung am 7. Juni vor, dass die ukrainische Gesetzgebung - nach Neuwahlen - Zusätze zur Verfassung bedenken solle, mit denen den jeweiligen Gebieten eine größere Kontrolle über ihre Finanzen und den Status der Sprachen eingeräumt wird.
+
+ref:
+Ukrainian President Petro Poroshenko proposed during his inauguration speech on June 7 that Ukrainian lawmakers - after new elections -- weigh constitutional amendments to give more control to the disparate regions over their finances and the status of languages.
+
+bpe2tree:
+In his speech at his inauguration on 7 June, Ukraine's President Petro Poroshenko suggested that Ukrainian legislation - following new elections - should take account of the Constitution, in which greater control over its finances and the status of languages is given to the relevant areas.
+
+bpe2bpe:
+The Ukrainian President, Petro Poroshenko, in his speech on the inauguration of the inauguration on 7 June, suggested that Ukraine's legislation - after new elections - should reflect amendments to the Constitution, which will grant greater control over their own finances and the status of languages in each area.
+
+
+line id: 2148 (more reordering - after 45)
+
+src:
+Der ganz in Rot auftretende Grünen-Politiker aus dem Kreistag - rotes Dress, rotes Bike - machte am Start noch etwas auf Understatement ("Jede Menge Profis, da ist Ankommen das Ziel!"), erwies sich dann aber am Berg doch als halber Profi und ging nach 45 Minuten ohne Atemnot durchs Ziel.
+
+ref:
+The Green Politician, wearing all red, from the municipal council - red clothes, red bike - looked to be taking it gently ("Quit some professionals here, so it's all about finishing!") - and then looked almost like a pro himself as he arrived at the end 45 minutes later without pausing for breath.
+
+bpe2tree:
+The green man in red - red dress in red - started at the start of something at the start ("Every amount of professional, there is the goal!), but after 45 minutes without breath, it proved to be at the top of the mountain and went to the finish after 45 minutes.
+
+bpe2bpe:
+The whole thing in red - red dress, red bike - made the start yet something on understatement ("Every crowd of professionals, there's been an end to the goal!"), but turned out to be half a professional and went after 45 minutes without any breathing problems.
+
+
+
+id: 261 (better translation - I was able to control my head)
+
+diff: 20.52
+
+src:
+Schon am Anfang des Jahres habe ich gemerkt, dass ich zwar meinen Kopf steuern, aber meinen Körper nicht täuschen kann", erklärte Glandorf im Interview dem Magazin "Handball Time".
+
+ref:
+At the beginning of the year I realized that I was able to control my head, but I couldn`t play tricks with my body," he explained in an interview with German magazine Handball Time.
+
+stripped tree (BLEU = 37.01, 60.6/40.6/32.3/26.7 (BP=0.970, ratio=0.971, hyp_len=33, ref_len=34)):
+Even at the beginning of the year, I noticed that I was able to control my head, but my body is unable to deceive," Glandorf explained in the interview the magazine "Handball Time.''
+
+tree:
+(TOP (S (PP (ADVP even )ADVP at (NP (NP the beginning )NP (PP of (NP the year )NP )PP )NP )PP , (S (NP I )NP (VP noticed (SBAR that (S (NP I )NP (VP was (ADJP able (S (VP to (VP control (NP my head )NP )VP )VP )S )ADJP )VP )S )SBAR )VP )S , but (S (NP my body )NP (VP is (ADJP unable (S (VP to (VP deceive )VP )VP )S )ADJP )VP )S , &apos;&apos; (NP G@@ land@@ orf )NP (VP explained (PP in (NP the interview )NP )PP (NP the magazine `` Hand@@ ball Time . )NP )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 16.49, 51.7/25.0/14.8/7.7 (BP=0.842, ratio=0.853, hyp_len=29, ref_len=34)):
+Even at the beginning of the year, I noticed that while I'm steering my head, but my body can't fool," Glandorf explained in the interview the magazine "Handball Time."
+
+
+id: 1771 (better translation - try to get on their feet)
+
+diff: 7.03
+
+src:
+Ich finde es sehr gut, dass manche nicht nur dumm quatschen, sondern auch wirklich versuchen etwas auf die Beine zu stellen.
+
+ref:
+I think it is really good that some people are not just standing around talking rubbish, but are actually making a real effort to get something up and running.
+
+stripped tree (BLEU = 30.90, 60.0/41.7/30.4/22.7 (BP=0.852, ratio=0.862, hyp_len=25, ref_len=29)):
+I think it is very good that some people are not just being foolish, but also that they really try to get on their feet.
+
+tree:
+(TOP (S (NP I )NP (VP think (SBAR (S (NP it )NP (VP is (ADJP very good )ADJP (SBAR (SBAR that (S (NP some people )NP (VP are not (ADVP just )ADVP (VP being (ADJP foolish )ADJP )VP )VP )S )SBAR , (CONJP but also )CONJP (SBAR that (S (NP they )NP (ADVP really )ADVP (VP try (S (VP to (VP get (PP on (NP their feet )NP )PP )VP )VP )S )VP )S )SBAR )SBAR )VP )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 23.87, 60.9/31.8/23.8/20.0 (BP=0.770, ratio=0.793, hyp_len=23, ref_len=29)):
+I find it very good that some people are not just stupid, but we are actually trying to do something about their legs.
+
+
+
+id: 1227 (better reordering)
+
+diff: 37.68
+
+src:
+Jetzt ist keine Spur der Tumore mehr sichtbar.
+
+ref:
+Now there is no sign of the tumours.
+
+stripped tree (BLEU = 37.68, 71.4/50.0/40.0/25.0 (BP=0.867, ratio=0.875, hyp_len=7, ref_len=8)):
+Now there is no trace of tumors.
+
+tree:
+(TOP (S (ADVP now )ADVP (NP there )NP (VP is (NP (NP no trace )NP (PP of (NP tum@@ ors )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 55.6/12.5/0.0/0.0 (BP=1.000, ratio=1.125, hyp_len=9, ref_len=8)):
+Now no trace of the tumors is more visible.
+
+
+id: 237 (more reordering - last week)
+
+diff: 32.38
+
+src:
+Peer Medau hatte vergangene Woche die Eltern der Kinderkrippe über die Pläne der Hochschule informiert.
+
+ref:
+Peer Medau informed the parents of the children's nursery about the plans, last week.
+
+stripped tree (BLEU = 32.38, 66.7/42.9/23.1/16.7 (BP=1.000, ratio=1.071, hyp_len=15, ref_len=14)):
+Peer Medau had informed the parents of the kindergarten last week about the College's plans.
+
+tree:
+(TOP (S (NP peer Med@@ au )NP (VP had (VP informed (NP (NP the parents )NP (PP of (NP the kindergarten )NP )PP )NP (NP last week )NP (PP about (NP (NP the College &apos;s )NP plans )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 66.7/27.3/0.0/0.0 (BP=0.846, ratio=0.857, hyp_len=12, ref_len=14)):
+
+
+
+id: 1590 (much more reordering - according to...)
+
+diff: 28.99
+
+src:
+Inländische Autobesitzer dürfen laut Koalitionsvertrag aber nicht zusätzlich belastet werden.
+
+ref:
+According to the coalition agreement, car owners in German must not, however, have to face additional charges.
+
+stripped tree (BLEU = 28.99, 68.8/40.0/21.4/15.4 (BP=0.939, ratio=0.941, hyp_len=16, ref_len=17)):
+However, according to the Coalition Agreement, domestic car owners must not be burdened with additional charges.
+
+tree:
+(TOP (S (ADVP however )ADVP , (PP according (PP to (NP the Coalition Agreement )NP )PP )PP , (NP domestic car owners )NP (VP must not (VP be (VP burdened (PP with (NP additional charges )NP )PP )VP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 41.7/18.2/0.0/0.0 (BP=0.659, ratio=0.706, hyp_len=12, ref_len=17)):
+Domestic car owners may not be charged, however, under the Coalition Agreement.
