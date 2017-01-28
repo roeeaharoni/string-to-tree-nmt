@@ -52,7 +52,7 @@ def toTree(lst):
         else: v.sid=i
     return t
 
-data = list(read("dev_alignments.txt.best.txt"))
+data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt/dev_alignments.txt.best"))
 sources = [x[0] for x in data]
 targets = [x[1] for x in data]
 trees = [toTree(x) for x in targets]
@@ -72,11 +72,14 @@ for s,t,a in zip(sources,targets,alignments):
             if tw[0] == ")": typ = "close"
             aligns.append({'sid':si,'tid':ti,'a':a_s_t,'type':typ})
 
-print "TREES = [ %s ]" % ",".join(js.dumps(toJson(x)) for x in trees[:500])
-print "SOURCES = [ %s ]" % ",".join("%s" % x for x in sources[:500])
-print "ALIGNS = %s" % (js.dumps(all_alignments[:500]),)
+max_amount = 1800
+# max_amount = len(trees)
 
-data_bpe = list(read("research/nmt/models/de_en_wmt16/dev_alignments.txt",read_trees=False))
+print "TREES = [ %s ]" % ",".join(js.dumps(toJson(x)) for x in trees[:max_amount])
+print "SOURCES = [ %s ]" % ",".join("%s" % x for x in sources[:max_amount])
+print "ALIGNS = %s" % (js.dumps(all_alignments[:max_amount]),)
+
+data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_wmt16/dev_alignments.txt",read_trees=False))
 sources_bpe = [x[0] for x in data_bpe]
 targets_bpe = [x[1] for x in data_bpe]
 alignments_bpe = [x[2] for x in data_bpe]
@@ -94,6 +97,6 @@ for s0,t,a in zip(sources_bpe,targets_bpe,alignments_bpe):
             typ = "lex"
             aligns.append({'sid':si,'tid':ti,'a':a_s_t,'type':typ})
 
-print "SBPES = %s" % (js.dumps(sources_bpe[:500]))
-print "BPES = %s" % (js.dumps(targets_bpe[:500]))
-print "BPE_ALIGN = %s" % (js.dumps(all_alignments_bpe[:500]))
+print "SBPES = %s" % (js.dumps(sources_bpe[:max_amount]))
+print "BPES = %s" % (js.dumps(targets_bpe[:max_amount]))
+print "BPE_ALIGN = %s" % (js.dumps(all_alignments_bpe[:max_amount]))
