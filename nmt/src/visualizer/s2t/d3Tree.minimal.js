@@ -278,9 +278,12 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
         console.log(sentData)
     var maxNodeX = Math.max(...nodes.map(d=>d.x))
     var positions = x_position_sent_words(baseSvg, sentData)
-    var sentNodes = sentData.map((w,i)=>{return { text:w, x:positions[i].s, y:res.h+40, m:positions[i].m }})
+//    var sentNodes = sentData.map((w,i)=>{return { text:w, x:positions[i].s, y:res.h+40, m:positions[i].m }})
+    var sentNodes = bpeSourceData.map((w,i)=>{return { text:w, x:positions[i].s, y:res.h+50, m:positions[i].m }})
     var last_node_x = sentNodes[sentNodes.length-1].x
     var offset = (maxNodeX - last_node_x) / 2
+
+    // add tree source nodes
     baseSvg.append("g").selectAll("text").data(sentNodes).enter().append("text")
         .text(d => d.text)
         .attr("x", d => d.x + offset)
@@ -299,6 +302,8 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
         "open":d3.scale.linear().domain([0.0,1.0]).range(["white","red"]),
         "close":d3.scale.linear().domain([0.0,1.0]).range(["white","green"]),
     }
+
+    // add tree alignments
     baseSvg.append("g").selectAll("line").data(alignData).enter().append("line")
         .attr("x1",d=>id2nodes[+d.tid].x)
         //.attr("y1",d=>id2nodes[+d.tid].y)
@@ -309,14 +314,16 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
 
     // The BPE
     var positions = x_position_sent_words(baseSvg, bpeSourceData)
-    var sentNodes = bpeSourceData.map((w,i)=>{return { text:w, x:positions[i].s, y:res.h+60, m:positions[i].m }})
-    var last_node_x = sentNodes[sentNodes.length-1].x
-    var offset = (maxNodeX - last_node_x) / 2
-    baseSvg.append("g").selectAll("text").data(sentNodes).enter().append("text")
-        .text(d => d.text)
-        .attr("x", d => d.x + offset)
-        .attr("y", d => d.y+10)
-        .attr('class', 'node')
+    //    var sentNodes = bpeSourceData.map((w,i)=>{return { text:w, x:positions[i].s, y:res.h+60, m:positions[i].m }})
+    //    var last_node_x = sentNodes[sentNodes.length-1].x
+    //    var offset = (maxNodeX - last_node_x) / 2
+
+    // add BPE source nodes
+    //    baseSvg.append("g").selectAll("text").data(sentNodes).enter().append("text")
+    //        .text(d => d.text)
+    //        .attr("x", d => d.x + offset)
+    //        .attr("y", d => d.y+10)
+    //        .attr('class', 'node')
 
     d3.select('g').attr("transform", "translate(0,20)");
     var maxNodeX = Math.max(...nodes.map(d=>d.x))
@@ -324,6 +331,8 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     var bpeNodes = bpeData.map((w,i)=>{return { text:w, x:bpe_positions[i].s, y:res.h+130, m:bpe_positions[i].m }})
     var last_node_x = bpeNodes[bpeNodes.length-1].x
     var offset2 = (maxNodeX - last_node_x) / 2
+
+    // add BPE target nodes
     baseSvg.append("g").selectAll("text").data(bpeNodes).enter().append("text")
         .text(d => d.text)
         .attr("x", d => d.x + offset2)
@@ -334,6 +343,8 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     bpeAlignData = bpeAlignData.filter(d=>d.type=="lex")
     bpeAlignData = bpeAlignData.filter(d=>d.a>0.2)
     console.log("bpeNodes",bpeNodes.length)
+
+    // add BPE alignments
     baseSvg.append("g").selectAll("line").data(bpeAlignData).enter().append("line")
         .attr("x1",d=>sentNodes[+d.sid].m + offset)
         //.attr("y1",d=>id2nodes[+d.tid].y)

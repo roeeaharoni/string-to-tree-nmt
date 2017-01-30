@@ -475,15 +475,17 @@ def compare_sentence_level_bleu():
                       'tree': output_trees[i],
                       'tree_score': scores_tree[i][2],
                       'bpe': scores_bpe[i][1],
-                      'bpe_score': scores_bpe[i][2]})
+                      'bpe_score': scores_bpe[i][2],
+                      'id':i})
 
     # large positive diffs = bpe is better
     out_format = u'id: {}\n\ndiff: {}\n\nsrc:\n{}\nref:\n{}\nstripped tree ({}):\n{}\ntree:\n{}\nbpe ({}):\n{} \n\n'
 
-    comparison_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/comparison.txt'
+    comparison_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/bleu_comparison.txt'
+    diffs.sort(key=lambda x: x['diff'],reverse=True)
     with codecs.open(comparison_path, 'w', 'utf-8') as comparison_file:
         for i, d in enumerate(diffs):
-            output = out_format.format(i,
+            output = out_format.format(d['id'],
                                        d['diff'],
                                         d['src'],
                                         d['ref'],
@@ -495,7 +497,7 @@ def compare_sentence_level_bleu():
             print output
             comparison_file.write(output)
 
-    # diffs.sort(key=lambda x: x['diff'])
+
     # top = diffs[:1000]
     # bottom = diffs[-1000:]
     #
@@ -683,7 +685,7 @@ def plot_tree_with_alignments(tree, alignments_mtx, input_labels, output_labels)
 
 
 def main(file1, file2):
-    # compare_sentence_level_bleu()
+    compare_sentence_level_bleu()
 
     # inspect_alignment_matrices(file1, file2)
 
@@ -692,8 +694,8 @@ def main(file1, file2):
     # cnt2 = sorted(cnt2.items(), key=itemgetter(0))
 
 
-    subtrees = get_subtrees_with_reordering(file1)
-    sorted_subtrees = sorted(subtrees, key=itemgetter(0), reverse=True)
+    # subtrees = get_subtrees_with_reordering(file1)
+    # sorted_subtrees = sorted(subtrees, key=itemgetter(0), reverse=True)
 
     return
 
