@@ -114,12 +114,14 @@ def main():
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
     bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
+    config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
 
     os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
 
     # foreach model file
     for f in models_files:
         model_path = base_path + '/git/research/nmt/models/de_en_stt/' + f
+        os.system('cp {} {}'.format(config_path, model_path + '.json'))
         dev_target = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'.format(
             f)
         dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'.format(
@@ -136,6 +138,9 @@ def main():
         score = bleu(moses_path, ref_path, postprocessed_path)
         with codecs.open(bleu_path, 'a', 'utf-8') as bleu_file:
             bleu_file.write('{}\t{}\n'.format(f, score))
+
+        # remove config file copy
+        os.system('rm {}'.format(model_path + '.json'))
 
     return
 
