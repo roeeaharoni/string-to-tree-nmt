@@ -54,7 +54,7 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
              -i {} \
              -o {} \
              -a {} \
-             -k 12 -n -p 5 -v'.format(nematus, model_path, dev_src, dev_target, alignments_path)
+             -k 12 -n -p 8 -v'.format(nematus, model_path, dev_src, dev_target, alignments_path)
     os.system(decode_command)
     print 'finished translating {}'.format(dev_src)
 
