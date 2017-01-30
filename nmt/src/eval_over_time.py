@@ -116,7 +116,7 @@ def main():
     bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
     config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
 
-    os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
+    # os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
 
     # foreach model file
     for f in models_files:
