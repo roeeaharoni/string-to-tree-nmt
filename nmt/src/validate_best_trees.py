@@ -13,9 +13,9 @@ def main():
     dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.best'
     alignments_path = base_path + '/git/research/nmt/models/de_en_stt/best_dev_alignments.txt'
 
-    test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de'
-    test_target = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.output.trees'
-    test_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.output.sents'
+    test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
+    test_target = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.trees'
+    test_target_sents = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.sents'
     test_alignments_path = base_path + '/git/research/nmt/models/de_en_stt/best_test_alignments.txt'
 
     test = True
