@@ -748,7 +748,7 @@ def get_distortion_from_alignments_file(filepath):
 
         while (file1):
             count += 1
-            print count
+            # print count
             sid, mma, target_labels, source_labels = read_alignment_matrix(file1)
             if not target_labels:
                 break
