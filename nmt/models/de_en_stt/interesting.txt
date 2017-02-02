@@ -481,7 +481,7 @@ bpe2bpe:
 It is less lethal than other forms of asbestos, but it is nonetheless viewed by the EU and the WHO as "major health risk" with possible death row.
 
 
-line id: 1131 (more reordering)
+line id: 1131 (much more reordering - entire subtree - great example)
 
 src:
 Asbest wurde aufgrund seiner fabelhaften isolierenden und flammhemmenden Eigenschaften häufig in Büros, Geschäften, Bibliotheken und Stadthallen verwendet.
@@ -1314,3 +1314,166 @@ tree:
 
 bpe (BLEU = 57.04, 70.6/56.2/53.3/50.0 (BP=1.000, ratio=1.062, hyp_len=17, ref_len=16)):
 The building probably belonged to a Villa Rustica, an agricultural commodity, explained the archaeologist Dr Jennifer Morscheiser.
+
+
+id: 2010 (better translation - to be won this year)
+
+diff: 19.12
+
+src:
+Wie bei früheren Serien der Main-Post in vergangenen Jahren gibt es auch heuer wieder Preise zu gewinnen, wenn sie die richtige Lösung haben.
+
+ref:
+As with the other Main-Post series over the years, there are prizes to be won again this year if you guess the correct answer.
+
+stripped tree (BLEU = 19.12, 57.7/32.0/16.7/4.3 (BP=1.000, ratio=1.083, hyp_len=26, ref_len=24)):
+As with previous series of the main post in recent years, there are also prizes to be won this year if they have the right solution.
+
+tree:
+(TOP (S (PP as (PP with (NP (NP previous series )NP (PP of (NP (NP the main post )NP (PP in (NP recent years )NP )PP )NP )PP )NP )PP )PP , (NP there )NP (VP are (ADVP also )ADVP (NP (NP prizes )NP (SBAR (S (VP to (VP be (VP won (NP this year )NP (SBAR if (S (NP they )NP (VP have (NP the right solution )NP )VP )S )SBAR )VP )VP )VP )S )SBAR )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 43.5/18.2/4.8/0.0 (BP=0.957, ratio=0.958, hyp_len=23, ref_len=24)):
+As with earlier series from the Main Post in past years, there are also prizes to win when they have the right solution.
+
+
+id: 602 (more reordering - over several years)
+
+diff: 18.16
+
+src:
+Über mehrere Jahre hatte niemand in dem Haus gelebt.
+
+ref:
+No one had lived in the house for several years.
+
+stripped tree (BLEU = 71.89, 100.0/87.5/71.4/66.7 (BP=0.895, ratio=0.900, hyp_len=9, ref_len=10)):
+No one lived in the house for several years.
+
+tree:
+(TOP (S (NP no one )NP (VP lived (PP in (NP the house )NP )PP (PP for (NP several years )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 53.73, 70.0/55.6/50.0/42.9 (BP=1.000, ratio=1.000, hyp_len=10, ref_len=10)):
+Over several years, no one had lived in the house.
+
+
+id: 1692 (less under-translation, more reordering)
+
+diff: 17.29
+
+src:
+Die südchinesische Metropole am Perlfluss ist dabei mit ihrer Wirtschaftskraft fast so stark wie ganz Hessen.
+
+ref:
+The South China metropolis, which lies on the Pearl River, is almost as strong as the whole of Hessen thanks to its economic power.
+
+stripped tree (BLEU = 35.47, 65.0/47.4/38.9/29.4 (BP=0.819, ratio=0.833, hyp_len=20, ref_len=24)):
+The southern Chinese metropolis of Pearl River is almost as strong as the whole of Hessen, with its economic power.
+
+tree:
+(TOP (S (NP (NP the southern Chinese metropolis )NP (PP of (NP Pearl River )NP )PP )NP (VP is (ADJP (ADJP almost as strong )ADJP (PP as (NP (NP the whole )NP (PP of (NP Hessen )NP )PP )NP )PP )ADJP , (PP with (NP its economic power )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 18.18, 52.9/37.5/20.0/14.3 (BP=0.662, ratio=0.708, hyp_len=17, ref_len=24)):
+The South Chinese metropolis at the Pearl River is almost as strong as it is in Hessen.
+
+
+
+id: 2107 (more reordering - during his speech)
+
+diff: 16.23
+
+src:
+Der ukrainische Präsident Petro Poroshenko schlug bei seiner Rede zur Amtseinführung am 7. Juni vor, dass die ukrainische Gesetzgebung - nach Neuwahlen - Zusätze zur Verfassung bedenken solle, mit denen den jeweiligen Gebieten eine größere Kontrolle über ihre Finanzen und den Status der Sprachen eingeräumt wird.
+
+ref:
+Ukrainian President Petro Poroshenko proposed during his inauguration speech on June 7 that Ukrainian lawmakers - after new elections -- weigh constitutional amendments to give more control to the disparate regions over their finances and the status of languages.
+
+stripped tree (BLEU = 32.76, 63.2/40.5/25.0/20.0 (BP=0.974, ratio=0.974, hyp_len=38, ref_len=39)):
+During his speech on 7 June, Ukrainian President Petro Poroshenko proposed that Ukrainian legislation, after new elections, should take account of the constitution of the constitution, which gives greater control over their finances and the status of languages.
+
+tree:
+(TOP (S (PP during (NP (NP his speech )NP (PP on (NP 7 )NP )PP (NP June )NP )NP )PP , (NP Ukrainian President Pet@@ ro Por@@ o@@ shenko )NP (VP proposed (SBAR that (S (NP Ukrainian legislation )NP , (PP after (NP new elections )NP )PP , (VP should (VP take (NP (NP account )NP (PP of (NP (NP the constitution )NP (PP of (NP (NP the constitution )NP , (SBAR (WHNP which )WHNP (S (VP gives (NP (NP greater control )NP (PP over (NP (NP their finances )NP and (NP (NP the status )NP (PP of (NP languages )NP )PP )NP )NP )PP )NP )VP )S )SBAR )NP )PP )NP )PP )NP )VP )VP )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 16.53, 46.9/22.9/10.6/6.5 (BP=1.000, ratio=1.256, hyp_len=49, ref_len=39)):
+The Ukrainian President, Petro Poroshenko, in his speech on the inauguration of the inauguration on 7 June, suggested that Ukraine's legislation - after new elections - should reflect amendments to the Constitution, which will grant greater control over their own finances and the status of languages in each area.
+
+
+
+id: 512 (more reordering - brought)
+
+diff: 14.11
+
+src:
+Dieser Tag ist traditionell ein wichtiger Tag für Familien, und wie Tausende anderer ukrainischer Eltern brachte Premierminister Arsenij Jazenjuk seine Tochter in die Schule.
+
+ref:
+The day is traditionally a big one for families, and like thousands of other Ukrainian parents, Prime Minister Arseny Yatsenyuk took his daughter to school.
+
+stripped tree (BLEU = 42.99, 64.0/50.0/39.1/27.3 (BP=1.000, ratio=1.000, hyp_len=25, ref_len=25)):
+This day is traditionally an important day for families and, like thousands of other Ukrainian parents, Prime Minister Arsenij Jazenjuk brought his daughter to school.
+
+tree:
+(TOP (S (S (NP this day )NP (VP is (ADVP traditionally )ADVP (NP (NP an important day )NP (PP for (NP families )NP )PP )NP )VP )S and , (S (PP like (NP (NP thousands )NP (PP of (NP other Ukrainian parents )NP )PP )NP )PP , (NP Prime Minister Arsen@@ i@@ j Jaz@@ en@@ ju@@ k )NP (VP brought (NP his daughter )NP (PP to (NP school )NP )PP )VP )S . )S )TOP
+
+bpe (BLEU = 28.88, 64.0/45.8/26.1/9.1 (BP=1.000, ratio=1.000, hyp_len=25, ref_len=25)):
+This day is traditionally an important day for families, and as thousands of other Ukrainian parents brought Prime Minister Arsenij Jazenjuk his daughter to school.
+
+
+id: 179 (more reordering - much to learn - learn alot)
+
+diff: 13.69
+
+src:
+Er appellierte an die Kinder, viel zu lernen und sagte "wir werden dafür sorgen, dass ihr Wissen erwerbt und bieten euch Sicherheit."
+
+ref:
+He urged the children to study hard and said "we will make sure to provide you with knowledge and provide you with security."
+
+stripped tree (BLEU = 28.31, 56.5/31.8/23.8/15.0 (BP=1.000, ratio=1.000, hyp_len=23, ref_len=23)):
+He appealed to the children to learn a lot and said "we will make sure that their knowledge is acquired and provides security
+
+tree:
+(TOP (S (NP he )NP (VP (VP appealed (PP to (NP the children )NP )PP (S (VP to (VP learn (NP a lot )NP )VP )VP )S )VP and (VP said `` (S (NP we )NP (VP will (VP make (ADJP sure (SBAR that (S (NP their knowledge )NP (VP (VP is (VP acquired )VP )VP and (VP provides (NP security )NP )VP )VP )S )SBAR )ADJP )VP )VP )S )VP )VP )S )TOP
+
+bpe (BLEU = 14.62, 57.1/20.0/10.5/5.6 (BP=0.909, ratio=0.913, hyp_len=21, ref_len=23)):
+He appealed to the children, much to learn and said "we will ensure that their knowledge is acquired and provide security."
+
+
+id: 585 (more reordering - dared to use...)
+
+diff: 13.5
+
+src:
+Ein Vertreter des Stars aus "Die Tribute von Panem" bestätigte, dass die Fotos von Lawrence echt seien und klagte den Hacker wegen "eklatanter Verletzung der Privatsphäre" an.
+
+ref:
+A representative for the star of "The Hunger Games" confirmed the photos of Lawrence were real and blasted the hacker for "a flagrant violation of privacy."
+
+stripped tree (BLEU = 13.50, 51.9/19.2/8.0/4.2 (BP=1.000, ratio=1.038, hyp_len=27, ref_len=26)):
+A representative of the star of "The Tribute of panem" confirmed that Lawrence's photos were authentic and that the hacker dared to use" blatant infringement of privacy.''
+
+tree:
+(TOP (S (NP (NP a representative )NP (PP of (NP (NP the star )NP (PP of `` (NP (NP The Tri@@ bute )NP (PP of (NP pan@@ em )NP )PP )NP &apos;&apos; )PP )NP )PP )NP (VP confirmed (SBAR (SBAR that (S (NP (NP Lawrence &apos;s )NP photos )NP (VP were (ADJP authentic )ADJP )VP )S )SBAR and (SBAR that (S (NP the h@@ acker )NP (VP dared (S (VP to (VP use `` (NP (NP blatant infringement )NP (PP of (NP privacy )NP )PP )NP . )VP )VP )S )VP )S )SBAR )SBAR )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 0.00, 63.0/23.1/4.0/0.0 (BP=1.000, ratio=1.038, hyp_len=27, ref_len=26)):
+A representative of the stars from "The Tribute of panem" confirmed that the photos were of Lawrence's real and complained the hacker was "blatant violation of privacy."
+
+
+
+id: 87 (more reordering - this year)
+
+diff: 11.83
+
+src:
+Er prognostizierte für dieses Jahr außerdem eine verbesserte Marktsituation wegen des besseren Wetters nach unfreundlichen Wetterbedingungen im März und April letzten Jahres.
+
+ref:
+It also predicted an improved market this year due to better weather following unfavourable conditions in March and April last year.
+
+stripped tree (BLEU = 34.34, 64.0/45.8/26.1/18.2 (BP=1.000, ratio=1.190, hyp_len=25, ref_len=21)):
+He also predicted an improved market situation this year because of the better weather after unfriendly weather conditions in March and April of last year.
+
+tree:
+(TOP (S (NP he )NP (ADVP also )ADVP (VP predicted (NP an improved market situation )NP (NP this year )NP (PP because of (NP (NP the better weather )NP (PP after (NP (NP un@@ friendly weather conditions )NP (PP in (NP March and April )NP )PP (PP of (NP last year )NP )PP )NP )PP )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 22.51, 56.5/31.8/14.3/10.0 (BP=1.000, ratio=1.095, hyp_len=23, ref_len=21)):
+He predicted this year's improved market situation because of the better weather after unfriendly weather conditions in March and April of last year.
