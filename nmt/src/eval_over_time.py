@@ -60,7 +60,7 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
 
 
 def main():
-    models_files = [
+    stt_models_files = [
         'de_en_stt_model.iter1320000.npz',
         'de_en_stt_model.iter1290000.npz',
         'de_en_stt_model.iter1260000.npz',
@@ -105,45 +105,93 @@ def main():
         'de_en_stt_model.iter90000.npz',
         'de_en_stt_model.iter60000.npz',
         'de_en_stt_model.iter30000.npz']
-
-    models_files.reverse()
+    stt_models_files.reverse()
 
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
-    bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
-    config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
+
+    stt_bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
+    stt_config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
+
 
     # os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
+    stt = False
+    if stt:
 
-    # foreach model file
-    for f in models_files:
-        model_path = base_path + '/git/research/nmt/models/de_en_stt/' + f
-        os.system('cp {} {}'.format(config_path, model_path + '.json'))
-        dev_target = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'.format(
-            f)
-        dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'.format(
-            f)
-        alignments_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_dev_alignments.txt'.format(f)
-        valid_trees_log = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}.valid_trees_log'.format(f)
+        # foreach model file
+        for f in stt_models_files:
+            stt_model_path = base_path + '/git/research/nmt/models/de_en_stt/' + f
 
-        translate(alignments_path, dev_src, dev_target, model_path, nematus_path)
+            os.system('cp {} {}'.format(stt_config_path, stt_model_path + '.json'))
 
-        validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target)
+            dev_target = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.trees.dev'.format(
+                f)
+            dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.sents.dev'.format(
+                f)
+            alignments_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}_dev_alignments.txt'.format(f)
+            valid_trees_log = base_path + '/git/research/nmt/models/de_en_stt/overtime/{}.valid_trees_log'.format(f)
 
-        postprocessed_path = postprocess(dev_target_sents)
+            translate(alignments_path, dev_src, dev_target, stt_model_path, nematus_path)
 
-        score = bleu(moses_path, ref_path, postprocessed_path)
-        with codecs.open(bleu_path, 'a', 'utf-8') as bleu_file:
-            bleu_file.write('{}\t{}\n'.format(f, score))
+            validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target)
 
-        # remove config file copy
-        os.system('rm {}'.format(model_path + '.json'))
+            postprocessed_path = postprocess(dev_target_sents)
 
-    return
+            score = bleu(moses_path, ref_path, postprocessed_path)
+            with codecs.open(stt_bleu_path, 'a', 'utf-8') as bleu_file:
+                bleu_file.write('{}\t{}\n'.format(f, score))
 
+            # remove config file copy
+            os.system('rm {}'.format(stt_model_path + '.json'))
+
+        return
+
+    bpe_model_files = ['de_en_bpe_model.iter390000.npz',
+                       'de_en_bpe_model.iter360000.npz',
+                       'de_en_bpe_model.iter330000.npz',
+                       'de_en_bpe_model.iter300000.npz',
+                       'de_en_bpe_model.iter270000.npz',
+                       'de_en_bpe_model.iter240000.npz',
+                       'de_en_bpe_model.iter210000.npz',
+                       'de_en_bpe_model.iter180000.npz',
+                       'de_en_bpe_model.iter150000.npz',
+                       'de_en_bpe_model.iter120000.npz',
+                       'de_en_bpe_model.iter90000.npz',
+                       'de_en_bpe_model.iter60000.npz',
+                       'de_en_bpe_model.iter30000.npz']
+    bpe_model_files.reverse()
+
+    bpe_bleu_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/bleu.txt'
+    bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
+    bpe = True
+    if bpe:
+        # foreach model file
+        for f in bpe_model_files:
+
+            bpe_model_path = base_path + '/git/research/nmt/models/de_en_bpe/' + f
+
+            os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
+
+            dev_target = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.dev'.format(
+                f)
+
+            alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_dev_alignments.txt'.format(f)
+
+            translate(alignments_path, dev_src, dev_target, bpe_model_path, nematus_path)
+
+            postprocessed_path = postprocess(dev_target)
+
+            score = bleu(moses_path, ref_path, postprocessed_path)
+            with codecs.open(bpe_bleu_path, 'a', 'utf-8') as bleu_file:
+                bleu_file.write('{}\t{}\n'.format(f, score))
+
+            # remove config file copy
+            os.system('rm {}'.format(bpe_bleu_path + '.json'))
+
+        return
 
 if __name__ == '__main__':
     main()
