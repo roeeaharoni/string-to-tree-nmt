@@ -744,7 +744,7 @@ def distortion_over_time():
 def get_distortion_from_alignments_file(filepath):
     count = 0
     scores = []
-    with codecs.open(filepath, 'r', 'utf-8') as file1:
+    with codecs.open(filepath, 'r') as file1:
 
         while (file1):
             count += 1
