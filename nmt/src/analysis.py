@@ -339,6 +339,7 @@ def inspect_alignment_matrices(file1, file2=None):
         if not target_labels:
             break
 
+
         no_tree_matrix, no_tree_target_labels = strip_tree(mma, target_labels)
 
         tree_score = get_diagonal_subsequent_reordering_score(no_tree_matrix, source_labels, no_tree_target_labels)
@@ -363,12 +364,12 @@ def inspect_alignment_matrices(file1, file2=None):
         for k in xrange(30):
             if tree_score == 0:
                 print 'neg'
-            if bpe_score >= k:
+            if bpe_score >= k and bpe_score < k+1:
                 high_bpe[k] += 1
-            if tree_score >= k:
+            if tree_score >= k and tree_score < k+1:
                 high_syntax[k] += 1
 
-        if tree_score > 4:
+        if count == 603:
             plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2)
                 # if comp and bpe_score < tree_score:
                 # plot both alignments on same figure for comparison
@@ -684,8 +685,86 @@ def plot_tree_with_alignments(tree, alignments_mtx, input_labels, output_labels)
     return
 
 
+def distortion_over_time():
+    model_files = [
+        'de_en_stt_model.iter1320000.npz',
+        'de_en_stt_model.iter1290000.npz',
+        'de_en_stt_model.iter1260000.npz',
+        'de_en_stt_model.iter1230000.npz',
+        'de_en_stt_model.iter1200000.npz',
+        'de_en_stt_model.iter1170000.npz',
+        'de_en_stt_model.iter1140000.npz',
+        'de_en_stt_model.iter1110000.npz',
+        'de_en_stt_model.iter1080000.npz',
+        'de_en_stt_model.iter1050000.npz',
+        'de_en_stt_model.iter1020000.npz',
+        'de_en_stt_model.iter990000.npz',
+        'de_en_stt_model.iter960000.npz',
+        'de_en_stt_model.iter930000.npz',
+        'de_en_stt_model.iter900000.npz',
+        'de_en_stt_model.iter870000.npz',
+        'de_en_stt_model.iter840000.npz',
+        'de_en_stt_model.iter810000.npz',
+        'de_en_stt_model.iter780000.npz',
+        'de_en_stt_model.iter750000.npz',
+        'de_en_stt_model.iter720000.npz',
+        'de_en_stt_model.iter690000.npz',
+        'de_en_stt_model.iter660000.npz',
+        'de_en_stt_model.iter630000.npz',
+        'de_en_stt_model.iter600000.npz',
+        'de_en_stt_model.iter570000.npz',
+        'de_en_stt_model.iter540000.npz',
+        'de_en_stt_model.iter510000.npz',
+        'de_en_stt_model.iter480000.npz',
+        'de_en_stt_model.iter450000.npz',
+        'de_en_stt_model.iter420000.npz',
+        'de_en_stt_model.iter390000.npz',
+        'de_en_stt_model.iter360000.npz',
+        'de_en_stt_model.iter330000.npz',
+        'de_en_stt_model.iter300000.npz',
+        'de_en_stt_model.iter270000.npz',
+        'de_en_stt_model.iter240000.npz',
+        'de_en_stt_model.iter210000.npz',
+        'de_en_stt_model.iter180000.npz',
+        'de_en_stt_model.iter150000.npz',
+        'de_en_stt_model.iter120000.npz',
+        'de_en_stt_model.iter90000.npz',
+        'de_en_stt_model.iter60000.npz',
+        'de_en_stt_model.iter30000.npz']
+    model_files.reverse()
+    prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
+    for filepath in model_files:
+        alignment_path = '{}/{}_dev_alignments.txt'.format(prefix, filepath)
+        scores = get_distortion_from_alignments_file(alignment_path)
+        avg = numpy.sum(scores)/len(scores)
+        print filepath, '\t', avg
+
+
+
+def get_distortion_from_alignments_file(filepath):
+    count = 0
+    scores = []
+    with codecs.open(filepath, 'r', 'utf-8') as file1:
+
+        while (file1):
+            count += 1
+            print count
+            sid, mma, target_labels, source_labels = read_alignment_matrix(file1)
+            if not target_labels:
+                break
+
+            no_tree_matrix, no_tree_target_labels = strip_tree(mma, target_labels)
+
+            tree_score = get_diagonal_subsequent_reordering_score(no_tree_matrix, source_labels, no_tree_target_labels)
+            scores.append(tree_score)
+            line = file1.readline()
+            if not line:
+                break
+    return scores
+
+
 def main(file1, file2):
-    compare_sentence_level_bleu()
+    # compare_sentence_level_bleu()
 
     # inspect_alignment_matrices(file1, file2)
 
@@ -693,6 +772,7 @@ def main(file1, file2):
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
     # cnt2 = sorted(cnt2.items(), key=itemgetter(0))
 
+    distortion_over_time()
 
     # subtrees = get_subtrees_with_reordering(file1)
     # sorted_subtrees = sorted(subtrees, key=itemgetter(0), reverse=True)
