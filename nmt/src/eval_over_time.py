@@ -47,7 +47,7 @@ def validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target):
 
 def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     # translate dev set using model (validate)
-    print 'validating trees...'
+    print 'translating...'
     # decode: k - beam size, n - normalize scores by length, p - processes
     decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
              -m {} \
