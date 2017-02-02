@@ -1,5 +1,6 @@
 .node {
 	cursor: pointer;
+	font-family: arial;
 }
 
 .overlay {
@@ -13,8 +14,10 @@
 }
    
 .node text {
-	font-size: 15px;
-	font-family: serif;
+	font-size: 15.5px;
+	fill:black;
+	background:white;
+	background-color:red;
 }
    
 .link {

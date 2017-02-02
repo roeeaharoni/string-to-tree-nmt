@@ -12,7 +12,7 @@ function d3Tree(treeData) {
     // size of the diagram
 	var pageWidth = $(document).width();
     var viewerWidth = pageWidth - (0.05 * pageWidth);
-    var viewerHeight = 600;
+    var viewerHeight = 800;
 
     // this is not really used, as I pretty much apply my own layout.
     // but the tree-layout is still used for the links.
@@ -99,13 +99,13 @@ function d3Tree(treeData) {
         // determine the y position of non-terms, and based on that also of leafs.
         var lowest_nonterm = 0;
         nodes.filter(d=>'children' in d).forEach(function(d,i) {
-                d.y = (d.depth * ((viewerHeight-80)/(maxLevel)));
+                d.y = (d.depth * ((viewerHeight-200)/(maxLevel)));
                 if (d.y > lowest_nonterm) lowest_nonterm = d.y;
                 s = nodeStartToX[d.s];
                 e = nodeEndToX[d.e];
                 d.x = (s+e)/2;
             });
-        tree_baseline = lowest_nonterm + 50;
+        tree_baseline = lowest_nonterm + 10;
 
         // set actual positions of leafs
         nodes.filter(d=>!('children' in d)).forEach(function(d,i) {
@@ -149,7 +149,7 @@ function d3Tree(treeData) {
             .text(function(d) {
                 return d.name;
             })
-            .style("fill-opacity", 0);
+            .style("fill-opacity", 1);
 
         // Update the text to reflect whether node has children or not.
         node.select('text')
@@ -162,14 +162,14 @@ function d3Tree(treeData) {
         node.select("rect.nodeRect")
             .attr("width", function(d) {
 				// Adjust the size of the square according to the label
-                return d.children || d._children ? d.name.length*5+10 : 0;
+                return d.children || d._children ? d.name.length*5+10 : d.name.length*5+10;
             })
             .attr("height", function(d) {
                 if (d.name == "") return 0;
-                return d.children || d._children ? 20 : 0;
+                return d.children || d._children ? 20 : 20;
             })
             .style("fill", function(d) {
-                return d._children ? "lightsteelblue" : "#fff";
+                return d._children ? "lightsteelblue" : "#fffff";
             });
 
         // Transition nodes to their new position.
@@ -195,7 +195,7 @@ function d3Tree(treeData) {
             .attr("r", 0);
 
         nodeExit.select("text")
-            .style("fill-opacity", 0);
+            .style("fill-opacity", 1);
 
         // Update the links…
         var link = svgGroup.selectAll("path.link")
@@ -307,9 +307,9 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     baseSvg.append("g").selectAll("line").data(alignData).enter().append("line")
         .attr("x1",d=>id2nodes[+d.tid].x)
         //.attr("y1",d=>id2nodes[+d.tid].y)
-        .attr("y1",d=>id2nodes[+d.tid].y+6)
+        .attr("y1",d=>id2nodes[+d.tid].y+12)
         .attr("x2",d=>sentNodes[+d.sid].m + offset)
-        .attr("y2",d=>sentNodes[+d.sid].y)
+        .attr("y2",d=>sentNodes[+d.sid].y - 5)
         .attr("stroke",d=> type2color[d.type](d.a) )
 
     // The BPE
@@ -328,7 +328,7 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     d3.select('g').attr("transform", "translate(0,20)");
     var maxNodeX = Math.max(...nodes.map(d=>d.x))
     var bpe_positions = x_position_sent_words(baseSvg, bpeData)
-    var bpeNodes = bpeData.map((w,i)=>{return { text:w, x:bpe_positions[i].s, y:res.h+130, m:bpe_positions[i].m }})
+    var bpeNodes = bpeData.map((w,i)=>{return { text:w, x:bpe_positions[i].s, y:res.h+135, m:bpe_positions[i].m }})
     var last_node_x = bpeNodes[bpeNodes.length-1].x
     var offset2 = (maxNodeX - last_node_x) / 2
 
@@ -348,9 +348,9 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     baseSvg.append("g").selectAll("line").data(bpeAlignData).enter().append("line")
         .attr("x1",d=>sentNodes[+d.sid].m + offset)
         //.attr("y1",d=>id2nodes[+d.tid].y)
-        .attr("y1",d=>sentNodes[+d.sid].y+12)
+        .attr("y1",d=>sentNodes[+d.sid].y+15)
         .attr("x2",d=>bpeNodes[+d.tid].m + offset2)
-        .attr("y2",d=>bpeNodes[+d.tid].y)
+        .attr("y2",d=>bpeNodes[+d.tid].y - 5)
         .attr("stroke",d=> type2color[d.type](d.a) )
 
 }
