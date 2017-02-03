@@ -165,7 +165,11 @@ def plot_heat_map(attn_mtx, target_labels, source_labels, attn_mtx2=None, target
 
             plt.xticks(rotation=45)
 
-            # plt.show()
+            if file != None:
+                plt.savefig(file+'.tree.png')
+                plt.close()
+
+            plt.show()
             plt.close()
 
         # plt.tight_layout()
@@ -369,8 +373,10 @@ def inspect_alignment_matrices(file1, file2=None):
             if tree_score >= k and tree_score < k+1:
                 high_syntax[k] += 1
 
+        image_path_prefix = '/Users/roeeaharoni/git/research/nmt/src/plots/'
+        file_path = image_path_prefix + str(count) + '.png'
         if count == 603:
-            plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2)
+            plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, file=file_path)
                 # if comp and bpe_score < tree_score:
                 # plot both alignments on same figure for comparison
                 # plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels, mma2, target_labels2, source_labels2)
@@ -686,7 +692,7 @@ def plot_tree_with_alignments(tree, alignments_mtx, input_labels, output_labels)
 
 
 def distortion_over_time():
-    model_files = [
+    stt_model_files = [
         'de_en_stt_model.iter1320000.npz',
         'de_en_stt_model.iter1290000.npz',
         'de_en_stt_model.iter1260000.npz',
@@ -731,10 +737,29 @@ def distortion_over_time():
         'de_en_stt_model.iter90000.npz',
         'de_en_stt_model.iter60000.npz',
         'de_en_stt_model.iter30000.npz']
-    model_files.reverse()
-    prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
-    for filepath in model_files:
-        alignment_path = '{}/{}_dev_alignments.txt'.format(prefix, filepath)
+    stt_model_files.reverse()
+
+    bpe_model_files = ['de_en_bpe_model.iter390000.npz',
+                       'de_en_bpe_model.iter360000.npz',
+                       'de_en_bpe_model.iter330000.npz',
+                       'de_en_bpe_model.iter300000.npz',
+                       'de_en_bpe_model.iter270000.npz',
+                       'de_en_bpe_model.iter240000.npz',
+                       'de_en_bpe_model.iter210000.npz',
+                       'de_en_bpe_model.iter180000.npz',
+                       'de_en_bpe_model.iter150000.npz',
+                       'de_en_bpe_model.iter120000.npz',
+                       'de_en_bpe_model.iter90000.npz',
+                       'de_en_bpe_model.iter60000.npz',
+                       'de_en_bpe_model.iter30000.npz']
+    bpe_model_files.reverse()
+
+    stt_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
+    bpe_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/overtime'
+
+
+    for filepath in bpe_model_files:
+        alignment_path = '{}/{}_dev_alignments.txt'.format(bpe_prefix, filepath)
         scores = get_distortion_from_alignments_file(alignment_path)
         avg = numpy.sum(scores)/len(scores)
         print filepath, '\t', avg
@@ -766,13 +791,13 @@ def get_distortion_from_alignments_file(filepath):
 def main(file1, file2):
     # compare_sentence_level_bleu()
 
-    # inspect_alignment_matrices(file1, file2)
+    inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
     # cnt2 = sorted(cnt2.items(), key=itemgetter(0))
 
-    distortion_over_time()
+    # distortion_over_time()
 
     # subtrees = get_subtrees_with_reordering(file1)
     # sorted_subtrees = sorted(subtrees, key=itemgetter(0), reverse=True)
