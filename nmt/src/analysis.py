@@ -450,6 +450,7 @@ def compute_sent_level_bleu_scores(ref, hyp):
 
 
 def compare_sentence_level_bleu():
+
     scores_tree = compute_sent_level_bleu_scores(
         '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
         '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best')
@@ -484,6 +485,7 @@ def compare_sentence_level_bleu():
                       'bpe': scores_bpe[i][1],
                       'bpe_score': scores_bpe[i][2],
                       'id':i})
+
 
     # large positive diffs = bpe is better
     out_format = u'id: {}\n\ndiff: {}\n\nsrc:\n{}\nref:\n{}\nstripped tree ({}):\n{}\ntree:\n{}\nbpe ({}):\n{} \n\n'
@@ -739,19 +741,28 @@ def distortion_over_time():
         'de_en_stt_model.iter30000.npz']
     stt_model_files.reverse()
 
-    bpe_model_files = ['de_en_bpe_model.iter390000.npz',
-                       'de_en_bpe_model.iter360000.npz',
-                       'de_en_bpe_model.iter330000.npz',
-                       'de_en_bpe_model.iter300000.npz',
-                       'de_en_bpe_model.iter270000.npz',
-                       'de_en_bpe_model.iter240000.npz',
-                       'de_en_bpe_model.iter210000.npz',
-                       'de_en_bpe_model.iter180000.npz',
-                       'de_en_bpe_model.iter150000.npz',
-                       'de_en_bpe_model.iter120000.npz',
-                       'de_en_bpe_model.iter90000.npz',
-                       'de_en_bpe_model.iter60000.npz',
-                       'de_en_bpe_model.iter30000.npz']
+    bpe_model_files = ['de_en_bpe_model.iter660000.npz',
+                       'de_en_bpe_model.iter630000.npz',
+                       'de_en_bpe_model.iter600000.npz',
+                       'de_en_bpe_model.iter570000.npz',
+                       'de_en_bpe_model.iter540000.npz',
+                       'de_en_bpe_model.iter510000.npz',
+                       'de_en_bpe_model.iter480000.npz',
+                       'de_en_bpe_model.iter450000.npz',
+                       'de_en_bpe_model.iter420000.npz']
+    # bpe_model_files = ['de_en_bpe_model.iter390000.npz',
+    #                    'de_en_bpe_model.iter360000.npz',
+    #                    'de_en_bpe_model.iter330000.npz',
+    #                    'de_en_bpe_model.iter300000.npz',
+    #                    'de_en_bpe_model.iter270000.npz',
+    #                    'de_en_bpe_model.iter240000.npz',
+    #                    'de_en_bpe_model.iter210000.npz',
+    #                    'de_en_bpe_model.iter180000.npz',
+    #                    'de_en_bpe_model.iter150000.npz',
+    #                    'de_en_bpe_model.iter120000.npz',
+    #                    'de_en_bpe_model.iter90000.npz',
+    #                    'de_en_bpe_model.iter60000.npz',
+    #                    'de_en_bpe_model.iter30000.npz']
     bpe_model_files.reverse()
 
     stt_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
@@ -789,9 +800,9 @@ def get_distortion_from_alignments_file(filepath):
 
 
 def main(file1, file2):
-    # compare_sentence_level_bleu()
+    compare_sentence_level_bleu()
 
-    inspect_alignment_matrices(file1, file2)
+    # inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
