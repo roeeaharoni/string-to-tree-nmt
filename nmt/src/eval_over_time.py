@@ -60,6 +60,29 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
 
 
 def main():
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
+    ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
+
+    test_alignments_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/test_alignments.txt.best'
+    test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
+
+    bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
+    test_target = '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
+    bpe_model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.npz.best_bleu'
+
+    # compute test bleu on bpe2bpe
+    os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
+    translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
+    postprocessed_path = postprocess(test_target)
+    score = bleu(moses_path, ref_path, postprocessed_path)
+    print score
+    return
+
+
+
     stt_models_files = [
         'de_en_stt_model.iter1320000.npz',
         'de_en_stt_model.iter1290000.npz',
@@ -107,15 +130,10 @@ def main():
         'de_en_stt_model.iter30000.npz']
     stt_models_files.reverse()
 
-    base_path = '/home/nlp/aharonr6'
-    nematus_path = base_path + '/git/nematus'
-    moses_path = base_path + '/git/mosesdecoder'
-    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
-    ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
+
 
     stt_bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
     stt_config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
-
 
     # os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
     stt = False
