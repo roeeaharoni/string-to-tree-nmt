@@ -66,7 +66,7 @@ def main():
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
 
-    test_alignments_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/test_alignments.txt.best'
+    test_alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/test_alignments.txt.best'
     test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
 
     bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
