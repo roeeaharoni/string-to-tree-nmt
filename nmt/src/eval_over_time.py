@@ -75,7 +75,7 @@ def main():
 
     # compute test bleu on bpe2bpe
     os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
-    translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
+    # translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
     postprocessed_path = postprocess(test_target)
     score = bleu(moses_path, ref_path, postprocessed_path)
     print score
