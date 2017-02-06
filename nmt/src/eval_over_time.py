@@ -149,19 +149,29 @@ def main():
 
         return
 
-    bpe_model_files = ['de_en_bpe_model.iter390000.npz',
-                       'de_en_bpe_model.iter360000.npz',
-                       'de_en_bpe_model.iter330000.npz',
-                       'de_en_bpe_model.iter300000.npz',
-                       'de_en_bpe_model.iter270000.npz',
-                       'de_en_bpe_model.iter240000.npz',
-                       'de_en_bpe_model.iter210000.npz',
-                       'de_en_bpe_model.iter180000.npz',
-                       'de_en_bpe_model.iter150000.npz',
-                       'de_en_bpe_model.iter120000.npz',
-                       'de_en_bpe_model.iter90000.npz',
-                       'de_en_bpe_model.iter60000.npz',
-                       'de_en_bpe_model.iter30000.npz']
+    bpe_model_files = [ 'de_en_bpe_model.iter660000.npz',
+    'de_en_bpe_model.iter630000.npz',
+    'de_en_bpe_model.iter600000.npz',
+    'de_en_bpe_model.iter570000.npz',
+    'de_en_bpe_model.iter540000.npz',
+    'de_en_bpe_model.iter510000.npz',
+    'de_en_bpe_model.iter480000.npz',
+    'de_en_bpe_model.iter450000.npz',
+    'de_en_bpe_model.iter420000.npz']
+    # bpe_model_files = ['de_en_bpe_model.iter390000.npz',
+    #                    'de_en_bpe_model.iter360000.npz',
+    #                    'de_en_bpe_model.iter330000.npz',
+    #                    'de_en_bpe_model.iter300000.npz',
+    #                    'de_en_bpe_model.iter270000.npz',
+    #                    'de_en_bpe_model.iter240000.npz',
+    #                    'de_en_bpe_model.iter210000.npz',
+    #                    'de_en_bpe_model.iter180000.npz',
+    #                    'de_en_bpe_model.iter150000.npz',
+    #                    'de_en_bpe_model.iter120000.npz',
+    #                    'de_en_bpe_model.iter90000.npz',
+    #                    'de_en_bpe_model.iter60000.npz',
+    #                    'de_en_bpe_model.iter30000.npz']
+
     bpe_model_files.reverse()
 
     bpe_bleu_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/bleu.txt'
