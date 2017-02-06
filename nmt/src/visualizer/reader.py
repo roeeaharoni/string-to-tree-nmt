@@ -79,7 +79,8 @@ print "TREES = [ %s ]" % ",".join(js.dumps(toJson(x)) for x in trees[:max_amount
 print "SOURCES = [ %s ]" % ",".join("%s" % x for x in sources[:max_amount])
 print "ALIGNS = %s" % (js.dumps(all_alignments[:max_amount]),)
 
-data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_wmt16/dev_alignments.txt",read_trees=False))
+# data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_wmt16/dev_alignments.txt",read_trees=False))
+data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/dev_alignments.txt.best",read_trees=False))
 sources_bpe = [x[0] for x in data_bpe]
 targets_bpe = [x[1] for x in data_bpe]
 alignments_bpe = [x[2] for x in data_bpe]

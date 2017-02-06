@@ -12,7 +12,7 @@ function d3Tree(treeData) {
     // size of the diagram
 	var pageWidth = $(document).width();
     var viewerWidth = pageWidth - (0.05 * pageWidth);
-    var viewerHeight = 800;
+    var viewerHeight = 600;
 
     // this is not really used, as I pretty much apply my own layout.
     // but the tree-layout is still used for the links.
@@ -99,7 +99,7 @@ function d3Tree(treeData) {
         // determine the y position of non-terms, and based on that also of leafs.
         var lowest_nonterm = 0;
         nodes.filter(d=>'children' in d).forEach(function(d,i) {
-                d.y = (d.depth * ((viewerHeight-200)/(maxLevel)));
+                d.y = (d.depth * ((viewerHeight-300)/(maxLevel)));
                 if (d.y > lowest_nonterm) lowest_nonterm = d.y;
                 s = nodeStartToX[d.s];
                 e = nodeEndToX[d.e];
