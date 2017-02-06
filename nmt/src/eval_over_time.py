@@ -74,6 +74,7 @@ def main():
     bpe_model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.npz.best_bleu'
 
     # compute test bleu on bpe2bpe
+    test_ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.en'
     os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
     # translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
     postprocessed_path = postprocess(test_target)
