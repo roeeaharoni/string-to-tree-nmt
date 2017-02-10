@@ -13,7 +13,7 @@ def main():
         with codecs.open(de_stt_file_path, 'r', 'utf-8') as de_stt_file:
             src_diff_count = 0
             i = 0
-            while i < 2000:
+            while i < 10000:
                 i+=1
                 de_bpe_line = de_bpe_file.readline()
                 de_stt_line = de_stt_file.readline()
@@ -30,7 +30,7 @@ def main():
         with codecs.open(en_stt_file_path, 'r', 'utf-8') as en_stt_file:
             i = 0
             trg_diff_count = 0
-            while i < 2000:
+            while i < 10000:
                 i += 1
                 en_bpe_line = en_bpe_file.readline()
                 en_stt_line = en_stt_file.readline()
@@ -49,6 +49,7 @@ def main():
                     print u'diff in trg files:\nbpe:{}\nstt:{}\n\ntree:{}\n'.format(en_bpe_line, sent, en_stt_line)
                     trg_diff_count += 1
 
+    print 'found {} diffs in src and {} diffs in target'.format(src_diff_count, trg_diff_count)
 
 if __name__ == '__main__':
     main()
