@@ -43,7 +43,7 @@ def main():
 
                 # check if same
                 if en_bpe_line.strip() != sent:
-                    print 'diff in trg files:\nbpe:{}\nstt:{}\n'.format(en_bpe_line, sent)
+                    print u'diff in trg files:\nbpe:{}\nstt:{}\ntree:{}\n'.format(en_bpe_line, sent,en_stt_line)
 
 
 
