@@ -36,6 +36,7 @@ def main():
 
                 # strip the tree
                 parsed = yoav_trees.Tree('Top').from_sexpr(en_stt_line)
+                print en_stt_line
                 sent = ' '.join(parsed.leaves())
 
                 # check if same
