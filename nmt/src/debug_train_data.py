@@ -35,10 +35,11 @@ def main():
                     break
 
                 # strip the tree
-                parsed = yoav_trees.Tree('Top').from_sexpr(en_stt_line)
-                print en_stt_line
-                print parsed.leaves()
-                sent = ' '.join(parsed.leaves())
+                sent = ' '.join([t for t in en_stt_line.split() if '(' not in t and ')' not in t])
+                # parsed = yoav_trees.Tree('Top').from_sexpr(en_stt_line)
+                # print en_stt_line
+                # print parsed.leaves()
+                # sent = ' '.join(parsed.leaves())
 
                 # check if same
                 if en_bpe_line != sent:
