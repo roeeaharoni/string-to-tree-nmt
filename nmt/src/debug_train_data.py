@@ -7,13 +7,16 @@ def main():
     de_stt_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.copy'
     en_bpe_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'
     en_stt_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
+    # trees_file =
+
+    max = 1000
 
     # open source files (same copied file, but to be sure)
     with codecs.open(de_bpe_file_path, 'r', 'utf-8') as de_bpe_file:
         with codecs.open(de_stt_file_path, 'r', 'utf-8') as de_stt_file:
             src_diff_count = 0
             i = 0
-            while i < 4200000:
+            while i < max:
                 i+=1
                 de_bpe_line = de_bpe_file.readline()
                 de_stt_line = de_stt_file.readline()
@@ -30,7 +33,7 @@ def main():
         with codecs.open(en_stt_file_path, 'r', 'utf-8') as en_stt_file:
             i = 0
             trg_diff_count = 0
-            while i < 4200000:
+            while i < max:
                 i += 1
                 en_bpe_line = en_bpe_file.readline()
                 en_stt_line = en_stt_file.readline()
