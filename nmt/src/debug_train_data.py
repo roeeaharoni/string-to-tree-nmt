@@ -35,14 +35,14 @@ def main():
                     break
 
                 # strip the tree
-                sent = ' '.join([t for t in en_stt_line.split() if '(' not in t and ')' not in t])
+                sent = ' '.join([t for t in en_stt_line.split() if '(' not in t and ')' not in t]).strip()
                 # parsed = yoav_trees.Tree('Top').from_sexpr(en_stt_line)
                 # print en_stt_line
                 # print parsed.leaves()
                 # sent = ' '.join(parsed.leaves())
 
                 # check if same
-                if en_bpe_line != sent:
+                if en_bpe_line.strip() != sent:
                     print 'diff in trg files:\nbpe:{}\nstt:{}\n'.format(en_bpe_line, sent)
 
 
