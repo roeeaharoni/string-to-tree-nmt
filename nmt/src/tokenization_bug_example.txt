@@ -1,0 +1,22 @@
+sentence #1000 in English train file
+
+/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en
+I can not imagine the Commission taking initiatives in order to de-Europeanise or re-nationalise in a thorough manner , but I have my concerns and questions nevertheless .
+
+/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe
+I can not imagine the Commission taking initiatives in order to de-@@ European@@ ise or re-@@ nation@@ alise in a thorough manner , but I have my concerns and questions nevertheless .
+
+yield
+I can not imagine the Commission taking initiatives in order to de-@@ European@@ ise or re-@@ nation@@ alise in a thorough manner , but I have my concerns and questions nevertheless
+
+/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final
+(TOP (S (S (NP I )NP (ADVP can )ADVP (VP not (NP imagine the )NP (S (VP Commission (NP taking )NP (SBAR initiatives in (S (VP order (VP to de-@@ European@@ ise or (PP re-@@ nation@@ alise (NP in a thorough )NP )PP )VP )VP )S )SBAR )VP )S )VP )S manner , (S (NP but )NP (VP I (NP have my concerns and )NP (ADVP questions )ADVP )VP )S nevertheless )S )TOP
+
+/Users/roeeaharoni/git/research/nmt/data/shi/Eng_Parse_3/9m.train.trainwords
+I cannot imagine the Commission taking initiatives in order to de-Europeanise or re-nationalise in a thorough manner , but I have my concerns and questions nevertheless .
+
+
+FOUND A BUG! trees are parsed according to one tokenization ("cannot") and I used the text from another tokenization ("can not"). 
+This created wrong parse trees "(VP not"..., may explain the BLEU difference.
+
+interesting paper on the subject: http://www.aclweb.org/anthology/P12-2074
