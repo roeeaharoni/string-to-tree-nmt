@@ -1,0 +1,39 @@
+BLLIP
+https://github.com/BLLIP/bllip-parser/blob/master/first-stage/README.rst
+
+nematus
+https://github.com/rsennrich/nematus
+
+edin paper
+https://128.84.21.199/pdf/1702.01147v1.pdf
+
+german relative clauses
+https://www.lsa.umich.edu/german/hmr/Grammatik/Relativsaetze/relative.html
+
+english place manner time
+http://english.stackexchange.com/questions/82776/adverbs-position-in-english-place-manner-time-or-manner-place-time
+
+time manner place
+https://en.wikipedia.org/wiki/Time%E2%80%93manner%E2%80%93place
+
+German Subordinating Conjunctions and Sending the Verb to the End
+http://www.fluentu.com/german/blog/german-subordinating-conjunctions/
+
+German word order
+http://www.fluentu.com/german/blog/learn-german-word-order/
+
+syntax based models - alon lavie
+https://demo.clab.cs.cmu.edu/sp2013-11731/slides/13.syntax1.pdf
+
+GHKM papers
+http://anthology.aclweb.org/N/N04/N04-1035.pdf
+http://www.mt-archive.info/Coling-ACL-2006-Galley.pdf
+
+yoav's syntax-based slides
+http://u.cs.biu.ac.il/~yogo/courses/mt2016/l11/l11-slides.pdf
+
+RIBES paper
+https://arxiv.org/pdf/1701.02901v1.pdf
+
+Collins pre-ordering
+http://homepages.inf.ed.ac.uk/pkoehn/publications/clause-acl05.pdf

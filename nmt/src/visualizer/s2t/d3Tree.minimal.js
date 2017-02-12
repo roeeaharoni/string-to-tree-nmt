@@ -293,6 +293,7 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
 
     console.log(nodes.length)
     if (only_lex) { alignData = alignData.filter(d=>d.type=="lex") }
+    else { alignData = alignData.filter(d=>d.type=="lex" || d.type.endsWith("_e")) }
     alignData = alignData.filter(d=>d.a>0.2)
     id2nodes = {}
     nodes.map(d=>{id2nodes[d.sid] = d; id2nodes[d.eid]=d;})
@@ -300,7 +301,9 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
     var type2color = {
         "lex":d3.scale.linear().domain([0.0,1.0]).range(["white","blue"]),
         "open":d3.scale.linear().domain([0.0,1.0]).range(["white","red"]),
+        "open_e":d3.scale.linear().domain([0.0,1.0]).range(["white","red"]),
         "close":d3.scale.linear().domain([0.0,1.0]).range(["white","green"]),
+        "close_e":d3.scale.linear().domain([0.0,1.0]).range(["white","green"]),
     }
 
     // add tree alignments
@@ -308,8 +311,8 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
         .attr("x1",d=>id2nodes[+d.tid].x)
         //.attr("y1",d=>id2nodes[+d.tid].y)
         .attr("y1",d=>id2nodes[+d.tid].y+12)
-        .attr("x2",d=>sentNodes[+d.sid].m + offset)
-        .attr("y2",d=>sentNodes[+d.sid].y - 5)
+        .attr("x2",d=>d.type.endsWith("_e") ? id2nodes[+d.sid].x : sentNodes[+d.sid].m + offset)
+        .attr("y2",d=>d.type.endsWith("_e") ? id2nodes[+d.sid].y : sentNodes[+d.sid].y - 5)
         .attr("stroke",d=> type2color[d.type](d.a) )
 
     // The BPE

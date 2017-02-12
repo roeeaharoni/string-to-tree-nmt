@@ -44,6 +44,7 @@ BPE_HOME = '/Users/roeeaharoni/git/subword-nmt'
 NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
 BPE_OPERATIONS = 89500
 
+
 # count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
 def trees_sanity(bped_sentences, bped_trees):
     missing = 0
@@ -57,7 +58,7 @@ def trees_sanity(bped_sentences, bped_trees):
     with codecs.open(bped_sentences, encoding='utf8') as sents:
         with codecs.open(bped_trees, encoding='utf8') as trees:
             while True:
-                if total%100000 == 0 and total != 0:
+                if total % 100000 == 0 and total != 0:
                     print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}'.format(
                         tok_len_sum / total,
                         tree_len_sum / total,
@@ -80,7 +81,7 @@ def trees_sanity(bped_sentences, bped_trees):
                 tree_len_hist[tree_len] += 1
 
                 if 'MISSING' in tree:
-                    missing +=1
+                    missing += 1
                 else:
                     try:
                         cleaned = ' '.join([')' if ')' in t else t for t in tree.split()])
@@ -88,7 +89,7 @@ def trees_sanity(bped_sentences, bped_trees):
                         if len(parsed.leaves()) != tok_amount:
                             uneven += 1
                     except Exception as e:
-                        failed +=1
+                        failed += 1
                 if not sent:
                     break  # EOF
     print '#########Tree len hist#########'
@@ -99,13 +100,14 @@ def trees_sanity(bped_sentences, bped_trees):
     for key in sorted(sent_len_hist.keys()):
         print key, sent_len_hist[key]
 
-    print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}'\
-        .format(tok_len_sum/total, tree_len_sum/total, missing, failed, uneven, total)
+    print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}' \
+        .format(tok_len_sum / total, tree_len_sum / total, missing, failed, uneven, total)
+
 
 def main():
     base_path = '/Users/roeeaharoni'
     # base_path = '/home/nlp/aharonr6'
-    bped_trees= base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
+    bped_trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
     bped_sentences = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'
     trees_sanity(bped_sentences, bped_trees)
     return
@@ -330,6 +332,8 @@ def apply_bpe_on_trees(bpe_model_path, words_file_path, trees_file_path, bped_tr
                     if word_count == sent_len:
                         perfect_cover += 1
                     lex_tree = ' '.join(lex_tree)
+
+                    # bpe the words
                     try:
                         if lex_tree != '':
                             parsed = yoav_trees.Tree('TOP').from_sexpr(lex_tree)
@@ -691,9 +695,9 @@ def en_he_len_exp():
 
 def moses_tokenize(input_file_path, output_file_path, lang):
     command_string = '{}/scripts/tokenizer/tokenizer.perl -l {} < {} > {}'.format(MOSES_HOME,
-                                                                                 lang,
-                                                                                 input_file_path,
-                                                                                 output_file_path)
+                                                                                  lang,
+                                                                                  input_file_path,
+                                                                                  output_file_path)
     os.system(command_string)
     return output_file_path
 
@@ -812,12 +816,12 @@ def get_TSS_prefixes(src_file, target_file, trees_file, sentences_file, output_f
                 text2tree[sent] = tree
                 if not sent:
                     break  # EOF
-                # sent_lines = sent.readlines()
-                # sent_lines = [next(sent) for x in xrange(600000)]
-                # tree_lines = trees.readlines()
-                # tree_lines = [next(trees) for x in xrange(600000)]
-                # for i, treeline in enumerate(tree_lines):
-                #     text2tree[sent_lines[i]] = treeline
+                    # sent_lines = sent.readlines()
+                    # sent_lines = [next(sent) for x in xrange(600000)]
+                    # tree_lines = trees.readlines()
+                    # tree_lines = [next(trees) for x in xrange(600000)]
+                    # for i, treeline in enumerate(tree_lines):
+                    #     text2tree[sent_lines[i]] = treeline
 
     TSS_strings = []
     TSS_with_lex_trees = []

@@ -3,6 +3,7 @@ import yoav_trees
 
 def main():
 
+    # compare bpe english side and the tree yields to find inconsistencies
     de_bpe_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe'
     de_stt_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de.bpe.copy'
     en_bpe_file_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'

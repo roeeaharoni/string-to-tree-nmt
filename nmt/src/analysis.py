@@ -138,6 +138,7 @@ def plot_heat_map(attn_mtx, target_labels, source_labels, attn_mtx2=None, target
             plt.close()
 
         else:
+            # show full tree matrix
             fig = plt.figure(figsize=(20, 10))
             score = get_diagonal_subsequent_reordering_score(attn_mtx, source_labels, target_labels)
             # ax3 = plt.subplot(224)
@@ -338,7 +339,7 @@ def inspect_alignment_matrices(file1, file2=None):
     high_syntax = defaultdict(int)
     while (file1):
         count += 1
-        print count
+        # print count
         sid, mma, target_labels, source_labels = read_alignment_matrix(file1)
         if not target_labels:
             break
@@ -357,31 +358,36 @@ def inspect_alignment_matrices(file1, file2=None):
             bpe_score = get_diagonal_subsequent_reordering_score(mma2, source_labels2, target_labels2)
 
         # if tree_score > 4:
-        # plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels, mma2, target_labels2, source_labels2, count)
+        to_show = [261, 39, 1227, 1146, 614, 943, 1135, 415, 865]
+        if (count - 1) in to_show:
+            plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, count)
 
         if bpe_score < tree_score:
+            print count
             syntax_based_higher += 1
         else:
             bpe_based_higher += 1
             # (target_len, source_len) = no_tree_matrix.shape
 
         for k in xrange(30):
-            if tree_score == 0:
-                print 'neg'
+            # if tree_score == 0:
+            #     print 'neg'
             if bpe_score >= k and bpe_score < k+1:
                 high_bpe[k] += 1
             if tree_score >= k and tree_score < k+1:
                 high_syntax[k] += 1
 
-        image_path_prefix = '/Users/roeeaharoni/git/research/nmt/src/plots/'
-        file_path = image_path_prefix + str(count) + '.png'
-        if count == 603:
-            plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, file=file_path)
-                # if comp and bpe_score < tree_score:
-                # plot both alignments on same figure for comparison
-                # plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels, mma2, target_labels2, source_labels2)
-                # else:
-                #     plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels)
+        # image_path_prefix = '/Users/roeeaharoni/git/research/nmt/src/plots/'
+        # file_path = image_path_prefix + str(count) + '.png'
+        # if count == 603:
+        #     plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, file=file_path)
+
+
+        # if comp and bpe_score < tree_score:
+        # plot both alignments on same figure for comparison
+        # plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels, mma2, target_labels2, source_labels2)
+        # else:
+        #     plot_heat_map(no_tree_matrix, no_tree_target_labels, source_labels)
 
         # plots full tree alignment
         # if mma is None:
@@ -457,7 +463,11 @@ def compare_sentence_level_bleu():
 
     scores_bpe = compute_sent_level_bleu_scores(
         '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
-        '/Users/roeeaharoni/git/research/nmt/models/de_en_wmt16/newstest2015-deen-src.de.output.en')
+        '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best')
+
+    # scores_bpe = compute_sent_level_bleu_scores(
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
+    #     '/Users/roeeaharoni/git/research/nmt/models/de_en_wmt16/newstest2015-deen-src.de.output.en')
 
     source_sentences = codecs.open('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.de',
                                    'r', 'utf-8').readlines()
@@ -800,9 +810,9 @@ def get_distortion_from_alignments_file(filepath):
 
 
 def main(file1, file2):
-    compare_sentence_level_bleu()
+    # compare_sentence_level_bleu()
 
-    # inspect_alignment_matrices(file1, file2)
+    inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
