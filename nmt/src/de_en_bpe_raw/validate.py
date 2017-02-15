@@ -1,6 +1,7 @@
 import os
 import codecs
 
+
 def main():
     print 'validating...'
 
@@ -12,12 +13,12 @@ def main():
 
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.tok.clean.true.bpe.de'
 
-    dev_target = base_path+ '/git/research/nmt/models/de_en_bpe_raw/newstest-2013-2014-deen.tok.clean.true.bpe.de.output.dev'
+    dev_target = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest-2013-2014-deen.tok.clean.true.bpe.de.output.dev'
 
     alignments_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/dev_alignments.txt'
 
-    # decode: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
+    # decode dev set: k - beam size, n - normalize scores by length, p - processes
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
      -m {}.dev.npz \
      -i {} \
      -o {} \
@@ -45,6 +46,7 @@ def postprocess(base_path, input_path, output_path):
     {}/scripts/tokenizer/detokenizer.perl -l en < {} > {}'.format(moses_home, moses_home, input_path, output_path)
 
     os.system(command)
+
 
 if __name__ == '__main__':
     main()
