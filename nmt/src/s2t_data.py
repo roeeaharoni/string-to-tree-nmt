@@ -45,6 +45,225 @@ NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
 BPE_OPERATIONS = 89500
 
 
+def preprocess_de_en_wmt16_from_scratch():
+    # create unified WMT de-en train corpus
+    # de_file_paths = [
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.de',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.de',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.de']
+    #
+    # en_file_paths = [
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.en',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.en',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.en']
+    #
+    de_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.de'
+    en_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.en'
+    #
+    # command = 'cat {} {} {} > {}'.format(de_file_paths[0], de_file_paths[1], de_file_paths[2], de_target_path)
+    # os.system(command)
+    # command = 'cat {} {} {} > {}'.format(en_file_paths[0], en_file_paths[1], en_file_paths[2], en_target_path)
+    # os.system(command)
+
+    # "conventional" preprocessing
+    prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    src = 'de'
+    trg = 'en'
+
+    # full_preprocess(prefix, src, trg)
+
+    # TODO:
+    # check train data size diff (by cleaning with 50 thresh) - maybe 4.5m and not 4.2m due to len 50 limit?
+    # seems like it as shrinks to 4153515 sentences - DONE
+
+    # preprocess new dev files - DONE
+    dev_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
+    full_preprocess(dev_prefix, src, trg)
+
+    # preprocess new test files - DONE
+    test2015_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
+    full_preprocess(test2015_prefix, src, trg)
+    test2016_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
+    full_preprocess(test2016_prefix, src, trg)
+
+    # train model on raw data
+    # unzip train data on server and go (/home/nlp/aharonr6/gdrive_root
+
+    # create the parsed version of the new corpus: moses ptb tok -> detok symbols -> BLLIP parse (on server, parallel) -> bpe trees
+
+    return
+
+
+def full_preprocess(prefix, src, trg, prev_train_prefix=None):
+    # train_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    if prev_train_prefix is not None:
+        on_train = False
+        train_prefix = prev_train_prefix
+    else:
+        on_train = True
+        train_prefix = prefix
+
+    # normalize punctuation (mainly spaces near punctuation. also has -penn option)
+    # $mosesdecoder/scripts/tokenizer/normalize-punctuation.perl -l $SRC
+    # tokenize (what is -a?)
+    # $mosesdecoder/scripts/tokenizer/tokenizer.perl -a -l $SRC > data/$prefix.tok.$SRC
+    normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
+    {}/scripts/tokenizer/tokenizer.perl -a -l {} > {}.tok.{}'
+
+    # tokenize src
+    os.system(normalize_tokenize_command_format.format(prefix, src, MOSES_HOME, src, MOSES_HOME, src, prefix, src))
+
+    # tokenize target
+    os.system(normalize_tokenize_command_format.format(prefix, trg, MOSES_HOME, trg, MOSES_HOME, trg, prefix, trg))
+    print 'finished tokenization'
+
+    # clean
+    # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
+    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok {} {} {}.tok.clean 1 80'.format(MOSES_HOME,
+                                                                                                    prefix,
+                                                                                                    src, trg, prefix)
+    os.system(clean_command)
+    print 'finished cleaning'
+
+    # truecase - train
+    # $mosesdecoder/scripts/recaser/train-truecaser.perl -corpus data/corpus.tok.clean.$SRC -model model/truecase-model.$SRC
+    if on_train:
+        train_moses_truecase(prefix + '.tok.clean.' + src, prefix + '.tok.clean.' + src + '.tcmodel')
+        train_moses_truecase(prefix + '.tok.clean.' + trg, prefix + '.tok.clean.' + trg + '.tcmodel')
+        print 'trained truecasing'
+
+    # truecase - apply
+    # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
+    # truecase source
+    apply_moses_truecase(prefix + '.tok.clean.' + src,
+                         prefix + '.tok.clean.true.' + src,
+                         train_prefix + '.tok.clean.' + src + '.tcmodel')
+    # truecase target
+    apply_moses_truecase(prefix + '.tok.clean.' + trg,
+                         prefix + '.tok.clean.true.' + trg,
+                         train_prefix + '.tok.clean.' + trg + '.tcmodel')
+
+    print 'finished truecasing'
+
+    # BPE - train (on both sides together)
+    # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
+    if on_train:
+        train_bpe(prefix + '.tok.clean.true.' + src,
+                  prefix + '.tok.clean.true.' + trg,
+                  BPE_OPERATIONS,
+                  prefix + '.tok.clean.true.bpemodel.' + src + trg)
+        print 'trained BPE'
+
+    # BPE - apply
+    # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
+    apply_BPE(prefix + '.tok.clean.true.' + src,
+              prefix + '.tok.clean.true.bpe.' + src,
+              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
+
+    apply_BPE(prefix + '.tok.clean.true.' + trg,
+              prefix + '.tok.clean.true.bpe.' + trg,
+              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
+    print 'applied BPE'
+
+    if on_train:
+        # build dict $nematus/data/build_dictionary.py data/corpus.bpe.$SRC data/corpus.bpe.$TRG
+        build_nematus_dictionary(prefix + '.tok.clean.true.bpe.' + src, prefix + '.tok.clean.true.bpe.' + trg)
+        print 'built dictionaries'
+
+    print 'finished preprocessing. files to use:'
+
+    # train files
+    print prefix + '.tok.clean.true.bpe.' + src
+    print prefix + '.tok.clean.true.bpe.' + trg
+
+
+def main():
+    base_path = '/Users/roeeaharoni'
+    # base_path = '/home/nlp/aharonr6'
+
+    preprocess_de_en_wmt16_from_scratch()
+
+    # run sanity check on trees
+    # bped_trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
+    # bped_sentences = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'
+    # trees_sanity(bped_sentences, bped_trees)
+    # return
+
+    # train bpe model
+    # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de',
+    #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en',
+    #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model')
+    # return
+
+    # create lexicalized trees based on truecased data for train
+    # true_bpe_model = base_path + '/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model'
+    # text_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
+    # trees_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final'
+    # divide_file(text_path)
+    # divide_file(trees_path)
+    # pool = Pool(processes=5)
+    #
+    # # do in parallel as slow
+    # for i in xrange(5):
+    #     pool.apply_async(apply_bpe_on_trees,
+    #                      (true_bpe_model,
+    #                       text_path + '._{}'.format(i),
+    #                       trees_path + '._{}'.format(i),
+    #                       trees_path + '._{}.bped'.format(i)))
+    #
+    # pool.close()
+    # pool.join()
+    # merge_files([trees_path + '._{}.bped'.format(i) for i in xrange(5)],
+    #             trees_path + '.true.bped')
+    # return
+
+    # parse with bllip
+    # dev
+    # dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.en'
+    # dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en'
+    # complete_missing_parse_tress_with_bllip(dev_true_en_file, dev_true_en_parsed_file)
+    # apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file + '.fixed', dev_true_en_parsed_file + '.bped')
+    # return
+
+    # test
+    # test_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.en'
+    # test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.parsed.en'
+    # complete_missing_parse_tress_with_bllip(test_true_en_file, test_true_en_parsed_file)
+    # apply_bpe_on_trees(true_bpe_model, test_true_en_file, test_true_en_parsed_file + '.fixed', test_true_en_parsed_file + '.bped')
+    #
+    # return
+
+    # re run bllip for missing trees on final.true.bped
+    # sents = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
+    # trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped'
+    #
+    # # try to parse the missing trees
+    # complete_missing_parse_tress_with_bllip(sents, trees)
+    #
+    # # lexicalize and bpe the missing trees
+    # apply_bpe_on_trees(true_bpe_model, sents + '.fixed', trees +'.fixed', trees +'.fixed.bped')
+    #
+    # # add the missing trees to the main file
+    # fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
+    # return
+
+    # get input file path
+    arguments = do.docopt(__doc__)
+    if arguments['--input']:
+        input_file_path = arguments['--input']
+    else:
+        print 'no input file specified'
+        return
+
+    if arguments['--trees']:
+        trees_file_path = arguments['--trees']
+    else:
+        print 'no trees file specified'
+        return
+
+    return
+
+
 # count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
 def trees_sanity(bped_sentences, bped_trees):
     missing = 0
@@ -102,90 +321,6 @@ def trees_sanity(bped_sentences, bped_trees):
 
     print 'avg. sent len:{}\navg. tree len:{}\nmissing:{}\nfailed:{}\nuneven:{}\ntotal:{}' \
         .format(tok_len_sum / total, tree_len_sum / total, missing, failed, uneven, total)
-
-
-def main():
-    base_path = '/Users/roeeaharoni'
-    # base_path = '/home/nlp/aharonr6'
-    bped_trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
-    bped_sentences = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en.bpe'
-    trees_sanity(bped_sentences, bped_trees)
-    return
-    # train_bpe('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.de',
-    #           '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en',
-    #           BPE_OPERATIONS, '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model')
-    # return
-
-    # create lexicalized trees based on truecased data for train
-    true_bpe_model = base_path + '/git/research/nmt/data/WMT16/de-en/train/de-en-true-bpe.model'
-    # text_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
-    # trees_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final'
-    # divide_file(text_path)
-    # divide_file(trees_path)
-
-    # pool = Pool(processes=5)
-    #
-    # # do in parallel as slow
-    # for i in xrange(5):
-    #     pool.apply_async(apply_bpe_on_trees,
-    #                      (true_bpe_model,
-    #                       text_path + '._{}'.format(i),
-    #                       trees_path + '._{}'.format(i),
-    #                       trees_path + '._{}.bped'.format(i)))
-    #
-    # pool.close()
-    # pool.join()
-    # merge_files([trees_path + '._{}.bped'.format(i) for i in xrange(5)],
-    #             trees_path + '.true.bped')
-    # return
-
-    # parse with bllip
-
-    # dev
-    # dev_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.en'
-    # dev_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.tok.true.parsed.en'
-    # complete_missing_parse_tress_with_bllip(dev_true_en_file, dev_true_en_parsed_file)
-    # apply_bpe_on_trees(true_bpe_model, dev_true_en_file, dev_true_en_parsed_file + '.fixed', dev_true_en_parsed_file + '.bped')
-    # return
-
-    # test
-    # test_true_en_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.en'
-    # test_true_en_parsed_file = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.tok.true.parsed.en'
-    # complete_missing_parse_tress_with_bllip(test_true_en_file, test_true_en_parsed_file)
-    # apply_bpe_on_trees(true_bpe_model, test_true_en_file, test_true_en_parsed_file + '.fixed', test_true_en_parsed_file + '.bped')
-    #
-    # return
-
-    # re run bllip missing on final.true.bped
-
-    # sents = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.true.en'
-    # trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped'
-    #
-    # # try to parse the missing trees
-    # complete_missing_parse_tress_with_bllip(sents, trees)
-    #
-    # # lexicalize and bpe the missing trees
-    # apply_bpe_on_trees(true_bpe_model, sents + '.fixed', trees +'.fixed', trees +'.fixed.bped')
-    #
-    # # add the missing trees to the main file
-    # fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
-    # return
-
-    # get input file path
-    arguments = do.docopt(__doc__)
-    if arguments['--input']:
-        input_file_path = arguments['--input']
-    else:
-        print 'no input file specified'
-        return
-
-    if arguments['--trees']:
-        trees_file_path = arguments['--trees']
-    else:
-        print 'no trees file specified'
-        return
-
-    return
 
 
 # truecase de-en train dev test
