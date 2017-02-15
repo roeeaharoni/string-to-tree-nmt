@@ -1,0 +1,40 @@
+{
+  "decoder": "gru_cond", 
+  "decay_c": 0.0, 
+  "patience": 10, 
+  "max_epochs": 5000, 
+  "dispFreq": 1000, 
+  "overwrite": false, 
+  "alpha_c": 0.0, 
+  "clip_c": 1.0, 
+  "n_words_src": 85000, 
+  "saveto": "model.npz", 
+  "valid_batch_size": 80, 
+  "n_words": 85000, 
+  "optimizer": "adadelta", 
+  "validFreq": 10000, 
+  "batch_size": 80, 
+  "encoder": "gru", 
+  "lrate": 0.0001, 
+  "valid_datasets": [
+    "dev.bpe.de", 
+    "dev.bpe.en"
+  ], 
+  "shuffle_each_epoch": true, 
+  "dim": 1024, 
+  "use_dropout": false, 
+  "datasets": [
+    "corpus.de.shuf", 
+    "corpus.en.shuf"
+  ], 
+  "dim_word": 500, 
+  "sampleFreq": 10000, 
+  "dictionaries": [
+    "vocab.de.json",
+    "vocab.en.json"
+  ], 
+  "reload_": true, 
+  "maxlen": 50, 
+  "finish_after": 720000, 
+  "saveFreq": 30000
+}
