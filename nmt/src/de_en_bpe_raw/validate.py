@@ -28,14 +28,23 @@ def main():
     print 'finished translating {}'.format(dev_src)
 
     # postprocess predictions (remove bpe, de-truecase)
-    postprocess_command = base_path + '/git/research/nmt/src/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target, dev_target)
-    os.system(postprocess_command)
+    postprocess(base_path, dev_target, dev_target + '.postprocessed')
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target, dev_target)
 
     # get current BLEU, compare to last best model, save as best if improved
     bleu_command = './bleu.sh'
     os.system(bleu_command)
 
+
+def postprocess(base_path, input_path, output_path):
+    moses_home = base_path + '/git/mosesdecoder'
+
+    # fix BPE split words, detruecase, detokenize
+    command = 'sed \'s/\@\@ //g\' | \
+    {}/scripts/recaser/detruecase.perl | \
+    {}/scripts/tokenizer/detokenizer.perl -l en < {} > {}'.format(moses_home, moses_home, input_path, output_path)
+
+    os.system(command)
 
 if __name__ == '__main__':
     main()
