@@ -384,6 +384,7 @@ def bllip_parse_large_file(input_path, output_path):
     print 'parsed sentences are in: {}'.format(output_path)
     return
 
+
 def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
@@ -396,6 +397,8 @@ def bllip_parse(input_file, output_file):
                 if count % 10 == 0:
                     print 'parsed {} sentences from {}'.format(count, input_file)
                 sent = input.readline()
+                if not sent:
+                    break  # EOF
                 # print sent
                 try:
                     tokens = [s.encode('utf-8') for s in sent.strip().split(' ')]
@@ -408,12 +411,8 @@ def bllip_parse(input_file, output_file):
                 # print '\n\n'
                 parses.append(parse)
                 output.write(format(parse.decode('utf-8')) + '\n')
-                if not sent:
-                    break  # EOF
+
     return parses
-
-
-
 
 
 # count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
@@ -535,12 +534,12 @@ def merge_files(file_paths, output_path):
     with codecs.open(output_path, 'w', encoding='utf8') as output:
         for file in file_paths:
             with codecs.open(file, encoding='utf8') as lines:
-
                 while True:
                     sent = lines.readline()
-                    output.write(sent)
                     if not sent:
                         break  # EOF
+                    output.write(sent)
+
 
 
 # fill the first 2 with the missing lines found in the second 2
