@@ -366,11 +366,13 @@ def preprocess_bllip(prefix, src, trg):
 def bllip_parse_large_file(input_path, output_path):
     start = time.time()
     paths = divide_file(input_path, 100)
+    print paths
     pool = Pool(processes=5)
     for path in paths:
         pool.apply_async(bllip_parse, (path, path + '.parsed'))
-    pool.close()
+
     pool.join()
+    pool.close()
     merge_files([path + '.parsed' for path in paths], output_path)
     end = time.time()
     print 'parsing took {} seconds'.format(end - start)
