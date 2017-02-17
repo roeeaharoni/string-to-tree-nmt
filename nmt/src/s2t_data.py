@@ -41,7 +41,14 @@ def main():
     base_path = '/Users/roeeaharoni'
     # base_path = '/home/nlp/aharonr6'
 
-    preprocess_de_en_wmt16_from_scratch()
+    # preprocess de_en_raw wmt16 for bllip
+    prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    src = 'de'
+    trg = 'en'
+    preprocess_bllip(prefix, src, trg)
+
+    # preprocess de_en_raw wmt16
+    # preprocess_de_en_wmt16_from_scratch()
 
     # run sanity check on trees
     # bped_trees = base_path + '/git/research/nmt/data/WMT16/de-en/train/corpus.parallel.tok.en.parsed2.final.true.bped.final'
