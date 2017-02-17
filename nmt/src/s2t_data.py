@@ -1,17 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""code for processing corpora for string-to-tree nmt
-
-Usage:
-  s2t_data.py [--input INPUT][--trees TREES]
-
-Arguments:
-
-Options:
-  -h --help                     show this help message and exit
-  --input INPUT                 input file path
-  --trees TREES                 trees file path
-"""
+"""code for processing corpora for string-to-tree nmt"""
 
 import codecs
 from collections import defaultdict
@@ -20,6 +9,7 @@ import yoav_trees
 import docopt as do
 import apply_bpe as apply_bpe
 import traceback
+from moses_tools import *
 
 from multiprocessing import Pool
 
@@ -39,142 +29,12 @@ from multiprocessing import Pool
 # TTS TODO: check how to manipulate decoder in nematus
 
 
-MOSES_HOME = '/Users/roeeaharoni/git/mosesdecoder'
-BPE_HOME = '/Users/roeeaharoni/git/subword-nmt'
-NEMATUS_HOME = '/Users/roeeaharoni/git/nematus'
+# BASE_PATH = '/Users/roeeaharoni'
+BASE_PATH = '/home/nlp/aharonr6'
+MOSES_HOME = BASE_PATH + '/git/mosesdecoder'
+BPE_HOME = BASE_PATH + '/git/subword-nmt'
+NEMATUS_HOME = BASE_PATH + '/git/nematus'
 BPE_OPERATIONS = 89500
-
-
-def preprocess_de_en_wmt16_from_scratch():
-    # create unified WMT de-en train corpus
-    # de_file_paths = [
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.de',
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.de',
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.de']
-    #
-    # en_file_paths = [
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.en',
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.en',
-    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.en']
-    #
-    de_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.de'
-    en_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.en'
-    #
-    # command = 'cat {} {} {} > {}'.format(de_file_paths[0], de_file_paths[1], de_file_paths[2], de_target_path)
-    # os.system(command)
-    # command = 'cat {} {} {} > {}'.format(en_file_paths[0], en_file_paths[1], en_file_paths[2], en_target_path)
-    # os.system(command)
-
-    # "conventional" preprocessing
-    prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
-    src = 'de'
-    trg = 'en'
-
-    # full_preprocess(prefix, src, trg)
-
-    # TODO:
-    # check train data size diff (by cleaning with 50 thresh) - maybe 4.5m and not 4.2m due to len 50 limit?
-    # seems like it as shrinks to 4153515 sentences - DONE
-
-    # preprocess new dev files - DONE
-    dev_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
-    full_preprocess(dev_prefix, src, trg)
-
-    # preprocess new test files - DONE
-    test2015_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
-    full_preprocess(test2015_prefix, src, trg)
-    test2016_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
-    full_preprocess(test2016_prefix, src, trg)
-
-    # train model on raw data
-    # unzip train data on server and go (/home/nlp/aharonr6/gdrive_root
-
-    # create the parsed version of the new corpus: moses ptb tok -> detok symbols -> BLLIP parse (on server, parallel) -> bpe trees
-
-    return
-
-
-def full_preprocess(prefix, src, trg, prev_train_prefix=None):
-    # train_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
-    if prev_train_prefix is not None:
-        on_train = False
-        train_prefix = prev_train_prefix
-    else:
-        on_train = True
-        train_prefix = prefix
-
-    # normalize punctuation (mainly spaces near punctuation. also has -penn option)
-    # $mosesdecoder/scripts/tokenizer/normalize-punctuation.perl -l $SRC
-    # tokenize (what is -a?)
-    # $mosesdecoder/scripts/tokenizer/tokenizer.perl -a -l $SRC > data/$prefix.tok.$SRC
-    normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
-    {}/scripts/tokenizer/tokenizer.perl -a -l {} > {}.tok.{}'
-
-    # tokenize src
-    os.system(normalize_tokenize_command_format.format(prefix, src, MOSES_HOME, src, MOSES_HOME, src, prefix, src))
-
-    # tokenize target
-    os.system(normalize_tokenize_command_format.format(prefix, trg, MOSES_HOME, trg, MOSES_HOME, trg, prefix, trg))
-    print 'finished tokenization'
-
-    # clean
-    # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
-    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok {} {} {}.tok.clean 1 80'.format(MOSES_HOME,
-                                                                                                    prefix,
-                                                                                                    src, trg, prefix)
-    os.system(clean_command)
-    print 'finished cleaning'
-
-    # truecase - train
-    # $mosesdecoder/scripts/recaser/train-truecaser.perl -corpus data/corpus.tok.clean.$SRC -model model/truecase-model.$SRC
-    if on_train:
-        train_moses_truecase(prefix + '.tok.clean.' + src, prefix + '.tok.clean.' + src + '.tcmodel')
-        train_moses_truecase(prefix + '.tok.clean.' + trg, prefix + '.tok.clean.' + trg + '.tcmodel')
-        print 'trained truecasing'
-
-    # truecase - apply
-    # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
-    # truecase source
-    apply_moses_truecase(prefix + '.tok.clean.' + src,
-                         prefix + '.tok.clean.true.' + src,
-                         train_prefix + '.tok.clean.' + src + '.tcmodel')
-    # truecase target
-    apply_moses_truecase(prefix + '.tok.clean.' + trg,
-                         prefix + '.tok.clean.true.' + trg,
-                         train_prefix + '.tok.clean.' + trg + '.tcmodel')
-
-    print 'finished truecasing'
-
-    # BPE - train (on both sides together)
-    # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
-    if on_train:
-        train_bpe(prefix + '.tok.clean.true.' + src,
-                  prefix + '.tok.clean.true.' + trg,
-                  BPE_OPERATIONS,
-                  prefix + '.tok.clean.true.bpemodel.' + src + trg)
-        print 'trained BPE'
-
-    # BPE - apply
-    # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
-    apply_BPE(prefix + '.tok.clean.true.' + src,
-              prefix + '.tok.clean.true.bpe.' + src,
-              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
-
-    apply_BPE(prefix + '.tok.clean.true.' + trg,
-              prefix + '.tok.clean.true.bpe.' + trg,
-              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
-    print 'applied BPE'
-
-    if on_train:
-        # build dict $nematus/data/build_dictionary.py data/corpus.bpe.$SRC data/corpus.bpe.$TRG
-        build_nematus_dictionary(prefix + '.tok.clean.true.bpe.' + src, prefix + '.tok.clean.true.bpe.' + trg)
-        print 'built dictionaries'
-
-    print 'finished preprocessing. files to use:'
-
-    # train files
-    print prefix + '.tok.clean.true.bpe.' + src
-    print prefix + '.tok.clean.true.bpe.' + trg
 
 
 def main():
@@ -247,21 +107,269 @@ def main():
     # fill_missing_trees(sents, trees, sents + '.fixed', trees + '.fixed.bped')
     # return
 
-    # get input file path
-    arguments = do.docopt(__doc__)
-    if arguments['--input']:
-        input_file_path = arguments['--input']
-    else:
-        print 'no input file specified'
-        return
+    return
 
-    if arguments['--trees']:
-        trees_file_path = arguments['--trees']
-    else:
-        print 'no trees file specified'
-        return
+
+def preprocess_de_en_wmt16_from_scratch():
+    # create unified WMT de-en train corpus
+    # de_file_paths = [
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.de',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.de',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.de']
+    #
+    # en_file_paths = [
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-europarl-v7/europarl-v7.de-en.en',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-commoncrawl/commoncrawl.de-en.en',
+    #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/all/train/training-parallel-nc-v11/news-commentary-v11.de-en.en']
+    #
+    de_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.de'
+    en_target_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/wmt16.train.en'
+    #
+    # command = 'cat {} {} {} > {}'.format(de_file_paths[0], de_file_paths[1], de_file_paths[2], de_target_path)
+    # os.system(command)
+    # command = 'cat {} {} {} > {}'.format(en_file_paths[0], en_file_paths[1], en_file_paths[2], en_target_path)
+    # os.system(command)
+
+    # "conventional" preprocessing
+    prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    src = 'de'
+    trg = 'en'
+
+    # full_preprocess(prefix, src, trg)
+
+    # TODO:
+    # check train data size diff (by cleaning with 50 thresh) - maybe 4.5m and not 4.2m due to len 50 limit?
+    # seems like it as shrinks to 4153515 sentences - DONE
+
+    # preprocess new dev files - DONE
+    dev_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
+    # full_preprocess(dev_prefix, src, trg)
+
+    # preprocess new test files - DONE
+    test2015_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
+    # full_preprocess(test2015_prefix, src, trg)
+    test2016_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
+    # full_preprocess(test2016_prefix, src, trg)
+
+    # train model on raw data - DONE
+
+    # create the parsed version of the new corpus: moses ptb tok -> detok symbols -> BLLIP parse (on server, parallel) -> bpe trees
+    preprocess_bllip(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train', 'de', 'en')
 
     return
+
+# standard preprocess wmt16 from scratch
+def full_preprocess(prefix, src, trg, prev_train_prefix=None):
+    # train_prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    if prev_train_prefix is not None:
+        on_train = False
+        train_prefix = prev_train_prefix
+    else:
+        on_train = True
+        train_prefix = prefix
+
+    # normalize punctuation (mainly spaces near punctuation. also has -penn option, irrelevant as penn comes later)
+    # tokenize (-a is aggressive hyphen splitting)
+    # $mosesdecoder/scripts/tokenizer/tokenizer.perl -a -l $SRC > data/$prefix.tok.$SRC
+    normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
+    {}/scripts/tokenizer/tokenizer.perl -a -l {} > {}.tok.{}'
+
+    # tokenize src
+    os.system(normalize_tokenize_command_format.format(prefix, src, MOSES_HOME, src, MOSES_HOME, src, prefix, src))
+
+    # tokenize target
+    os.system(normalize_tokenize_command_format.format(prefix, trg, MOSES_HOME, trg, MOSES_HOME, trg, prefix, trg))
+    print 'finished tokenization'
+
+    # clean
+    # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
+    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok {} {} {}.tok.clean 1 80'.format(MOSES_HOME,
+                                                                                                    prefix,
+                                                                                                    src, trg, prefix)
+    os.system(clean_command)
+    print 'finished cleaning'
+
+    # truecase - train
+    # $mosesdecoder/scripts/recaser/train-truecaser.perl -corpus data/corpus.tok.clean.$SRC -model model/truecase-model.$SRC
+    if on_train:
+        train_moses_truecase(prefix + '.tok.clean.' + src, prefix + '.tok.clean.' + src + '.tcmodel')
+        train_moses_truecase(prefix + '.tok.clean.' + trg, prefix + '.tok.clean.' + trg + '.tcmodel')
+        print 'trained truecasing'
+
+    # truecase - apply
+    # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
+    # truecase source
+    apply_moses_truecase(prefix + '.tok.clean.' + src,
+                         prefix + '.tok.clean.true.' + src,
+                         train_prefix + '.tok.clean.' + src + '.tcmodel')
+    # truecase target
+    apply_moses_truecase(prefix + '.tok.clean.' + trg,
+                         prefix + '.tok.clean.true.' + trg,
+                         train_prefix + '.tok.clean.' + trg + '.tcmodel')
+
+    print 'finished truecasing'
+
+    # BPE - train (on both sides together)
+    # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
+    if on_train:
+        train_bpe(prefix + '.tok.clean.true.' + src,
+                  prefix + '.tok.clean.true.' + trg,
+                  BPE_OPERATIONS,
+                  prefix + '.tok.clean.true.bpemodel.' + src + trg)
+        print 'trained BPE'
+
+    # BPE - apply
+    # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
+    apply_BPE(prefix + '.tok.clean.true.' + src,
+              prefix + '.tok.clean.true.bpe.' + src,
+              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
+
+    apply_BPE(prefix + '.tok.clean.true.' + trg,
+              prefix + '.tok.clean.true.bpe.' + trg,
+              train_prefix + '.tok.clean.true.bpemodel.' + src + trg)
+    print 'applied BPE'
+
+    if on_train:
+        # build dict $nematus/data/build_dictionary.py data/corpus.bpe.$SRC data/corpus.bpe.$TRG
+        build_nematus_dictionary(prefix + '.tok.clean.true.bpe.' + src, prefix + '.tok.clean.true.bpe.' + trg)
+        print 'built dictionaries'
+
+    print 'finished preprocessing. files to use:'
+
+    # train files
+    print prefix + '.tok.clean.true.bpe.' + src
+    print prefix + '.tok.clean.true.bpe.' + trg
+
+
+# english is ptb tokenized, german is "normally" tokenized
+def preprocess_bllip(prefix, src, trg):
+
+    # normalize punctuation (mainly spaces near punctuation. also has -penn option - irrelevant as not in ptb here)
+    # $mosesdecoder/scripts/tokenizer/normalize-punctuation.perl -l $SRC
+    # tokenize (-a is aggressive hyphen splitting)
+    normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
+    {}/scripts/tokenizer/tokenizer.perl {} -a -l {} > {}.tok.penntrg.{}'
+
+    # tokenize src
+    os.system(normalize_tokenize_command_format.format(prefix, src, MOSES_HOME, src, MOSES_HOME, '', src, prefix, src))
+
+    # tokenize target (ptb style)
+    os.system(normalize_tokenize_command_format.format(prefix, trg, MOSES_HOME, trg, MOSES_HOME, '-penn', trg, prefix,
+                                                       trg))
+    print 'finished tokenization'
+
+    # clean
+    # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
+    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok.penntrg {} {} {}.tok.penntrg.clean 1 80'.format(
+                                                                                                    MOSES_HOME,
+                                                                                                    prefix,
+                                                                                                    src, trg, prefix)
+    os.system(clean_command)
+    print 'finished cleaning'
+
+    # truecase - apply
+    # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
+    # truecase source
+    apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
+                         prefix + '.tok.penntrg.clean.true.' + src,
+                         prefix + '.tok.clean.' + src + '.tcmodel')
+    # truecase target
+    apply_moses_truecase(prefix + '.tok.penntrg.clean.' + trg,
+                         prefix + '.tok.penntrg.clean.true.' + trg,
+                         prefix + '.tok.clean.' + trg + '.tcmodel')
+
+    print 'finished truecasing'
+
+    # BPE - apply
+    # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
+    apply_BPE(prefix + '.tok.penntrg.clean.true.' + src,
+              prefix + '.tok.penntrg.clean.true.bpe.' + src,
+              prefix + '.tok.clean.true.bpemodel.' + src + trg)
+
+    print 'applied BPE on source side'
+
+    apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
+              prefix + '.tok.penntrg.clean.true.bpe.' + trg,
+              prefix + '.tok.clean.true.bpemodel.' + src + trg)
+
+    print 'applied BPE on target side (for test purposes)'
+
+    # prepare for BLLIP parsing:
+
+    # de-escape special chars
+    deescape_command = '{}/scripts/tokenizer/deescape-special-chars-PTB.perl < {} > {}'.format(MOSES_HOME,
+                                                                        prefix + '.tok.penntrg.clean.true.' + trg,
+                                                                        prefix + '.tok.penntrg.clean.true.desc.' + trg)
+    os.system(deescape_command)
+
+    # Unsplit hyphens
+    command = 'sed -i \"s/ \@-\@ /-/g\" {} '.format(prefix + '.tok.penntrg.clean.true.desc.' + trg)
+    os.system(command)
+
+    # Unsplit slashes
+    command = 'sed -i \"s/ \@\/\@ /\//g\" {}'.format(prefix + '.tok.penntrg.clean.true.desc.' + trg)
+    os.system(command)
+
+    # so far we should have:
+    # bped version of src(non-penn)/target(penn) tokenized, clean, truecased
+    # non bped vesion of target, with unsplit hyphens and slashes, ready for bllip parsing
+    return
+
+    # TODO: parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
+    # with python bllip version, send list of tokens to avoid bllip tokenization)
+    # do this in server
+
+
+    # after parsing:
+
+    # TODO: Re-split hyphens / slashes
+    # $pipeline .= " $RealBin/syntax-hyphen-splitting.perl";
+    # $pipeline. = " $RealBin/syntax-hyphen-splitting.perl -slash";
+
+    split_hyphen_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
+        prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+    split_slash_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
+        prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+
+    # TODO: lexicalize trees with bpe - already have code for that
+
+    # TODO: check if yields are identical to bped ptb version - already have code for that
+
+    # TODO: build dictionaries
+    # if on_train:
+    #     # build dict $nematus/data/build_dictionary.py data/corpus.bpe.$SRC data/corpus.bpe.$TRG
+    #     build_nematus_dictionary(prefix + '.tok.clean.true.bpe.' + src, prefix + '.tok.clean.true.bpe.' + trg)
+    #     print 'built dictionaries'
+
+    # print 'finished preprocessing. files to use:'
+    #
+    # # train files
+    # print prefix + '.tok.clean.true.bpe.' + src
+    # print prefix + '.tok.clean.true.bpe.' + trg
+
+    # TODO: re-train bpe2tree
+
+
+def bllip_parse_large_file(input_path, output_path):
+    from bllipparser import RerankingParser
+    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+    paths = divide_file(input_path, 500000)
+    pool = Pool(processes=5)
+    for path in paths:
+        pool.apply_async(apply_bpe_on_trees,
+                             (true_bpe_model,
+                              text_path + '._{}'.format(i),
+                              trees_path + '._{}'.format(i),
+                              trees_path + '._{}.bped'.format(i)))
+
+        pool.close()
+        pool.join()
+        merge_files([trees_path + '._{}.bped'.format(i) for i in xrange(5)],
+                    trees_path + '.true.bped')
+    return
+
+
+
 
 
 # count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
@@ -355,24 +463,28 @@ def truecase_de_en():
     return
 
 
-def divide_file(path):
+def divide_file(path, lines_per_file = 1000000):
     i = 0
     j = 0
+    sub_paths = []
     output = False
     with codecs.open(path, encoding='utf8') as lines:
         while True:
             sent = lines.readline()
             if i % 100000 == 0:
                 print i
-            if i % 1000000 == 0:
+            if i % lines_per_file == 0:
                 if i > 0:
                     output.close()
-                output = codecs.open(path + '._{}'.format(j), 'w', encoding='utf8')
+                sub_file_path = path + '._{}'.format(j)
+                sub_paths.append(sub_file_path)
+                output = codecs.open(sub_file_path, 'w', encoding='utf8')
                 j += 1
             output.write(sent)
             i += 1
             if not sent:
                 break  # EOF
+    return sub_paths
 
 
 def merge_files(file_paths, output_path):
@@ -684,18 +796,18 @@ def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
     parses = []
-    with codecs.open(input_file, encoding='utf8') as sents:
-        while True:
-            sent = sents.readline()
-            print sent
-            parse = rrp.simple_parse(str(sent))
-            print parse
-            print '\n\n'
-            parses.append(parse)
-            if not sent:
-                break  # EOF
-    # acp.bllip_parse('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
-    # '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en')
+    with codecs.open(input_file, 'r', encoding='utf8') as input:
+        with codecs.open(output_file, 'w', encoding='utf-8') as output:
+            while True:
+                sent = input.readline()
+                # print sent
+                parse = rrp.simple_parse(sent.split(' '))
+                # print parse
+                # print '\n\n'
+                parses.append(parse)
+                output.write(parse)
+                if not sent:
+                    break  # EOF
     return parses
 
 
@@ -826,73 +938,6 @@ def en_he_len_exp():
     output_file = '/Users/roeeaharoni/git/research/nmt/en-he/IWSLT14.TED.dev2010.he-en.en.tok.len'
     add_length_prefix(src_file, target_file, output_file)
     return src_file, target_file
-
-
-def moses_tokenize(input_file_path, output_file_path, lang):
-    command_string = '{}/scripts/tokenizer/tokenizer.perl -l {} < {} > {}'.format(MOSES_HOME,
-                                                                                  lang,
-                                                                                  input_file_path,
-                                                                                  output_file_path)
-    os.system(command_string)
-    return output_file_path
-
-
-def moses_clean(input_corpus_prefix_path, output_corpus_prefix_path, src_lang, trg_lang):
-    command_string = '{}/scripts/training/clean-corpus-n.perl {} {} {} {} 1 80'.format(
-        MOSES_HOME,
-        input_corpus_prefix_path,
-        src_lang,
-        trg_lang,
-        output_corpus_prefix_path)
-    os.system(command_string)
-
-
-# input is cleaned files
-def train_moses_truecase(src_file_path, tc_model_path):
-    # train on clean src
-    command_string = '{}/scripts/recaser/train-truecaser.perl -corpus {} -model {}'.format(MOSES_HOME,
-                                                                                           src_file_path,
-                                                                                           tc_model_path)
-    os.system(command_string)
-    return tc_model_path
-
-
-def apply_moses_truecase(input_file_path, output_file_path, tc_model_path):
-    # apply on clean source
-    command_string = '{}/scripts/recaser/truecase.perl -model {} < {} > {}'.format(MOSES_HOME,
-                                                                                   tc_model_path,
-                                                                                   input_file_path,
-                                                                                   output_file_path)
-    os.system(command_string)
-    return output_file_path
-
-
-def train_bpe(src_file_path, trg_file_path, bpe_ops, bpe_model_path):
-    # apply on clean source
-    command_string = 'cat {} {} | {}/learn_bpe.py -s {} > {}'.format(src_file_path,
-                                                                     trg_file_path,
-                                                                     BPE_HOME,
-                                                                     bpe_ops,
-                                                                     bpe_model_path)
-    os.system(command_string)
-    return bpe_model_path
-
-
-def apply_BPE(input_file_path, output_file_path, bpe_model_path):
-    command_string = '{}/apply_bpe.py -c {} < {} > {}'.format(BPE_HOME,
-                                                              bpe_model_path,
-                                                              input_file_path,
-                                                              output_file_path)
-    os.system(command_string)
-    return output_file_path
-
-
-def build_nematus_dictionary(train_src_bpe_file_path, train_target_bpe_file_path):
-    # build network dictionary
-    command_string = '{}/data/build_dictionary.py {} {}'.format(NEMATUS_HOME,
-                                                                train_src_bpe_file_path,
-                                                                train_target_bpe_file_path)
-    os.system(command_string)
 
 
 def get_tss_from_tree(tree):
