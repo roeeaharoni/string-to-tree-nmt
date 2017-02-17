@@ -41,11 +41,9 @@ BPE_OPERATIONS = 89500
 
 
 def main():
-    base_path = '/Users/roeeaharoni'
-    # base_path = '/home/nlp/aharonr6'
 
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
-    output_path = ''
+    output_path = input_path + '.parsed'
     bllip_parse_large_file(input_path, output_path)
     return
 
@@ -393,14 +391,15 @@ def bllip_parse(input_file, output_file):
                 sent = input.readline()
                 # print sent
                 try:
-                    parse = rrp.simple_parse(sent.split(' '))
+                    tokens = [s.encode('utf-8') for s in sent.split(' ')]
+                    parse = rrp.simple_parse(tokens)
                 except Exception as e:
                     print e
                     parse = 'MISSING'
                 # print parse
                 # print '\n\n'
                 parses.append(parse)
-                output.write(parse)
+                output.write(parse + '\n')
                 if not sent:
                     break  # EOF
     return parses
