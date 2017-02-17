@@ -393,7 +393,7 @@ def bllip_parse(input_file, output_file):
                 sent = input.readline()
                 # print sent
                 try:
-                    tokens = [s.encode('utf-8') for s in sent.split(' ')]
+                    tokens = [s.encode('utf-8') for s in sent.strip().split(' ')]
                     parse = rrp.simple_parse(tokens)
                 except Exception as e:
                     print e
