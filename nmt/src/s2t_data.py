@@ -406,7 +406,7 @@ def bllip_parse(input_file, output_file):
                 # print parse
                 # print '\n\n'
                 parses.append(parse)
-                output.write(parse + '\n')
+                output.write(parse + u'\n')
                 if not sent:
                     break  # EOF
     return parses
