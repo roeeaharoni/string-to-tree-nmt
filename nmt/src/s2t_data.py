@@ -387,6 +387,7 @@ def bllip_parse(input_file, output_file):
     with codecs.open(input_file, 'r', encoding='utf8') as input:
         with codecs.open(output_file, 'w', encoding='utf-8') as output:
             while True:
+                count += 1
                 if count % 10000 == 0:
                     print 'parsed {} sentences from {}'.format(count, input_file)
                 sent = input.readline()
