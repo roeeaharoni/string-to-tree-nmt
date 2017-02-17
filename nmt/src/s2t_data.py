@@ -369,9 +369,9 @@ def bllip_parse_large_file(input_path, output_path):
     pool = Pool(processes=5)
     for path in paths:
         pool.apply_async(bllip_parse, (path, path + '.parsed'))
-        pool.close()
-        pool.join()
-        merge_files([path + '.parsed' for path in paths], output_path)
+    pool.close()
+    pool.join()
+    merge_files([path + '.parsed' for path in paths], output_path)
     end = time.time()
     print 'parsing took {} seconds'.format(end - start)
     print 'parsed sentences are in: {}'.format(output_path)
@@ -507,8 +507,8 @@ def divide_file(path, lines_per_file = 1000000):
     with codecs.open(path, encoding='utf8') as lines:
         while True:
             sent = lines.readline()
-            if i % 100000 == 0:
-                print i
+            # if i % 100000 == 0:
+            #     print i
             if i % lines_per_file == 0:
                 if i > 0:
                     output.close()
