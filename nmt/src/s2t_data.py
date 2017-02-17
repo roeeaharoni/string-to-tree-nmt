@@ -5,6 +5,9 @@
 import codecs
 from collections import defaultdict
 import os
+
+import time
+
 import yoav_trees
 import docopt as do
 import apply_bpe as apply_bpe
@@ -40,6 +43,11 @@ BPE_OPERATIONS = 89500
 def main():
     base_path = '/Users/roeeaharoni'
     # base_path = '/home/nlp/aharonr6'
+
+    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
+    output_path = ''
+    bllip_parse_large_file(input_path, output_path)
+    return
 
     # preprocess de_en_raw wmt16 for bllip
     prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
@@ -358,22 +366,43 @@ def preprocess_bllip(prefix, src, trg):
 
 
 def bllip_parse_large_file(input_path, output_path):
-    from bllipparser import RerankingParser
-    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
-    paths = divide_file(input_path, 500000)
+    start = time.time()
+    paths = divide_file(input_path, 100)
     pool = Pool(processes=5)
     for path in paths:
-        pool.apply_async(apply_bpe_on_trees,
-                             (true_bpe_model,
-                              text_path + '._{}'.format(i),
-                              trees_path + '._{}'.format(i),
-                              trees_path + '._{}.bped'.format(i)))
-
+        pool.apply_async(bllip_parse, (path, path + '.parsed'))
         pool.close()
         pool.join()
-        merge_files([trees_path + '._{}.bped'.format(i) for i in xrange(5)],
-                    trees_path + '.true.bped')
+        merge_files([path + '.parsed' for path in paths], output_path)
+    end = time.time()
+    print 'parsing took {} seconds'.format(end - start)
+    print 'parsed sentences are in: {}'.format(output_path)
     return
+
+def bllip_parse(input_file, output_file):
+    from bllipparser import RerankingParser
+    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+    parses = []
+    count = 0
+    with codecs.open(input_file, 'r', encoding='utf8') as input:
+        with codecs.open(output_file, 'w', encoding='utf-8') as output:
+            while True:
+                if count % 10000 == 0:
+                    print 'parsed {} sentences from {}'.format(count, input_file)
+                sent = input.readline()
+                # print sent
+                try:
+                    parse = rrp.simple_parse(sent.split(' '))
+                except Exception as e:
+                    print e
+                    parse = 'MISSING'
+                # print parse
+                # print '\n\n'
+                parses.append(parse)
+                output.write(parse)
+                if not sent:
+                    break  # EOF
+    return parses
 
 
 
@@ -797,25 +826,6 @@ def remove_leaves(tree):
     if len(non_leaves) == 0:
         non_leaves = None
     return yoav_trees.Tree(tree.label, non_leaves)
-
-
-def bllip_parse(input_file, output_file):
-    from bllipparser import RerankingParser
-    rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
-    parses = []
-    with codecs.open(input_file, 'r', encoding='utf8') as input:
-        with codecs.open(output_file, 'w', encoding='utf-8') as output:
-            while True:
-                sent = input.readline()
-                # print sent
-                parse = rrp.simple_parse(sent.split(' '))
-                # print parse
-                # print '\n\n'
-                parses.append(parse)
-                output.write(parse)
-                if not sent:
-                    break  # EOF
-    return parses
 
 
 def fr_en_tss_exp():
