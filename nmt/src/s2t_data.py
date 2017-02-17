@@ -42,7 +42,7 @@ def main():
     # base_path = '/home/nlp/aharonr6'
 
     # preprocess de_en_raw wmt16 for bllip
-    prefix = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     src = 'de'
     trg = 'en'
     preprocess_bllip(prefix, src, trg)
