@@ -405,7 +405,7 @@ def bllip_parse(input_file, output_file):
                     tokens = [s.encode('utf-8') for s in sent.strip().split(' ')]
                     parse = rrp.simple_parse(tokens)
                 except Exception as e:
-                    print 'exception when parsing:'
+                    print u'exception when parsing: {}'.format(sent)
                     print e
                     parse = 'MISSING'
                 # print parse
