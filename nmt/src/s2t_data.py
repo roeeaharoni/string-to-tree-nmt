@@ -49,7 +49,7 @@ def main():
     # out = inp + '.parsed'
     # bllip_parse(inp, out)
     # return
-    bllip_parse_large_file(input_path, output_path)
+    parallel_bllip_parse_large_file(input_path, output_path, 300)
     return
 
     # preprocess de_en_raw wmt16 for bllip
@@ -336,6 +336,7 @@ def preprocess_bllip(prefix, src, trg):
     # TODO: parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
     # with python bllip version, send list of tokens to avoid bllip tokenization)
     # do this in server
+    # works, run on big file :)
 
 
     # after parsing:
@@ -368,9 +369,9 @@ def preprocess_bllip(prefix, src, trg):
     # TODO: re-train bpe2tree
 
 
-def bllip_parse_large_file(input_path, output_path):
+def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=200000):
     start = time.time()
-    paths = divide_file(input_path, 100)
+    paths = divide_file(input_path, lines_per_sub_file)
     print paths
     pool = Pool(processes=len(paths))
     for path in paths:
@@ -394,7 +395,7 @@ def bllip_parse(input_file, output_file):
         with codecs.open(output_file, 'w', encoding='utf-8') as output:
             while True:
                 count += 1
-                if count % 10 == 0:
+                if count % 10000 == 0:
                     print 'parsed {} sentences from {}'.format(count, input_file)
                 sent = input.readline()
                 if not sent:
