@@ -332,7 +332,7 @@ def preprocess_bllip(prefix, src, trg):
     # TODO: parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
     # with python bllip version, send list of tokens to avoid bllip tokenization)
     # do this in server
-    # works, run on big file :)
+    # works, run on big file - in progress
 
 
     # after parsing:
@@ -343,10 +343,14 @@ def preprocess_bllip(prefix, src, trg):
 
     split_hyphen_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
         prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+    os.system(split_hyphen_command)
+
     split_slash_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
         prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+    os.system(split_slash_command)
 
     # TODO: lexicalize trees with bpe - already have code for that
+
 
     # TODO: check if yields are identical to bped ptb version - already have code for that
 
@@ -584,6 +588,7 @@ def fill_missing_trees(words_file_path, trees_file_path, missing_words_file_path
     return
 
 
+# trees file contains POS tags as terminals
 def apply_bpe_on_trees(bpe_model_path, words_file_path, trees_file_path, bped_trees_file_path):
     # load bpe model
     bpe = apply_bpe.BPE(bpe_model_path)
@@ -786,7 +791,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                             sents_output.write(sent)
                             try:
                                 parsed = rrp.simple_parse(sent.encode('utf-8'))
-                                trees_output.write(convert_tree(parsed) + '\n')
+                                trees_output.write(convert_bllip_tree_to_xing_tree(parsed) + '\n')
                                 fixed += 1
                                 print 'parsed missing tree'
                             except Exception as e:
@@ -804,7 +809,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     return
 
 
-def convert_tree(bllip_tree):
+def convert_bllip_tree_to_xing_tree(bllip_tree):
     # converts bllip tree (lexicalized, no labels on closing brackets) to xing tree (unlexicalized, labels on closing
     # brac.)
     # example:
