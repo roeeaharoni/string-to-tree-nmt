@@ -49,7 +49,7 @@ def main():
     # out = inp + '.parsed'
     # bllip_parse(inp, out)
     # return
-    parallel_bllip_parse_large_file(input_path, output_path, 300)
+    parallel_bllip_parse_large_file(input_path, output_path, 500)
     return
 
     # preprocess de_en_raw wmt16 for bllip
@@ -369,6 +369,11 @@ def preprocess_bllip(prefix, src, trg):
     # TODO: re-train bpe2tree
 
 
+def delete_files(paths):
+    for path in paths:
+        os.system('rm {}'.format(path))
+
+
 def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=200000):
     start = time.time()
     paths = divide_file(input_path, lines_per_sub_file)
@@ -379,7 +384,10 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
 
     pool.close()
     pool.join()
-    merge_files([path + '.parsed' for path in paths], output_path)
+    parsed = [path + '.parsed' for path in paths]
+    merge_files(parsed, output_path)
+    delete_files(paths)
+    delete_files(parsed)
     end = time.time()
     print 'parsing took {} seconds'.format(end - start)
     print 'parsed sentences are in: {}'.format(output_path)
@@ -389,7 +397,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
 def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
-    rrp.set_parser_options(nbest=10)
+    print rrp.set_parser_options(nbest=50)
     parses = []
     count = 0
     with codecs.open(input_file, 'r', encoding='utf8') as input:
