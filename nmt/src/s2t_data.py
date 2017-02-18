@@ -389,6 +389,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
 def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
+    rrp.set_parser_options(nbest=10)
     parses = []
     count = 0
     with codecs.open(input_file, 'r', encoding='utf8') as input:
