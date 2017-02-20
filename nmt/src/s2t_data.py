@@ -385,6 +385,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     parallel_command = 'parallel --bar -j 30 --link \'python bllip_parse.py\' ::: {} ::: {}'.format(
                                                                                                 ' '.join(paths),
                                                                                                 ' '.join(parsed_paths))
+    print parallel_command
     os.system(parallel_command)
 
 
