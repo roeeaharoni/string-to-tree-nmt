@@ -43,9 +43,10 @@ BPE_OPERATIONS = 89500
 def main():
 
     # parse large file
-    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
+    # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
+    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    parallel_bllip_parse_large_file(input_path, output_path, 150000)
+    parallel_bllip_parse_large_file(input_path, output_path, 1000)
     return
 
     # preprocess de_en_raw wmt16 for bllip
@@ -377,17 +378,26 @@ def delete_files(paths):
 def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=200000):
     start = time.time()
     paths = divide_file(input_path, lines_per_sub_file)
-    print paths
-    pool = Pool(processes=len(paths))
-    for path in paths:
-        pool.apply_async(bllip_parse, (path, path + '.parsed'))
+    parsed_paths = [path + '.parsed' for path in paths]
+    # print paths
 
-    pool.close()
-    pool.join()
-    parsed = [path + '.parsed' for path in paths]
-    merge_files(parsed, output_path)
+    # TODO: run with GNU parallel on all the files, limit cpu amount, add eta option
+    parallel_command = 'parallel --bar -j 30 --link \'python bllip_parse.py\' ::: {} ::: {}'.format(
+                                                                                                ' '.join(paths),
+                                                                                                ' '.join(parsed_paths))
+    os.system(parallel_command)
+
+
+    # pool = Pool(processes=len(paths))
+    # for path in paths:
+    #     pool.apply_async(bllip_parse, (path, path + '.parsed'))
+    #
+    # pool.close()
+    # pool.join()
+
+    merge_files(parsed_paths, output_path)
     delete_files(paths)
-    delete_files(parsed)
+    delete_files(parsed_paths)
     end = time.time()
     print 'parsing took {} seconds'.format(end - start)
     print 'parsed sentences are in: {}'.format(output_path)
