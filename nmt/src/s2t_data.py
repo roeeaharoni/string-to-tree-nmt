@@ -43,10 +43,10 @@ BPE_OPERATIONS = 89500
 def main():
 
     # parse large file
-    # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
-    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
+    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
+    # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    parallel_bllip_parse_large_file(input_path, output_path, 2500)
+    parallel_bllip_parse_large_file(input_path, output_path, 10000)
     return
 
     # preprocess de_en_raw wmt16 for bllip
