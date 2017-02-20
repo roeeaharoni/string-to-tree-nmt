@@ -46,7 +46,7 @@ def main():
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    parallel_bllip_parse_large_file(input_path, output_path, 1000)
+    parallel_bllip_parse_large_file(input_path, output_path, 2500)
     return
 
     # preprocess de_en_raw wmt16 for bllip
@@ -382,9 +382,8 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     # print paths
 
     # TODO: run with GNU parallel on all the files, limit cpu amount, add eta option
-    parallel_command = 'parallel --bar -j 30 --xapply \'python bllip_parse.py\' ::: {} ::: {}'.format(
-                                                                                                ' '.join(paths),
-                                                                                                ' '.join(parsed_paths))
+    parallel_command = 'parallel --bar -j 30 --xapply \'python {}/git/research/nmt/src/bllip_parse.py\' ::: {} ::: {}'\
+        .format(BASE_PATH, ' '.join(paths), ' '.join(parsed_paths))
     print parallel_command
     os.system(parallel_command)
 
