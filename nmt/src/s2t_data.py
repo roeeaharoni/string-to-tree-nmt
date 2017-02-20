@@ -382,7 +382,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     # print paths
 
     # TODO: run with GNU parallel on all the files, limit cpu amount, add eta option
-    parallel_command = 'parallel --bar -j 30 --link \'python bllip_parse.py\' ::: {} ::: {}'.format(
+    parallel_command = 'parallel --bar -j 30 --xapply \'python bllip_parse.py\' ::: {} ::: {}'.format(
                                                                                                 ' '.join(paths),
                                                                                                 ' '.join(parsed_paths))
     print parallel_command
