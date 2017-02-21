@@ -112,10 +112,10 @@ def main():
     detok_2016_score = bleu(moses_path, ref_2016, post_2016)
     tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
 
-    print 'tokenized bleu 2015: {}'.format(tok_2015_score)
     print 'detokenized bleu 2015: {}'.format(detok_2015_score)
-    print 'tokenized bleu 2016: {}'.format(tok_2016_score)
+    print 'tokenized bleu 2015: {}'.format(tok_2015_score)
     print 'detokenized bleu 2016: {}'.format(detok_2016_score)
+    print 'tokenized bleu 2016: {}'.format(tok_2016_score)
     return
 
 
