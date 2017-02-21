@@ -85,6 +85,8 @@ def main():
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
     model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+    config_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+    os.system('cp {} {}'.format(config_path, model_path + '.json'))
 
     src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
     trg_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en'
