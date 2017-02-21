@@ -379,12 +379,12 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     start = time.time()
     paths = divide_file(input_path, lines_per_sub_file)
     parsed_paths = [path + '.parsed' for path in paths]
-    print paths[0:5]
-    print parsed_paths[0:5]
+    # print paths[0:5]
+    # print parsed_paths[0:5]
 
     # TODO: run with GNU parallel on all the files, limit cpu amount, add eta option
     parallel_command = 'parallel --bar -j 30 --xapply \'python {}/git/research/nmt/src/bllip_parse.py\' ::: {} ::: {}'\
-        .format(BASE_PATH, ' '.join(paths), ' '.join(parsed_paths))
+        .format(BASE_PATH, ' '.join(paths[0:100]), ' '.join(parsed_paths[0:100]))
     # print parallel_command
     os.system(parallel_command)
 
