@@ -432,6 +432,7 @@ def bllip_parse(input_file, output_file):
                 except Exception as e:
                     print u'exception when parsing: {}'.format(sent)
                     print e
+                    output.write('MISSING\n')
                     # parse = 'MISSING'
                 # print parse
                 # print '\n\n'
