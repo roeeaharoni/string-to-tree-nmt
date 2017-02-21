@@ -46,7 +46,7 @@ def main():
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    parallel_bllip_parse_large_file(input_path, output_path, 50000)
+    parallel_bllip_parse_large_file(input_path, output_path, 1000)
     return
 
     # preprocess de_en_raw wmt16 for bllip
@@ -531,6 +531,10 @@ def divide_file(path, lines_per_file = 1000000):
     j = 0
     sub_paths = []
     output = False
+    dir_path = os.path.dirname(os.path.abspath(path))
+    file_name = os.path.basename(path)
+    if not os.path.exists(dir_path + '/tmp'):
+        os.makedirs(dir_path + '/tmp')
     with codecs.open(path, encoding='utf8') as lines:
         while True:
             sent = lines.readline()
@@ -539,7 +543,7 @@ def divide_file(path, lines_per_file = 1000000):
             if i % lines_per_file == 0:
                 if i > 0:
                     output.close()
-                sub_file_path = path + '._{}'.format(j)
+                sub_file_path = '{}/tmp/{}._{}'.format(dir_path, file_name, j)
                 sub_paths.append(sub_file_path)
                 output = codecs.open(sub_file_path, 'w', encoding='utf8')
                 j += 1
