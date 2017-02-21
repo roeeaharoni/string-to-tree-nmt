@@ -23,6 +23,24 @@ def postprocess(dev_target_sents):
     return dev_target_sents + '.postprocessed'
 
 
+# non-ptb tokenization, no detok
+def postprocess_normal_tok(dev_target_sents):
+    # postprocess stripped trees (remove bpe, de-truecase)
+    postprocess_command = './de_en_bpe_raw/postprocess-en-tok.sh < {} > {}.postprocessed.tok'.format(dev_target_sents, dev_target_sents)
+    os.system(postprocess_command)
+    print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed.tok'.format(dev_target_sents, dev_target_sents)
+    return dev_target_sents + '.postprocessed.tok'
+
+
+# non-ptb tokenization, no detok
+def postprocess_normal(dev_target_sents):
+    # postprocess stripped trees (remove bpe, de-truecase)
+    postprocess_command = './de_en_bpe_raw/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    os.system(postprocess_command)
+    print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    return dev_target_sents + '.postprocessed'
+
+
 def validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target):
     # validate and strip trees
     valid_trees = 0
@@ -60,9 +78,46 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
 
 
 def main():
+
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
+
+    # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
+    model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+
+    src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
+    trg_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en'
+    align_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt'
+    ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.en'
+    tok_ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.en'
+
+    src_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.bpe.de'
+    trg_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en'
+    align_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
+    ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.en'
+    tok_ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.en'
+
+    translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
+    post_2015 = postprocess_normal(trg_2015)
+    post_2015_tok = postprocess_normal_tok(trg_2015)
+    detok_2015_score = bleu(moses_path, ref_2015, post_2015)
+    tok_2015_score = bleu(moses_path, tok_ref_2015, post_2015_tok)
+
+    translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
+    post_2016 = postprocess_normal(trg_2016)
+    post_2016_tok = postprocess_normal_tok(trg_2016)
+    detok_2016_score = bleu(moses_path, ref_2016, post_2016)
+    tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
+
+    print 'tokenized bleu 2015: {}'.format(tok_2015_score)
+    print 'detokenized bleu 2015: {}'.format(detok_2015_score)
+    print 'tokenized bleu 2016: {}'.format(tok_2016_score)
+    print 'detokenized bleu 2016: {}'.format(detok_2016_score)
+    return
+
+
+
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
 
@@ -130,8 +185,6 @@ def main():
         'de_en_stt_model.iter60000.npz',
         'de_en_stt_model.iter30000.npz']
     stt_models_files.reverse()
-
-
 
     stt_bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
     stt_config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
