@@ -413,7 +413,7 @@ def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
     print rrp.set_parser_options(nbest=50)
-    parses = []
+    # parses = []
     count = 0
     with codecs.open(input_file, 'r', encoding='utf8') as input:
         with codecs.open(output_file, 'w', encoding='utf-8') as output:
@@ -428,17 +428,17 @@ def bllip_parse(input_file, output_file):
                 try:
                     tokens = [s.encode('utf-8') for s in sent.strip().split(' ')]
                     parse = rrp.simple_parse(tokens)
+                    output.write(format(parse.decode('utf-8')) + '\n')
                 except Exception as e:
                     print u'exception when parsing: {}'.format(sent)
                     print e
-                    parse = 'MISSING'
+                    # parse = 'MISSING'
                 # print parse
                 # print '\n\n'
-                parses.append(parse)
-                output.write(format(parse.decode('utf-8')) + '\n')
+                # parses.append(parse)
 
-    return parses
-
+    # return parses
+    return
 
 # count how many missing, how many overPOS/underPOS (uneven), how many invalid trees, avg. sent/tree length
 def trees_sanity(bped_sentences, bped_trees):
