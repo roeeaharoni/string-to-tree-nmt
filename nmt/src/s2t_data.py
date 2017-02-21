@@ -390,7 +390,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     # parallel_command = 'parallel --bar -j 30 --xapply \'python {}/git/research/nmt/src/bllip_parse.py\' ::: {} ::: {}'\
     #     .format(BASE_PATH, ' '.join(paths[0:100]), ' '.join(parsed_paths[0:100]))
     # print parallel_command
-    parallel_command = 'parallel --bar -j 30 < commands_file'
+    parallel_command = 'parallel --bar -j 30 < {}'.format(commands_file)
     os.system(parallel_command)
 
     # pool = Pool(processes=len(paths))
