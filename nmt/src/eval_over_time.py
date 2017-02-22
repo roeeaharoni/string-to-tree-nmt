@@ -77,11 +77,31 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     print 'finished translating {}'.format(dev_src)
 
 
+def nist_bleu(moses_path, src_sgm_path, ref_sgm_path, predictions_path, trg_lang):
+    wrap_command = '{}/scripts/ems/support/wrap-xml.perl {} {} < {} > {}.sgm'.format(moses_path,
+                                                                                     trg_lang,
+                                                                                     src_sgm_path,
+                                                                                     predictions_path,
+                                                                                     predictions_path)
+    os.system(wrap_command)
+    nist_command = '{}/scripts/generic/mteval-v13a.pl -c -s {} -r {} -t {}'.format(moses_path,
+                                                                                   src_sgm_path,
+                                                                                   ref_sgm_path,
+                                                                                   predictions_path + '.sgm')
+    os.system(nist_command)
+
 def main():
 
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
+
+    # calc nist bleu
+    src_sgm = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
+    ref_sgm = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
+    predictions_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+    nist_bleu(moses_path, src_sgm, ref_sgm, predictions_path, 'en')
+    return
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
     model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
@@ -112,6 +132,8 @@ def main():
     detok_2016_score = bleu(moses_path, ref_2016, post_2016)
     tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
 
+    score = nist_bleu(moses_path, tok_ref_2016, post_2016_tok)
+
     print 'detokenized bleu 2015: {}'.format(detok_2015_score)
     print 'tokenized bleu 2015: {}'.format(tok_2015_score)
     print 'detokenized bleu 2016: {}'.format(detok_2016_score)
@@ -127,7 +149,7 @@ def main():
     test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
 
     bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
-    test_target = base_path+ '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
+    test_target = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
     bpe_model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.npz.best_bleu'
 
     # compute test bleu on bpe2bpe
