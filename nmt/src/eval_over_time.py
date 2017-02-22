@@ -92,20 +92,27 @@ def nist_bleu(moses_path, src_sgm_path, ref_sgm_path, predictions_path, trg_lang
 
 def main():
 
-    base_path = '/home/nlp/aharonr6'
+    # base_path = '/home/nlp/aharonr6'
+    base_path = '~'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
 
     # calc nist bleu
-    src_sgm = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
-    ref_sgm = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
-    predictions_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en.postprocessed'
-    nist_bleu(moses_path, src_sgm, ref_sgm, predictions_path, 'en')
+    src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
+    ref_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
+    predictions_path_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+
+    src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
+    ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
+    predictions_path_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+
+    nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, predictions_path_2016, 'en')
+    nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, predictions_path_2015, 'en')
     return
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
-    model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
-    config_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+    model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+    config_path = base_path + 'git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
 
     src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
