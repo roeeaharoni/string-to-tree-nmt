@@ -42,8 +42,8 @@ BPE_OPERATIONS = 89500
 
 def main():
 
-    train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpe.de',
-              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpe.en',
+    train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.de',
+              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.en',
               BPE_OPERATIONS,
               '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen')
     return
@@ -51,7 +51,7 @@ def main():
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    bpe_model_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.clean.true.bpemodel.deen'
+    bpe_model_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen'
 
     # parallel_bllip_parse_large_file(input_path, output_path, 1000)
     # return
