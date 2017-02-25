@@ -105,9 +105,27 @@ def main():
     src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
     ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
     predictions_path_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+    prediction_path_stt_2015 = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best'
+    prediction_path_stt_2016 = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.sents.postprocessed'
 
-    nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, predictions_path_2016, 'en')
-    nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, predictions_path_2015, 'en')
+    prediction_path_bpe_2015 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
+    prediction_path_bpe_2016 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best.postprocessed'
+
+
+    # nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, predictions_path_2016, 'en')
+    # nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, predictions_path_2015, 'en')
+
+    # stt results
+    # 0.2835
+    # nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_stt_2016, 'en')
+    # 0.2736
+    # nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_stt_2015, 'en')
+
+    # 0.2820
+    nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_bpe_2016, 'en')
+
+    # 0.2719
+    nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
     return
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
