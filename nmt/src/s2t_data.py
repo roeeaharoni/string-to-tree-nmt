@@ -58,11 +58,11 @@ def main():
 
     # re-split hyphens/slashes
     parse_trees_path = '{}.tok.penntrg.clean.true.desc.{}.parsed'.format(prefix, trg)
-    split_hyphen_command = 'sed -i -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
+    split_hyphen_command = 'sed -i -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\\1 @-@ \\2/g\' {}'.format(
         parse_trees_path)
     os.system(split_hyphen_command)
 
-    split_slash_command = 'sed -i -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
+    split_slash_command = 'sed -i -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\\1 @\/@ \\2/g\' {}'.format(
         parse_trees_path)
     os.system(split_slash_command)
     return
