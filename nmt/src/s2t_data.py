@@ -42,18 +42,30 @@ BPE_OPERATIONS = 89500
 
 def main():
 
+
     # parse large file
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    parallel_bllip_parse_large_file(input_path, output_path, 1000)
-    return
+    # parallel_bllip_parse_large_file(input_path, output_path, 1000)
+    # return
 
     # preprocess de_en_raw wmt16 for bllip
     prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     src = 'de'
     trg = 'en'
-    preprocess_bllip(prefix, src, trg)
+    # preprocess_bllip(prefix, src, trg)
+
+    # re-split hyphens/slashes
+    parse_trees_path = '{}.tok.penntrg.clean.true.desc.{}.parsed'.format(prefix, trg)
+    split_hyphen_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
+        parse_trees_path)
+    os.system(split_hyphen_command)
+
+    split_slash_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
+        parse_trees_path)
+    os.system(split_slash_command)
+    return
 
     # preprocess de_en_raw wmt16
     # preprocess_de_en_wmt16_from_scratch()
@@ -326,14 +338,16 @@ def preprocess_bllip(prefix, src, trg):
     os.system(command)
 
     # so far we should have:
-    # bped version of src(non-penn)/target(penn) tokenized, clean, truecased
+    # bped version of src(non-penn) tokenized, clean, truecased
+    # target(penn) tokenized, clean, truecased
     # non bped vesion of target, with unsplit hyphens and slashes, ready for bllip parsing
     return
 
-    # TODO: parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
+    # parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
     # with python bllip version, send list of tokens to avoid bllip tokenization)
     # do this in server
-    # works, run on big file - in progress
+    # works, run on big file (parallel_bllip_parse_large_file) - in progress - DONE
+    # /home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed
 
 
     # after parsing:
@@ -342,16 +356,16 @@ def preprocess_bllip(prefix, src, trg):
     # $pipeline .= " $RealBin/syntax-hyphen-splitting.perl";
     # $pipeline. = " $RealBin/syntax-hyphen-splitting.perl -slash";
 
+    parse_trees_path = '{}.tok.penntrg.clean.true.desc.{}.parsed'.format(prefix, trg)
     split_hyphen_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
-        prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+        parse_trees_path)
     os.system(split_hyphen_command)
 
     split_slash_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
-        prefix + '.tok.penntrg.clean.true.desc.parsed' + trg)
+        parse_trees_path)
     os.system(split_slash_command)
 
-    # TODO: lexicalize trees with bpe - already have code for that
-
+    # TODO: lexicalize trees with bpe - already ~have code for that
 
     # TODO: check if yields are identical to bped ptb version - already have code for that
 
