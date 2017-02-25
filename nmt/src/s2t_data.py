@@ -5,7 +5,7 @@
 import codecs
 from collections import defaultdict
 import os
-
+import re
 import time
 
 import yoav_trees
@@ -42,13 +42,22 @@ BPE_OPERATIONS = 89500
 
 def main():
 
-
+    train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpe.de',
+              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpe.en',
+              BPE_OPERATIONS,
+              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen')
+    return
     # parse large file
     input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
+    bpe_model_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.clean.true.bpemodel.deen'
+
     # parallel_bllip_parse_large_file(input_path, output_path, 1000)
     # return
+
+    parsed = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed'
+    bllip_to_linearized(parsed, parsed + '.lin', bpe_model_path)
 
     # preprocess de_en_raw wmt16 for bllip
     prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
@@ -56,15 +65,7 @@ def main():
     trg = 'en'
     # preprocess_bllip(prefix, src, trg)
 
-    # re-split hyphens/slashes
-    parse_trees_path = '{}.tok.penntrg.clean.true.desc.{}.parsed'.format(prefix, trg)
-    split_hyphen_command = 'sed -i -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\\1 @-@ \\2/g\' {}'.format(
-        parse_trees_path)
-    os.system(split_hyphen_command)
 
-    split_slash_command = 'sed -i -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\\1 @\/@ \\2/g\' {}'.format(
-        parse_trees_path)
-    os.system(split_slash_command)
     return
 
     # preprocess de_en_raw wmt16
@@ -268,7 +269,64 @@ def full_preprocess(prefix, src, trg, prev_train_prefix=None):
     print prefix + '.tok.clean.true.bpe.' + trg
 
 
-# english is ptb tokenized, german is "normally" tokenized
+def bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path):
+    count = 0
+    bpe_model = apply_bpe.BPE(bpe_model_path)
+    with codecs.open(parse_trees_path, 'r', 'utf-8') as bllip_trees:
+        with codecs.open(linearized_path, 'w', 'utf-8') as linearized_trees:
+            while True:
+                count += 1
+                if count % 1000 == 0:
+                    print 'went through {} trees'.format(count)
+                line = bllip_trees.readline()
+                if not line:
+                    break
+                if line == u'MISSING\n':
+                    linearized_trees.write(u'MISSING\n')
+                    continue
+
+                tree = yoav_trees.Tree('TOP').from_sexpr(line.encode('utf-8'))
+
+                # remove POS tags
+                no_pos_tree = remove_pos_tags_from_tree(tree)
+
+                # split hyphens/slashes in words
+                split_tree = split_hyphens_slashes(no_pos_tree)
+
+                # maybe re-escape special chars? check this
+
+                # bpe the words
+                bped = bpe_leaves(split_tree, bpe_model)
+                bped_string = bped.nonter_closing()
+                # print bped_string
+                linearized_trees.write(u'{}\n'.format(bped_string))
+
+    return
+
+
+def remove_pos_tags_from_tree(tree):
+    new_children = []
+    for child in tree.children:
+        if child.isleaf():
+            return yoav_trees.Tree(child.label)
+        else:
+            new_children.append(remove_pos_tags_from_tree(child))
+
+    return yoav_trees.Tree(tree.label, new_children)
+
+
+def split_hyphens_slashes(tree):
+    tree_str = str(tree)
+
+    # split hyphens in words
+    hyphen_split = re.sub(r'([A-Za-z0-9]+)-([A-Za-z0-9]+)', r'\1 @-@ \2', tree_str)
+
+    slash_split = re.sub(r'([A-Za-z0-9]+)/([A-Za-z0-9]+)', r'\1 @/@ \2', hyphen_split)
+
+    return yoav_trees.Tree('TOP').from_sexpr(slash_split)
+
+
+# preprocessing + parse with bllip. english is ptb tokenized, german is "normally" tokenized
 def preprocess_bllip(prefix, src, trg):
 
     # normalize punctuation (mainly spaces near punctuation. also has -penn option - irrelevant as not in ptb here)
@@ -341,31 +399,34 @@ def preprocess_bllip(prefix, src, trg):
     # bped version of src(non-penn) tokenized, clean, truecased
     # target(penn) tokenized, clean, truecased
     # non bped vesion of target, with unsplit hyphens and slashes, ready for bllip parsing
-    return
 
-    # parse (the '.tok.penntrg.clean.true.desc.en' file, into '.tok.penntrg.clean.true.desc.parsed.en',
-    # with python bllip version, send list of tokens to avoid bllip tokenization)
-    # do this in server
-    # works, run on big file (parallel_bllip_parse_large_file) - in progress - DONE
-    # /home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed
+    # parse with python bllip version
+    input_path = '{}.tok.penntrg.clean.true.desc.{}'.format(prefix, trg)
+    parse_trees_path = input_path + '.parsed'
+    parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
 
 
-    # after parsing:
+    # TODO: create linearized trees (remove POS tags, bpe the words, split hyphens/slashes in words, maybe escape
+    # special chars)
+    linearized_path = '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg)
+    bpe_model_path = prefix + '.tok.clean.true.bpemodel.' + src + trg
+    bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path)
 
-    # TODO: Re-split hyphens / slashes
-    # $pipeline .= " $RealBin/syntax-hyphen-splitting.perl";
-    # $pipeline. = " $RealBin/syntax-hyphen-splitting.perl -slash";
 
-    parse_trees_path = '{}.tok.penntrg.clean.true.desc.{}.parsed'.format(prefix, trg)
-    split_hyphen_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\1 @-@ \2/g\' {}'.format(
+
+
+
+
+
+    split_hyphen_command = 'sed -i -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\\1 @-@ \\2/g\' {}'.format(
         parse_trees_path)
     os.system(split_hyphen_command)
 
-    split_slash_command = 'sed -i \'\' -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\1 @\/@ \2/g\' {}'.format(
+    split_slash_command = 'sed -i -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\\1 @\/@ \\2/g\' {}'.format(
         parse_trees_path)
     os.system(split_slash_command)
 
-    # TODO: lexicalize trees with bpe - already ~have code for that
+
 
     # TODO: check if yields are identical to bped ptb version - already have code for that
 
@@ -696,7 +757,7 @@ def bpe_leaves(tree, bpe):
     bped_children = []
     for child in tree.children:
         if child.isleaf():
-            segs = bpe.segment(child.label).strip().split()
+            segs = bpe.segment(child.label.decode('utf-8')).strip().split()
             for seg in segs:
                 bped_children.append(yoav_trees.Tree(seg, None))
         else:
