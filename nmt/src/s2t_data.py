@@ -32,6 +32,7 @@ BPE_OPERATIONS = 89500
 
 def main():
 
+    # train penntrg bpe model
     # train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.de',
     #           '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.en',
     #           BPE_OPERATIONS,
@@ -53,7 +54,6 @@ def main():
 
     # compare_tree_yield_to_bpe_test(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
     #                            BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
-
 
     # return
 
