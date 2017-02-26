@@ -48,17 +48,24 @@ def main():
 
 
     # convert bllip trees to linearized
-    bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
-    os.system('wc -l {}'.format(output_path + '.lin'))
+    # bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
+    # os.system('wc -l {}'.format(output_path + '.lin'))
 
-    compare_tree_yield_to_bpe_test(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
-                               BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
-    return
+    # compare_tree_yield_to_bpe_test(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
+    #                            BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
+
+
+    # return
 
     # preprocess de_en_raw wmt16 for bllip
     prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     src = 'de'
     trg = 'en'
+
+    # build stt raw dictionaries
+    build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
+                             '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
+
     # preprocess_bllip(prefix, src, trg)
     return
 
@@ -448,19 +455,21 @@ def preprocess_bllip(prefix, src, trg):
     parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
 
 
-    # TODO: create linearized trees (remove POS tags, bpe the words, split hyphens/slashes in words, maybe escape
-    # special chars)
+    # create linearized trees (remove POS tags, bpe the words)
     linearized_path = '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg)
-    bpe_model_path = prefix + '.tok.clean.true.bpemodel.' + src + trg
-    bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path)
+    bpe_model_path = prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg
 
-    # TODO: check if yields are identical to bped ptb version - already have code for that
+    # bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path)
+    bllip_to_linearized_parallel(parse_trees_path, linearized_path, bpe_model_path)
 
-    # TODO: build dictionaries
-    # if on_train:
-    #     # build dict $nematus/data/build_dictionary.py data/corpus.bpe.$SRC data/corpus.bpe.$TRG
-    #     build_nematus_dictionary(prefix + '.tok.clean.true.bpe.' + src, prefix + '.tok.clean.true.bpe.' + trg)
-    #     print 'built dictionaries'
+    # check if yields are identical to bped ptb version
+    compare_tree_yield_to_bpe_test(linearized_path,
+        BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
+
+    # build dictionaries
+    build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
+                             '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
+    print 'built dictionaries'
 
     # print 'finished preprocessing. files to use:'
     #
