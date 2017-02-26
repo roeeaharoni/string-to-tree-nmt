@@ -51,8 +51,8 @@ def main():
     # bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
     os.system('wc -l {}'.format(output_path + '.lin'))
 
-    compare_tree_yield_to_bpe_test('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
-                               '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
+    compare_tree_yield_to_bpe_test(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
+                               BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
     return
 
     # preprocess de_en_raw wmt16 for bllip
