@@ -16,17 +16,6 @@ from moses_tools import *
 
 from multiprocessing import Pool
 
-# TODO:
-# write a pipeline that does:
-# tokenization with moses scripts - done
-# count words per output sentence - done
-# run BPE on both sides - done
-# extract TSS prefix - done
-# write train versions (BPE2BPE): with output length, with output TSS, with both, without anything
-# 4 models for 2 language pairs - totals in 8 models, 1 week per model - 8 weeks (one week if takeover)
-# can be run in one week on all NLP GPUs / use cyber GPUs?
-# start with fr-en TSS, fr-en len
-# process is: tokenize -> clean --> truecase --> BPE --> add prefixes --> build dictionaries --> train --> evaluate
 
 # TTS TODO: use amunmt decoder? nice to have
 # TTS TODO: check how to manipulate decoder in nematus
@@ -34,6 +23,7 @@ from multiprocessing import Pool
 
 # BASE_PATH = '/Users/roeeaharoni'
 BASE_PATH = '/home/nlp/aharonr6'
+# BASE_PATH = '~'
 MOSES_HOME = BASE_PATH + '/git/mosesdecoder'
 BPE_HOME = BASE_PATH + '/git/subword-nmt'
 NEMATUS_HOME = BASE_PATH + '/git/nematus'
@@ -42,30 +32,34 @@ BPE_OPERATIONS = 89500
 
 def main():
 
-    train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.de',
-              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.en',
-              BPE_OPERATIONS,
-              '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen')
-    return
+    # train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.de',
+    #           '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.en',
+    #           BPE_OPERATIONS,
+    #           '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen')
+    # return
+
     # parse large file
-    input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
+    input_path = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en'
     # input_path = '/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.sample'
     output_path = input_path + '.parsed'
-    bpe_model_path = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen'
-
+    bpe_model_path = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.bpemodel.deen'
     # parallel_bllip_parse_large_file(input_path, output_path, 1000)
     # return
 
-    parsed = '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed'
-    bllip_to_linearized(parsed, parsed + '.lin', bpe_model_path)
+
+    # convert bllip trees to linearized
+    bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
+    os.system('wc -l {}'.format(output_path + '.lin'))
+
+    compare_tree_yield_to_bpe_test('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.100k.lin',
+                               '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en.100k')
+    return
 
     # preprocess de_en_raw wmt16 for bllip
     prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     src = 'de'
     trg = 'en'
     # preprocess_bllip(prefix, src, trg)
-
-
     return
 
     # preprocess de_en_raw wmt16
@@ -138,6 +132,32 @@ def main():
     return
 
 
+def compare_tree_yield_to_bpe_test(trees_path, bped_path):
+    count = 0
+    diff = 0
+    with codecs.open(trees_path, 'r', 'utf-8') as trees:
+        with codecs.open(bped_path, 'r', 'utf-8') as bpe:
+            while True:
+                if count % 100000 == 0:
+                    print count
+                # compare yields to bped, see where and how much diff, if ok train
+                tree = trees.readline().strip()
+                sent = bpe.readline().strip()
+                if not tree:
+                    break
+                count += 1
+                tokens = tree.split()
+                stripped_tree = ' '.join([t for t in tokens if '(' not in t and ')' not in t])
+                # stripped_tree = stripped_tree.replace(' @-@ ', '-')
+                # stripped_tree = stripped_tree.replace(' @/@ ', '/')
+                if sent != stripped_tree:
+                    # if not '-' in sent and not '/' in sent:
+                    diff +=1
+                    print '{} are different out of {}\n'.format(diff, count)
+                    print 'tree:\n{}\nsentence:\n{}\n'.format(stripped_tree, sent)
+    print '{} are different out of {}'.format(diff, count)
+
+
 def preprocess_de_en_wmt16_from_scratch():
     # create unified WMT de-en train corpus
     # de_file_paths = [
@@ -165,7 +185,6 @@ def preprocess_de_en_wmt16_from_scratch():
 
     # full_preprocess(prefix, src, trg)
 
-    # TODO:
     # check train data size diff (by cleaning with 50 thresh) - maybe 4.5m and not 4.2m due to len 50 limit?
     # seems like it as shrinks to 4153515 sentences - DONE
 
@@ -269,6 +288,7 @@ def full_preprocess(prefix, src, trg, prev_train_prefix=None):
     print prefix + '.tok.clean.true.bpe.' + trg
 
 
+# convert the output of the bllip trees to the format we use for training the nmt system
 def bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path):
     count = 0
     bpe_model = apply_bpe.BPE(bpe_model_path)
@@ -291,19 +311,40 @@ def bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path):
                 no_pos_tree = remove_pos_tags_from_tree(tree)
 
                 # split hyphens/slashes in words
-                split_tree = split_hyphens_slashes(no_pos_tree)
+                # split_tree = split_hyphens_slashes(no_pos_tree)
 
-                # maybe re-escape special chars? check this
+                # TODO: re-escape special chars? check this
 
                 # bpe the words
-                bped = bpe_leaves(split_tree, bpe_model)
+                bped = bpe_leaves(no_pos_tree, bpe_model)
+
+                # create linearized string
                 bped_string = bped.nonter_closing()
+
                 # print bped_string
                 linearized_trees.write(u'{}\n'.format(bped_string))
+    return
+
+
+# run bllip_to_linearized in parallel
+def bllip_to_linearized_parallel(parse_trees_path, linearized_path, bpe_model_path, lines_per_file=500000):
+    input_paths = divide_file(parse_trees_path, lines_per_file)
+    output_paths = [path + '.lin' for path in input_paths]
+    pool = Pool(processes=len(input_paths))
+    for i, path in enumerate(input_paths):
+        pool.apply_async(bllip_to_linearized,(path, output_paths[i], bpe_model_path))
+
+    pool.close()
+    pool.join()
+
+    merge_files(output_paths, linearized_path)
+    delete_files(input_paths)
+    delete_files(output_paths)
 
     return
 
 
+# remove the pos tags level from the tree
 def remove_pos_tags_from_tree(tree):
     new_children = []
     for child in tree.children:
@@ -318,9 +359,10 @@ def remove_pos_tags_from_tree(tree):
 def split_hyphens_slashes(tree):
     tree_str = str(tree)
 
-    # split hyphens in words
+    # split hyphens inside words
     hyphen_split = re.sub(r'([A-Za-z0-9]+)-([A-Za-z0-9]+)', r'\1 @-@ \2', tree_str)
 
+    # split slashes inside words
     slash_split = re.sub(r'([A-Za-z0-9]+)/([A-Za-z0-9]+)', r'\1 @/@ \2', hyphen_split)
 
     return yoav_trees.Tree('TOP').from_sexpr(slash_split)
@@ -412,22 +454,6 @@ def preprocess_bllip(prefix, src, trg):
     bpe_model_path = prefix + '.tok.clean.true.bpemodel.' + src + trg
     bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path)
 
-
-
-
-
-
-
-    split_hyphen_command = 'sed -i -E \'s/([^-[:blank:]]+)-([^-[:blank:]]+)/\\1 @-@ \\2/g\' {}'.format(
-        parse_trees_path)
-    os.system(split_hyphen_command)
-
-    split_slash_command = 'sed -i -E \'s/([^-[:blank:]]+)\/([^-[:blank:]]+)/\\1 @\/@ \\2/g\' {}'.format(
-        parse_trees_path)
-    os.system(split_slash_command)
-
-
-
     # TODO: check if yields are identical to bped ptb version - already have code for that
 
     # TODO: build dictionaries
@@ -457,7 +483,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     # print paths[0:5]
     # print parsed_paths[0:5]
 
-    # TODO: run with GNU parallel on all the files, limit cpu amount, add eta option
+    # run with GNU parallel on all the files, limit cpu amount, add eta option
     commands_file = input_path + '.commands'
     with codecs.open(commands_file, 'w', 'utf-8') as commands:
         for i,path in enumerate(paths):
