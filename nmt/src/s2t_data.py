@@ -153,9 +153,9 @@ def compare_tree_yield_to_bpe_test(trees_path, bped_path):
                 if sent != stripped_tree:
                     # if not '-' in sent and not '/' in sent:
                     diff +=1
-                    print '{} are different out of {}\n'.format(diff, count)
-                    print 'tree:\n{}\nsentence:\n{}\n'.format(stripped_tree, sent)
-    print '{} are different out of {}'.format(diff, count)
+                    print u'{} are different out of {}\n'.format(diff, count)
+                    print u'tree:\n{}\nsentence:\n{}\n'.format(stripped_tree, sent)
+    print u'{} are different out of {}'.format(diff, count)
 
 
 def preprocess_de_en_wmt16_from_scratch():
