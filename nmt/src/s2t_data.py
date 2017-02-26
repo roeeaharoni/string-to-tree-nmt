@@ -64,7 +64,7 @@ def main():
 
     # build stt raw dictionaries
     build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
-                             '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
+                             '{}.tok.penntrg.clean.true.desc.en.parsed.lin'.format(prefix))
 
     # preprocess_bllip(prefix, src, trg)
     return
