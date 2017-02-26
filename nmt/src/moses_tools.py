@@ -67,7 +67,7 @@ def apply_BPE(input_file_path, output_file_path, bpe_model_path):
 
 def build_nematus_dictionary(train_src_bpe_file_path, train_target_bpe_file_path):
     # build network dictionary
-    command_string = '{}/data/build_dictionary.py {} {}'.format(NEMATUS_HOME,
+    command_string = 'python {}/data/build_dictionary.py {} {}'.format(NEMATUS_HOME,
                                                                 train_src_bpe_file_path,
                                                                 train_target_bpe_file_path)
     os.system(command_string)
