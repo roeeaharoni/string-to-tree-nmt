@@ -48,7 +48,7 @@ def main():
 
 
     # convert bllip trees to linearized
-    # bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
+    bllip_to_linearized_parallel(output_path, output_path + '.lin', bpe_model_path)
     os.system('wc -l {}'.format(output_path + '.lin'))
 
     compare_tree_yield_to_bpe_test(BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin',
@@ -672,7 +672,6 @@ def merge_files(file_paths, output_path):
                     output.write(sent)
 
 
-
 # fill the first 2 with the missing lines found in the second 2
 def fill_missing_trees(words_file_path, trees_file_path, missing_words_file_path,
                        missing_trees_file_path):
@@ -965,127 +964,6 @@ def remove_leaves(tree):
     if len(non_leaves) == 0:
         non_leaves = None
     return yoav_trees.Tree(tree.label, non_leaves)
-
-
-def fr_en_tss_exp():
-    # get file paths
-    prefix = '/Users/roeeaharoni/git/research/nmt/data/Eng_Fre_4M/xing'
-
-    train_src = prefix + '.train.txt.tok.fr'
-    train_target = prefix + '.train.txt.tok.en'
-
-    dev_src = prefix + '.dev.txt.tok.fr'
-    dev_target = prefix + '.dev.txt.tok.en'
-
-    test_src = prefix + '.en.test.txt.tok.fr'
-    test_target = prefix + '.en.test.txt.tok.en'
-
-    in_lang = 'fr'
-    out_lang = 'en'
-
-    all_files = [train_src, train_target, dev_src, dev_target, test_src, test_target]
-
-    src_files = [train_src, dev_src, test_src]
-
-    target_files = [train_target, dev_target, test_target]
-
-    # tokenize
-    for file in src_files:
-        moses_tokenize(file, file + '.tok', in_lang)
-
-    for file in target_files:
-        moses_tokenize(file, file + '.tok', out_lang)
-
-    # clean
-    for f in ['train', 'dev', 'test']:
-        input_corpus_prefix_path = prefix + '.{}.txt.tok'
-        output_corpus_prefix_path = prefix + '.{}.txt.tok.clean'
-        moses_clean(input_corpus_prefix_path.format(f), output_corpus_prefix_path.format(f), 'fr', 'en')
-
-    train_src_clean = prefix + '.train.txt.tok.clean.fr'
-    train_target_clean = prefix + '.train.txt.tok.clean.en'
-
-    # train src truecase
-    src_tc_model_path = prefix + '.train.txt.tok.clean.fr.tcmodel'
-    src_tc_model_path = train_moses_truecase(train_src_clean, src_tc_model_path)
-
-    # apply src truecase
-    for f in ['train', 'dev', 'test']:
-        apply_moses_truecase(prefix + '.{}.txt.tok.clean.fr'.format(f),
-                             prefix + '.{}.txt.tok.clean.true.fr'.format(f),
-                             src_tc_model_path)
-
-    # train target truecase
-    trg_tc_model_path = prefix + '.train.txt.tok.clean.en.tcmodel'
-    trg_tc_model_path = train_moses_truecase(train_target_clean, trg_tc_model_path)
-
-    # apply target truecase
-    for f in ['train', 'dev', 'test']:
-        apply_moses_truecase(
-            prefix + '.{}.txt.tok.clean.en'.format(f),
-            prefix + '.{}.txt.tok.clean.true.en'.format(f),
-            trg_tc_model_path)
-
-    # BPE
-
-    # train bpe
-    clean_src_train_file = prefix + '.train.txt.tok.clean.true.en'
-    clean_target_train_file = prefix + '.train.txt.tok.clean.true.en'
-    bpe_model_path = prefix + '.train.txt.tok.clean.true.fr_en.bpe'
-    bpe_model_path = train_bpe(clean_src_train_file, clean_target_train_file, BPE_OPERATIONS, bpe_model_path)
-
-    # apply bpe
-    for l in ['fr', 'en']:
-        for f in ['train', 'dev', 'test']:
-            apply_BPE(
-                prefix + '.{}.txt.tok.clean.true.{}'.format(f, l),
-                prefix + '.{}.txt.tok.clean.true.bpe.{}'.format(f, l),
-                bpe_model_path)
-
-    # add len prefixes
-    for f in ['train', 'dev', 'test']:
-        src_file = prefix + '.{}.txt.tok.clean.true.bpe.fr'.format(f)
-        with codecs.open(src_file, encoding='utf8') as src:
-            src_lines = src.readlines()
-
-        output_lengths = get_binned_lengths(
-            prefix + '.{}.txt.tok.clean.true.en'.format(f))
-
-        new_src_lines = []
-        for i, length in enumerate(output_lengths):
-            new_src_lines.append('TL{} '.format(length) + src_lines[i])
-
-        output_file = prefix + '.{}.txt.tok.clean.true.bpe.len.fr'.format(f)
-        with codecs.open(output_file, 'w', encoding='utf8') as predictions:
-            for i, line in enumerate(new_src_lines):
-                predictions.write(u'{}'.format(line))
-
-    # add TSS prefixes
-    for f in ['train', 'dev', 'test']:
-
-        src_file = prefix + '.{}.txt.tok.clean.true.bpe.fr'.format(f)
-
-        with codecs.open(src_file, encoding='utf8') as src:
-            src_lines = src.readlines()
-
-        output_tss_prefixes = get_TSS_prefixes(
-            prefix + '.{}.txt.tok.clean.true.en'.format(f))
-
-        new_src_lines = []
-        for i, length in enumerate(output_lengths):
-            new_src_lines.append('TL{} '.format(length) + src_lines[i])
-
-        output_file = prefix + '.{}.txt.tok.clean.true.bpe.len.fr'.format(
-            f)
-        with codecs.open(output_file, 'w', encoding='utf8') as predictions:
-            for i, line in enumerate(new_src_lines):
-                predictions.write(u'{}'.format(line))
-
-                # build dictionaries
-
-                # train
-
-                # evaluate
 
 
 def en_he_len_exp():
