@@ -444,12 +444,6 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
                                                                         prefix + '.tok.penntrg.clean.true.desc.' + trg)
     os.system(deescape_command)
 
-    apply_BPE(prefix + '.tok.penntrg.clean.true.desc.' + trg,
-              prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg,
-              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
-
-    print 'applied BPE on target side (for test purposes)'
-
     # Unsplit hyphens
     command = 'sed -i \"s/ \@-\@ /-/g\" {} '.format(prefix + '.tok.penntrg.clean.true.desc.' + trg)
     os.system(command)
@@ -457,6 +451,13 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     # Unsplit slashes
     command = 'sed -i \"s/ \@\/\@ /\//g\" {}'.format(prefix + '.tok.penntrg.clean.true.desc.' + trg)
     os.system(command)
+
+    # create bped target file for test purposes
+    apply_BPE(prefix + '.tok.penntrg.clean.true.desc.' + trg,
+              prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg,
+              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+
+    print 'applied BPE on target side (for test purposes)'
 
     # so far we should have:
     # bped version of src(non-penn) tokenized, clean, truecased
@@ -467,7 +468,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     input_path = '{}.tok.penntrg.clean.true.desc.{}'.format(prefix, trg)
     parse_trees_path = input_path + '.parsed'
     print 'parsing target with bllip...'
-    parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
+    # parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
     print 'done parsing.'
 
     # create linearized trees (remove POS tags, bpe the words)
