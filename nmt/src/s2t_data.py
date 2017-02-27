@@ -31,8 +31,9 @@ BPE_OPERATIONS = 89500
 
 
 def main():
+    train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
-    preprocess_bllip(dev_prefix, 'de', 'en')
+    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix)
     return
 
     # train penntrg bpe model
@@ -380,7 +381,11 @@ def split_hyphens_slashes(tree):
 
 
 # preprocessing + parse with bllip. english is ptb tokenized, german is "normally" tokenized
-def preprocess_bllip(prefix, src, trg, is_train = False):
+def preprocess_bllip(prefix, src, trg, train_prefix = None):
+    is_train = False
+    if train_prefix == None:
+        is_train = True
+        train_prefix = prefix
 
     # normalize punctuation (mainly spaces near punctuation.)
     # tokenize (-a is aggressive hyphen splitting)
@@ -409,11 +414,11 @@ def preprocess_bllip(prefix, src, trg, is_train = False):
     # truecase source
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
                          prefix + '.tok.penntrg.clean.true.' + src,
-                         prefix + '.tok.clean.' + src + '.tcmodel')
+                         train_prefix + '.tok.clean.' + src + '.tcmodel')
     # truecase target
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + trg,
                          prefix + '.tok.penntrg.clean.true.' + trg,
-                         prefix + '.tok.clean.' + trg + '.tcmodel')
+                         train_prefix + '.tok.clean.' + trg + '.tcmodel')
 
     print 'finished truecasing'
 
@@ -421,7 +426,7 @@ def preprocess_bllip(prefix, src, trg, is_train = False):
     # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
     apply_BPE(prefix + '.tok.penntrg.clean.true.' + src,
               prefix + '.tok.penntrg.clean.true.bpe.' + src,
-              prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
 
     print 'applied BPE on source side'
 
@@ -435,7 +440,7 @@ def preprocess_bllip(prefix, src, trg, is_train = False):
 
     apply_BPE(prefix + '.tok.penntrg.clean.true.desc' + trg,
               prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg,
-              prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
 
     print 'applied BPE on target side (for test purposes)'
 
@@ -461,7 +466,7 @@ def preprocess_bllip(prefix, src, trg, is_train = False):
 
     # create linearized trees (remove POS tags, bpe the words)
     linearized_path = '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg)
-    bpe_model_path = prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg
+    bpe_model_path = train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg
 
     # bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path)
     bllip_to_linearized_parallel(parse_trees_path, linearized_path, bpe_model_path)
