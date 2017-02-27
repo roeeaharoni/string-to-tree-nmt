@@ -13,7 +13,7 @@ $base_path/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.c
 $base_path/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.en.parsed.lin.json \
 --model $base_path/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz \
 --saveFreq 30000 \
---validFreq 1 \
+--validFreq 10000 \
 --dim_word 500 \
 --dim 1024 \
 --valid_datasets $base_path/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de \
