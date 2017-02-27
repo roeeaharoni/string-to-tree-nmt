@@ -31,6 +31,9 @@ BPE_OPERATIONS = 89500
 
 
 def main():
+    dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
+    preprocess_bllip(dev_prefix, 'de', 'en')
+    return
 
     # train penntrg bpe model
     # train_bpe('/home/nlp/aharonr6/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.de',
@@ -363,6 +366,7 @@ def remove_pos_tags_from_tree(tree):
     return yoav_trees.Tree(tree.label, new_children)
 
 
+# ended up not using this
 def split_hyphens_slashes(tree):
     tree_str = str(tree)
 
@@ -376,10 +380,9 @@ def split_hyphens_slashes(tree):
 
 
 # preprocessing + parse with bllip. english is ptb tokenized, german is "normally" tokenized
-def preprocess_bllip(prefix, src, trg):
+def preprocess_bllip(prefix, src, trg, is_train = False):
 
-    # normalize punctuation (mainly spaces near punctuation. also has -penn option - irrelevant as not in ptb here)
-    # $mosesdecoder/scripts/tokenizer/normalize-punctuation.perl -l $SRC
+    # normalize punctuation (mainly spaces near punctuation.)
     # tokenize (-a is aggressive hyphen splitting)
     normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
     {}/scripts/tokenizer/tokenizer.perl {} -a -l {} > {}.tok.penntrg.{}'
@@ -418,23 +421,23 @@ def preprocess_bllip(prefix, src, trg):
     # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
     apply_BPE(prefix + '.tok.penntrg.clean.true.' + src,
               prefix + '.tok.penntrg.clean.true.bpe.' + src,
-              prefix + '.tok.clean.true.bpemodel.' + src + trg)
+              prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
 
     print 'applied BPE on source side'
 
-    apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
-              prefix + '.tok.penntrg.clean.true.bpe.' + trg,
-              prefix + '.tok.clean.true.bpemodel.' + src + trg)
-
-    print 'applied BPE on target side (for test purposes)'
-
     # prepare for BLLIP parsing:
 
-    # de-escape special chars
+    # de-escape special chars in target
     deescape_command = '{}/scripts/tokenizer/deescape-special-chars-PTB.perl < {} > {}'.format(MOSES_HOME,
                                                                         prefix + '.tok.penntrg.clean.true.' + trg,
                                                                         prefix + '.tok.penntrg.clean.true.desc.' + trg)
     os.system(deescape_command)
+
+    apply_BPE(prefix + '.tok.penntrg.clean.true.desc' + trg,
+              prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg,
+              prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+
+    print 'applied BPE on target side (for test purposes)'
 
     # Unsplit hyphens
     command = 'sed -i \"s/ \@-\@ /-/g\" {} '.format(prefix + '.tok.penntrg.clean.true.desc.' + trg)
@@ -452,8 +455,9 @@ def preprocess_bllip(prefix, src, trg):
     # parse with python bllip version
     input_path = '{}.tok.penntrg.clean.true.desc.{}'.format(prefix, trg)
     parse_trees_path = input_path + '.parsed'
+    print 'parsing target with bllip...'
     parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
-
+    print 'done parsing.'
 
     # create linearized trees (remove POS tags, bpe the words)
     linearized_path = '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg)
@@ -463,13 +467,13 @@ def preprocess_bllip(prefix, src, trg):
     bllip_to_linearized_parallel(parse_trees_path, linearized_path, bpe_model_path)
 
     # check if yields are identical to bped ptb version
-    compare_tree_yield_to_bpe_test(linearized_path,
-        BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.penntrg.clean.true.desc.bpe.en')
+    compare_tree_yield_to_bpe_test(linearized_path, prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg)
 
     # build dictionaries
-    build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
-                             '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
-    print 'built dictionaries'
+    if is_train:
+        build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
+                                 '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
+        print 'built dictionaries'
 
     # print 'finished preprocessing. files to use:'
     #
