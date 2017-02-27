@@ -1,4 +1,6 @@
 import os
+import codecs
+import re
 
 # BASE_PATH = '/Users/roeeaharoni'
 BASE_PATH = '/home/nlp/aharonr6'
@@ -71,3 +73,38 @@ def build_nematus_dictionary(train_src_bpe_file_path, train_target_bpe_file_path
                                                                 train_src_bpe_file_path,
                                                                 train_target_bpe_file_path)
     os.system(command_string)
+
+
+def nist_bleu(moses_path, src_sgm_path, ref_sgm_path, predictions_path, trg_lang):
+    wrap_command = '{}/scripts/ems/support/wrap-xml.perl {} {} < {} > {}.sgm'.format(moses_path,
+                                                                                     trg_lang,
+                                                                                     src_sgm_path,
+                                                                                     predictions_path,
+                                                                                     predictions_path)
+    os.system(wrap_command)
+    tmp_file = '{}.bleu'.format(predictions_path)
+    nist_command = '{}/scripts/generic/mteval-v13a.pl -c -s {} -r {} -t {} > {}'.format(moses_path,
+                                                                                        src_sgm_path,
+                                                                                        ref_sgm_path,
+                                                                                        predictions_path + '.sgm',
+                                                                                        tmp_file)
+    os.system(nist_command)
+    nist_str = codecs.open(tmp_file, 'r', 'utf-8').read()
+    regex = re.compile('BLEU score = ([0-9]*\.[0-9]*) for')
+    nist_score = regex.search(nist_str).group(1)
+    score = float(nist_score) * 100
+    print 'reference:{}\npredictions:{}\nnist bleu: {}\n'.format(ref_sgm_path, predictions_path, score)
+    return score
+
+
+def bleu(moses_path, ref_path, output_path):
+    tmp_file = '{}.bleu'.format(output_path)
+    bleu_command = "{}/scripts/generic/multi-bleu.perl {} < {} > {}".format(
+        moses_path, ref_path, output_path, tmp_file)
+
+    os.system(bleu_command)
+
+    bleu_str = codecs.open(tmp_file, 'r', 'utf-8').read()
+
+    os.system('rm {}'.format(tmp_file))
+    return bleu_str

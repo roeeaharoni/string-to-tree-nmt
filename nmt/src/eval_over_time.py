@@ -1,18 +1,7 @@
 import os
 import codecs
 import yoav_trees
-
-
-def bleu(moses_path, ref_path, output_path):
-    tmp_file = '{}.bleu'.format(output_path)
-    bleu_command = "{}/scripts/generic/multi-bleu.perl {} < {} > {}".format(
-        moses_path, ref_path, output_path, tmp_file)
-
-    os.system(bleu_command)
-
-    bleu_str = codecs.open(tmp_file, 'r', 'utf-8').read()
-
-    return bleu_str
+import moses_tools
 
 
 def postprocess(dev_target_sents):
@@ -77,23 +66,11 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     print 'finished translating {}'.format(dev_src)
 
 
-def nist_bleu(moses_path, src_sgm_path, ref_sgm_path, predictions_path, trg_lang):
-    wrap_command = '{}/scripts/ems/support/wrap-xml.perl {} {} < {} > {}.sgm'.format(moses_path,
-                                                                                     trg_lang,
-                                                                                     src_sgm_path,
-                                                                                     predictions_path,
-                                                                                     predictions_path)
-    os.system(wrap_command)
-    nist_command = '{}/scripts/generic/mteval-v13a.pl -c -s {} -r {} -t {}'.format(moses_path,
-                                                                                   src_sgm_path,
-                                                                                   ref_sgm_path,
-                                                                                   predictions_path + '.sgm')
-    os.system(nist_command)
-
 def main():
 
     # base_path = '/home/nlp/aharonr6'
-    base_path = '~'
+    # base_path = '~'
+    base_path = '/Users/roeeaharoni'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
 
@@ -122,10 +99,10 @@ def main():
     # nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_stt_2015, 'en')
 
     # 0.2820
-    nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_bpe_2016, 'en')
+    moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_bpe_2016, 'en')
 
     # 0.2719
-    nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
+    moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
     return
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
@@ -157,7 +134,7 @@ def main():
     detok_2016_score = bleu(moses_path, ref_2016, post_2016)
     tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
 
-    score = nist_bleu(moses_path, tok_ref_2016, post_2016_tok)
+    score = moses_tools.nist_bleu(moses_path, tok_ref_2016, post_2016_tok)
 
     print 'detokenized bleu 2015: {}'.format(detok_2015_score)
     print 'tokenized bleu 2015: {}'.format(tok_2015_score)
