@@ -34,8 +34,8 @@ def main():
     train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
     test2015_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
-    test2016_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest-2016-deen'
-    preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix)
+    test2016_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
+    # preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix)
     preprocess_bllip(test2016_prefix, 'de', 'en', train_prefix)
     return
 
