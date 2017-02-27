@@ -402,10 +402,16 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
 
     # clean
     # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
-    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok.penntrg {} {} {}.tok.penntrg.clean 1 80'.format(
+
+    if is_train:
+        length_threshold = 80
+    else:
+        length_threshold = 999
+    clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok.penntrg {} {} {}.tok.penntrg.clean 1 {}'.format(
                                                                                                     MOSES_HOME,
                                                                                                     prefix,
-                                                                                                    src, trg, prefix)
+                                                                                                    src, trg, prefix,
+                                                                                                    length_threshold)
     os.system(clean_command)
     print 'finished cleaning'
 
@@ -438,7 +444,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
                                                                         prefix + '.tok.penntrg.clean.true.desc.' + trg)
     os.system(deescape_command)
 
-    apply_BPE(prefix + '.tok.penntrg.clean.true.desc' + trg,
+    apply_BPE(prefix + '.tok.penntrg.clean.true.desc.' + trg,
               prefix + '.tok.penntrg.clean.true.desc.bpe.' + trg,
               train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
 
