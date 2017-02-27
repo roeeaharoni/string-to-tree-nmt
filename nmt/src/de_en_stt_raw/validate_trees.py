@@ -1,8 +1,8 @@
 import os
 import codecs
 
-from .. import yoav_trees
-from .. import moses_tools
+from src import yoav_trees
+from src import moses_tools
 
 def main():
     print 'validating trees...'
