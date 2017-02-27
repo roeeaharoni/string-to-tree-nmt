@@ -29,5 +29,5 @@ $base_path/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.tok
 --dropout_target 0 \
 --maxlen 150 \
 --batch_size 40 \
---valid_batch_size 40 \
+--valid_batch_size 10 \
 --reload
