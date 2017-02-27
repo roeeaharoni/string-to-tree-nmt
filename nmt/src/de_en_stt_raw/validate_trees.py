@@ -2,7 +2,7 @@ import os
 import codecs
 
 from src import yoav_trees
-from src import moses_tools
+# from src import moses_tools
 
 def main():
     print 'validating trees...'
@@ -40,7 +40,7 @@ def main():
                         break  # EOF
                     total += 1
                     try:
-                        parsed = Tree('Top').from_sexpr(tree)
+                        parsed = yoav_trees.Tree('Top').from_sexpr(tree)
                         valid_trees += 1
                         sent = ' '.join(parsed.leaves())
                     except Exception as e:
