@@ -33,7 +33,10 @@ BPE_OPERATIONS = 89500
 def main():
     train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
-    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix)
+    test2015_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
+    test2016_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest-2016-deen'
+    preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix)
+    preprocess_bllip(test2016_prefix, 'de', 'en', train_prefix)
     return
 
     # train penntrg bpe model
@@ -468,7 +471,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     input_path = '{}.tok.penntrg.clean.true.desc.{}'.format(prefix, trg)
     parse_trees_path = input_path + '.parsed'
     print 'parsing target with bllip...'
-    # parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
+    parallel_bllip_parse_large_file(input_path, parse_trees_path, lines_per_sub_file=1000)
     print 'done parsing.'
 
     # create linearized trees (remove POS tags, bpe the words)
