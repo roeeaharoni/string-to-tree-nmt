@@ -56,7 +56,7 @@ def main():
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
 
     # get current BLEU, compare to last best model, save as best if improved
-    bleu_command = './bleu.sh'
+    bleu_command = base_path + '/git/research/nmt/src/de_en_stt_raw/bleu.sh'
     os.system(bleu_command)
 
 
