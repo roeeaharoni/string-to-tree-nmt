@@ -51,7 +51,8 @@ def main():
 
 
     # postprocess stripped trees (de-bpe, de-truecase)
-    postprocess_command = './postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = '{}/git/research/nmt/src/de_en_stt_raw/postprocess-en.sh < {} > {}.postprocessed'.format(
+        base_path, dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
 
