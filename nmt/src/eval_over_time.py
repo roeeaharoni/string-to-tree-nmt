@@ -102,7 +102,7 @@ def main():
 
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
     model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
-    config_path = base_path + 'git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+    config_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
 
     src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
@@ -136,7 +136,10 @@ def main():
     nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
     nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
 
+    # nist bleu: 27.33
     print 'nist bleu 2015: {}'.format(nist2015)
+
+    # nist bleu 2016: 31.19
     print 'nist bleu 2016: {}'.format(nist2016)
 
     return

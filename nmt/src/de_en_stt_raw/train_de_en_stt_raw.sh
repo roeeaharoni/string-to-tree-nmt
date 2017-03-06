@@ -1,6 +1,7 @@
 #!/bin/sh
 
 base_path=/home/nlp/aharonr6
+export PYTHONPATH=$base_path/git/research/nmt
 
 # path to nematus ( https://www.github.com/rsennrich/nematus )
 nematus=$base_path/git/nematus
