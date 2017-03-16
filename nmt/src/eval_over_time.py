@@ -30,6 +30,15 @@ def postprocess_normal(dev_target_sents):
     return dev_target_sents + '.postprocessed'
 
 
+def postprocess_stt_raw(sents):
+    # postprocess stripped trees (remove bpe, de-truecase)
+    postprocess_command = './de_en_stt_raw/postprocess-en.sh < {} > {}.postprocessed'.format(sents,
+                                                                                             sents)
+    os.system(postprocess_command)
+    print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(sents, sents)
+    return sents + '.postprocessed'
+
+
 def validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target):
     # validate and strip trees
     valid_trees = 0
@@ -66,7 +75,60 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     print 'finished translating {}'.format(dev_src)
 
 
+def evaluate_best_stt_raw():
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.npz.best_bleu'
+    config_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.json'
+    moses_path = base_path + '/git/mosesdecoder'
+
+    os.system('cp {} {}'.format(config_path, model_path + '.json'))
+
+    # sgm files newstest2016
+    src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
+    ref_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
+
+    # sgm files newstest2015
+    src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
+    ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
+
+    # src/references 2015
+    src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
+
+    # src/references 2016
+    src_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.bpe.de'
+
+    trg_2015_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.trees.en'
+    trg_2015_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.sents.en'
+    align_2015 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt'
+
+    trg_2016_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.trees.en'
+    trg_2016_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.sents.en'
+    align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
+
+    valid_trees_log_2015 = base_path + '/' + trg_2015_trees + '_validtrees'
+    translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
+    post_2015 = postprocess_stt_raw(trg_2015_trees)
+
+    valid_trees_log_2016 = base_path + '/' + trg_2016_trees + '_validtrees'
+    translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
+    post_2016 = postprocess_normal(trg_2016_trees)
+
+    nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
+    nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
+
+    # nist bleu: 27.33
+    print 'nist bleu 2015: {}'.format(nist2015)
+
+    # nist bleu 2016: 31.19
+    print 'nist bleu 2016: {}'.format(nist2016)
+
+
 def main():
+    evaluate_best_stt_raw()
+    return
 
     base_path = '/home/nlp/aharonr6'
     # base_path = '~'
@@ -143,8 +205,6 @@ def main():
     print 'nist bleu 2016: {}'.format(nist2016)
 
     return
-
-
 
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
