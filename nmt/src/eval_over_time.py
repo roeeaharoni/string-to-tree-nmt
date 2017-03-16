@@ -106,12 +106,12 @@ def evaluate_best_stt_raw():
     trg_2016_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.sents.en'
     align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
 
-    valid_trees_log_2015 = base_path + '/' + trg_2015_trees + '_validtrees'
+    valid_trees_log_2015 = trg_2015_trees + '_validtrees'
     translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
     validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
     post_2015 = postprocess_stt_raw(trg_2015_trees)
 
-    valid_trees_log_2016 = base_path + '/' + trg_2016_trees + '_validtrees'
+    valid_trees_log_2016 = trg_2016_trees + '_validtrees'
     translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
     validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
     post_2016 = postprocess_normal(trg_2016_trees)
