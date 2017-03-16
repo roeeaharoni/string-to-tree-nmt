@@ -109,12 +109,12 @@ def evaluate_best_stt_raw():
     valid_trees_log_2015 = trg_2015_trees + '_validtrees'
     translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
     validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
-    post_2015 = postprocess_stt_raw(trg_2015_trees)
+    post_2015 = postprocess_stt_raw(trg_2015_sents)
 
     valid_trees_log_2016 = trg_2016_trees + '_validtrees'
     translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
     validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
-    post_2016 = postprocess_normal(trg_2016_trees)
+    post_2016 = postprocess_stt_raw(trg_2016_sents)
 
     nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
     nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
