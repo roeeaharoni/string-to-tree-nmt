@@ -103,6 +103,8 @@ def evaluate_best_stt_raw():
                     base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1230000.npz']
 
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
+    for ensemble_model_path in ensemble_model_paths:
+        os.system('cp {} {}'.format(config_path, ensemble_model_path + '.json'))
 
     # sgm files newstest2016
     src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
