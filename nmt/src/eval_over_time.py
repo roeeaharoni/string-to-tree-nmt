@@ -75,12 +75,32 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     print 'finished translating {}'.format(dev_src)
 
 
+def translate_with_ensemble(alignments_path, dev_src, dev_target, model_paths, nematus):
+    # translate dev set using model (validate)
+    print 'translating...'
+    # decode: k - beam size, n - normalize scores by length, p - processes
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
+             -m {} \
+             -i {} \
+             -o {} \
+             -a {} \
+             -k 12 -n -p 8 -v'.format(nematus, ' '.join(model_paths), dev_src, dev_target, alignments_path)
+    os.system(decode_command)
+    print 'finished translating {}'.format(dev_src)
+
+
 def evaluate_best_stt_raw():
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
     model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.npz.best_bleu'
     config_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.json'
     moses_path = base_path + '/git/mosesdecoder'
+    ensemble_model_paths = \
+        [base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1110000.npz',
+                    base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1140000.npz',
+                    base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1170000.npz',
+                    base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1200000.npz',
+                    base_path + '/git/research/nmt/models/de_en_stt_raw/' + 'de_en_stt_raw_model.iter1230000.npz']
 
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
 
@@ -107,12 +127,14 @@ def evaluate_best_stt_raw():
     align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
 
     valid_trees_log_2015 = trg_2015_trees + '_validtrees'
-    translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    # translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    translate_with_ensemble(align_2015, src_2015, trg_2015_trees, ensemble_model_paths, nematus_path)
     validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
     post_2015 = postprocess_stt_raw(trg_2015_sents)
 
     valid_trees_log_2016 = trg_2016_trees + '_validtrees'
-    translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    # translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    translate_with_ensemble(align_2016, src_2016, trg_2016_trees, ensemble_model_paths, nematus_path)
     validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
     post_2016 = postprocess_stt_raw(trg_2016_sents)
 
