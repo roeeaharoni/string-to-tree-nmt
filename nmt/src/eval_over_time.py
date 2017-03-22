@@ -231,7 +231,61 @@ def evaluate_new_stt_overtime():
 
 
 def evaluate_new_bpe_overtime():
-    pass
+    bpe_model_files = [
+        'de_en_bpe_raw_model.iter30000.npz',
+        'de_en_bpe_raw_model.iter60000.npz',
+        'de_en_bpe_raw_model.iter90000.npz',
+        'de_en_bpe_raw_model.iter120000.npz',
+        'de_en_bpe_raw_model.iter150000.npz',
+        'de_en_bpe_raw_model.iter180000.npz',
+        'de_en_bpe_raw_model.iter210000.npz',
+        'de_en_bpe_raw_model.iter240000.npz',
+        'de_en_bpe_raw_model.iter270000.npz',
+        'de_en_bpe_raw_model.iter300000.npz',
+        'de_en_bpe_raw_model.iter330000.npz',
+        'de_en_bpe_raw_model.iter360000.npz',
+        'de_en_bpe_raw_model.iter390000.npz',
+        'de_en_bpe_raw_model.iter420000.npz',
+        'de_en_bpe_raw_model.iter450000.npz',
+        'de_en_bpe_raw_model.iter480000.npz',
+        'de_en_bpe_raw_model.iter510000.npz',
+        'de_en_bpe_raw_model.iter540000.npz',
+        'de_en_bpe_raw_model.iter570000.npz',
+        'de_en_bpe_raw_model.iter600000.npz',
+        'de_en_bpe_raw_model.iter630000.npz',
+        'de_en_bpe_raw_model.iter660000.npz',
+        'de_en_bpe_raw_model.iter690000.npz',
+        'de_en_bpe_raw_model.iter720000.npz']
+
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de'
+    bpe_bleu_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/overtime/bleu.txt'
+    bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+
+    # foreach model file
+    for f in bpe_model_files:
+        bpe_model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/' + f
+
+        os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
+
+        dev_target = base_path + '/git/research/nmt/models/de_en_bpe_raw/overtime/{}_newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de.output.dev'.format(
+            f)
+
+        alignments_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/overtime/{}_dev_alignments.txt'.format(f)
+
+        translate(alignments_path, dev_src, dev_target, bpe_model_path, nematus_path)
+
+        postprocessed_path = postprocess_normal(dev_target)
+        dev_src_sgm_path = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.de.sgm'
+        dev_ref_sgm_path = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.en.sgm'
+        score = moses_tools.nist_bleu(moses_path, dev_src_sgm_path, dev_ref_sgm_path, postprocessed_path, "en")
+        with codecs.open(bpe_bleu_path, 'a', 'utf-8') as bleu_file:
+            bleu_file.write('{}\t{}\n'.format(f, score))
+
+        # remove config file copy
+        os.system('rm {}'.format(bpe_bleu_path + '.json'))
 
 
 def main():
