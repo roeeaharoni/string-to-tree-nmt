@@ -150,34 +150,167 @@ def evaluate_best_stt_raw():
     print 'nist bleu 2016: {}'.format(nist2016)
 
 
+def evaluate_new_stt_overtime():
+    stt_raw_model_files = [
+    'de_en_stt_raw_model.iter30000.npz',
+    'de_en_stt_raw_model.iter60000.npz',
+    'de_en_stt_raw_model.iter90000.npz',
+    'de_en_stt_raw_model.iter120000.npz',
+    'de_en_stt_raw_model.iter150000.npz',
+    'de_en_stt_raw_model.iter180000.npz',
+    'de_en_stt_raw_model.iter210000.npz',
+    'de_en_stt_raw_model.iter240000.npz',
+    'de_en_stt_raw_model.iter270000.npz',
+    'de_en_stt_raw_model.iter300000.npz',
+    'de_en_stt_raw_model.iter330000.npz',
+    'de_en_stt_raw_model.iter360000.npz',
+    'de_en_stt_raw_model.iter390000.npz',
+    'de_en_stt_raw_model.iter420000.npz',
+    'de_en_stt_raw_model.iter450000.npz',
+    'de_en_stt_raw_model.iter480000.npz',
+    'de_en_stt_raw_model.iter510000.npz',
+    'de_en_stt_raw_model.iter540000.npz',
+    'de_en_stt_raw_model.iter570000.npz',
+    'de_en_stt_raw_model.iter600000.npz',
+    'de_en_stt_raw_model.iter630000.npz',
+    'de_en_stt_raw_model.iter660000.npz',
+    'de_en_stt_raw_model.iter690000.npz',
+    'de_en_stt_raw_model.iter720000.npz',
+    'de_en_stt_raw_model.iter750000.npz',
+    'de_en_stt_raw_model.iter780000.npz',
+    'de_en_stt_raw_model.iter810000.npz',
+    'de_en_stt_raw_model.iter840000.npz',
+    'de_en_stt_raw_model.iter870000.npz',
+    'de_en_stt_raw_model.iter900000.npz',
+    'de_en_stt_raw_model.iter930000.npz',
+    'de_en_stt_raw_model.iter960000.npz',
+    'de_en_stt_raw_model.iter990000.npz',
+    'de_en_stt_raw_model.iter1020000.npz',
+    'de_en_stt_raw_model.iter1050000.npz',
+    'de_en_stt_raw_model.iter1080000.npz',
+    'de_en_stt_raw_model.iter1110000.npz',
+    'de_en_stt_raw_model.iter1140000.npz',
+    'de_en_stt_raw_model.iter1170000.npz',
+    'de_en_stt_raw_model.iter1200000.npz',
+    'de_en_stt_raw_model.iter1230000.npz']
+
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
+    stt_bleu_path = base_path + '/git/research/nmt/models/de_en_stt_raw/overtime/bleu.txt'
+    stt_config_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.json'
+    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de'
+
+    # foreach model file
+    for f in stt_raw_model_files:
+        stt_model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/' + f
+
+        os.system('cp {} {}'.format(stt_config_path, stt_model_path + '.json'))
+
+        dev_target_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/overtime/{}_newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de.output.trees.dev'.format(
+            f)
+        dev_target_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/overtime/{}_newstest-2013-2014-deen.tok.penntrg.clean.true.bpe.de.output.sents.dev'.format(
+            f)
+        alignments_path = base_path + '/git/research/nmt/models/de_en_stt_raw/overtime/{}_dev_alignments.txt'.format(f)
+        valid_trees_log = base_path + '/git/research/nmt/models/de_en_stt_raw/overtime/{}.valid_trees_log'.format(f)
+
+        translate(alignments_path, dev_src, dev_target_trees, stt_model_path, nematus_path)
+
+        validate_and_strip_trees(dev_target_sents, valid_trees_log, dev_target_trees)
+
+        postprocessed_path = postprocess_stt_raw(dev_target_sents)
+
+        dev_src_sgm_path = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.de.sgm'
+        dev_ref_sgm_path = base_path + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen.en.sgm'
+        score = moses_tools.nist_bleu(moses_path, dev_src_sgm_path, dev_ref_sgm_path, postprocessed_path, 'en')
+        with codecs.open(stt_bleu_path, 'a', 'utf-8') as bleu_file:
+            bleu_file.write('{}\t{}\n'.format(f, score))
+
+        # remove config file copy
+        os.system('rm {}'.format(stt_model_path + '.json'))
+
+
+def evaluate_new_bpe_overtime():
+    pass
+
+
 def main():
+    evaluate_new_stt_overtime()
+    # evaluate_new_bpe_overtime()
+
     # evaluate_best_stt_raw()
     # return
 
-    evaluate_best_bpe_raw()
-    return
+    # evaluate_best_bpe_raw()
+    # return
 
+    # evaluate_best_bpe_model_old()
+    # return
+
+    # eval_old_stt_overtime()
+    # return
+
+    # evaluate_old_bpe_overtime()
+    # return
+
+
+def evaluate_old_bpe_overtime():
+    bpe_model_files = ['de_en_bpe_model.iter660000.npz',
+                       'de_en_bpe_model.iter630000.npz',
+                       'de_en_bpe_model.iter600000.npz',
+                       'de_en_bpe_model.iter570000.npz',
+                       'de_en_bpe_model.iter540000.npz',
+                       'de_en_bpe_model.iter510000.npz',
+                       'de_en_bpe_model.iter480000.npz',
+                       'de_en_bpe_model.iter450000.npz',
+                       'de_en_bpe_model.iter420000.npz']
+    # bpe_model_files = ['de_en_bpe_model.iter390000.npz',
+    #                    'de_en_bpe_model.iter360000.npz',
+    #                    'de_en_bpe_model.iter330000.npz',
+    #                    'de_en_bpe_model.iter300000.npz',
+    #                    'de_en_bpe_model.iter270000.npz',
+    #                    'de_en_bpe_model.iter240000.npz',
+    #                    'de_en_bpe_model.iter210000.npz',
+    #                    'de_en_bpe_model.iter180000.npz',
+    #                    'de_en_bpe_model.iter150000.npz',
+    #                    'de_en_bpe_model.iter120000.npz',
+    #                    'de_en_bpe_model.iter90000.npz',
+    #                    'de_en_bpe_model.iter60000.npz',
+    #                    'de_en_bpe_model.iter30000.npz']
+    bpe_model_files.reverse()
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
     dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
     ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
-
-    test_alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/test_alignments.txt.best'
-    test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
-
+    bpe_bleu_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/bleu.txt'
     bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
-    test_target = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
-    bpe_model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.npz.best_bleu'
+    bpe = True
+    if bpe:
+        # foreach model file
+        for f in bpe_model_files:
+            bpe_model_path = base_path + '/git/research/nmt/models/de_en_bpe/' + f
 
-    # compute test bleu on bpe2bpe
-    test_ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.en'
-    os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
-    # translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
-    postprocessed_path = postprocess(test_target)
-    score = bleu(moses_path, test_ref_path, postprocessed_path)
-    print score
-    return
+            os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
+
+            dev_target = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.dev'.format(
+                f)
+
+            alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_dev_alignments.txt'.format(f)
+
+            translate(alignments_path, dev_src, dev_target, bpe_model_path, nematus_path)
+
+            postprocessed_path = postprocess(dev_target)
+
+            score = moses_tools.bleu(moses_path, ref_path, postprocessed_path)
+            with codecs.open(bpe_bleu_path, 'a', 'utf-8') as bleu_file:
+                bleu_file.write('{}\t{}\n'.format(f, score))
+
+            # remove config file copy
+            os.system('rm {}'.format(bpe_bleu_path + '.json'))
 
 
-
+def eval_old_stt_overtime():
     stt_models_files = [
         'de_en_stt_model.iter1320000.npz',
         'de_en_stt_model.iter1290000.npz',
@@ -224,10 +357,15 @@ def main():
         'de_en_stt_model.iter60000.npz',
         'de_en_stt_model.iter30000.npz']
     stt_models_files.reverse()
-
+    base_path = '/home/nlp/aharonr6'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
     stt_bleu_path = base_path + '/git/research/nmt/models/de_en_stt/overtime/bleu.txt'
     stt_config_path = base_path + '/git/research/nmt/models/de_en_stt/de_en_stt_model.npz.json'
-
+    dev_src = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.tok.true.de.bpe'
+    ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en'
+    test_alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/test_alignments.txt.best'
+    test_src = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-src.penn.tok.true.de.bpe'
     # os.mkdir(base_path + '/git/research/nmt/models/de_en_stt/overtime/')
     stt = False
     if stt:
@@ -251,82 +389,46 @@ def main():
 
             postprocessed_path = postprocess(dev_target_sents)
 
-            score = bleu(moses_path, ref_path, postprocessed_path)
+            score = moses_tools.bleu(moses_path, ref_path, postprocessed_path)
             with codecs.open(stt_bleu_path, 'a', 'utf-8') as bleu_file:
                 bleu_file.write('{}\t{}\n'.format(f, score))
 
             # remove config file copy
             os.system('rm {}'.format(stt_model_path + '.json'))
 
-        return
 
-    bpe_model_files = [ 'de_en_bpe_model.iter660000.npz',
-    'de_en_bpe_model.iter630000.npz',
-    'de_en_bpe_model.iter600000.npz',
-    'de_en_bpe_model.iter570000.npz',
-    'de_en_bpe_model.iter540000.npz',
-    'de_en_bpe_model.iter510000.npz',
-    'de_en_bpe_model.iter480000.npz',
-    'de_en_bpe_model.iter450000.npz',
-    'de_en_bpe_model.iter420000.npz']
-    # bpe_model_files = ['de_en_bpe_model.iter390000.npz',
-    #                    'de_en_bpe_model.iter360000.npz',
-    #                    'de_en_bpe_model.iter330000.npz',
-    #                    'de_en_bpe_model.iter300000.npz',
-    #                    'de_en_bpe_model.iter270000.npz',
-    #                    'de_en_bpe_model.iter240000.npz',
-    #                    'de_en_bpe_model.iter210000.npz',
-    #                    'de_en_bpe_model.iter180000.npz',
-    #                    'de_en_bpe_model.iter150000.npz',
-    #                    'de_en_bpe_model.iter120000.npz',
-    #                    'de_en_bpe_model.iter90000.npz',
-    #                    'de_en_bpe_model.iter60000.npz',
-    #                    'de_en_bpe_model.iter30000.npz']
-
-    bpe_model_files.reverse()
-
-    bpe_bleu_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/bleu.txt'
+def evaluate_best_bpe_model_old():
+    base_path = '/home/nlp/aharonr6'
+    moses_path = base_path + '/git/mosesdecoder'
     bpe_config_path = base_path + '/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.json'
-    bpe = True
-    if bpe:
-        # foreach model file
-        for f in bpe_model_files:
-
-            bpe_model_path = base_path + '/git/research/nmt/models/de_en_bpe/' + f
-
-            os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
-
-            dev_target = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_newstest2015-deen-src.tok.true.de.bpe.output.dev'.format(
-                f)
-
-            alignments_path = base_path + '/git/research/nmt/models/de_en_bpe/overtime/{}_dev_alignments.txt'.format(f)
-
-            translate(alignments_path, dev_src, dev_target, bpe_model_path, nematus_path)
-
-            postprocessed_path = postprocess(dev_target)
-
-            score = bleu(moses_path, ref_path, postprocessed_path)
-            with codecs.open(bpe_bleu_path, 'a', 'utf-8') as bleu_file:
-                bleu_file.write('{}\t{}\n'.format(f, score))
-
-            # remove config file copy
-            os.system('rm {}'.format(bpe_bleu_path + '.json'))
-
-        return
+    test_target = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
+    bpe_model_path = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/de_en_bpe_model.npz.npz.best_bleu'
+    # compute test bleu on bpe2bpe
+    test_ref_path = base_path + '/git/research/nmt/data/WMT16/de-en/test/newstest2016-deen-ref.en'
+    os.system('cp {} {}'.format(bpe_config_path, bpe_model_path + '.json'))
+    # translate(test_alignments_path, test_src, test_target, bpe_model_path, nematus_path)
+    postprocessed_path = postprocess(test_target)
+    score = moses_tools.bleu(moses_path, test_ref_path, postprocessed_path)
+    print score
+    return
 
 
 def evaluate_best_bpe_raw():
     base_path = '/home/nlp/aharonr6'
+
     # base_path = '~'
     # base_path = '/Users/roeeaharoni'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
+
     # sgm files newstest2016
     src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
     ref_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
+
     # sgm files newstest2015
     src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
     ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
+
     # prediction_path_stt_2015 = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best'
     # prediction_path_stt_2016 = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.sents.postprocessed'
     # stt results
@@ -344,16 +446,21 @@ def evaluate_best_bpe_raw():
     # return
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
     model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+
     ensemble_models_path = [
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter600000.npz',
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter630000.npz',
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter660000.npz',
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter690000.npz',
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter720000.npz']
+
     config_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
+
     for model in ensemble_models_path:
         os.system('cp {} {}'.format(config_path, model + '.json'))
+
     src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
     trg_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en'
     align_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt'
