@@ -65,7 +65,7 @@ def translate(alignments_path, dev_src, dev_target, model_path, nematus):
     # translate dev set using model (validate)
     print 'translating...'
     # decode: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
              -m {} \
              -i {} \
              -o {} \
@@ -289,8 +289,8 @@ def evaluate_new_bpe_overtime():
 
 
 def main():
-    evaluate_new_stt_overtime()
-    # evaluate_new_bpe_overtime()
+    # evaluate_new_stt_overtime()
+    evaluate_new_bpe_overtime()
 
     # evaluate_best_stt_raw()
     # return
