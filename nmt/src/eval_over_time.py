@@ -136,8 +136,8 @@ def evaluate_best_stt_raw():
     post_2015 = postprocess_stt_raw(trg_2015_sents)
 
     valid_trees_log_2016 = trg_2016_trees + '_validtrees'
-    # translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
-    translate_with_ensemble(align_2016, src_2016, trg_2016_trees, ensemble_model_paths, nematus_path)
+    translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    # translate_with_ensemble(align_2016, src_2016, trg_2016_trees, ensemble_model_paths, nematus_path)
     validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
     post_2016 = postprocess_stt_raw(trg_2016_sents)
 
