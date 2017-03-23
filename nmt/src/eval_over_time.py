@@ -293,10 +293,10 @@ def main():
     # evaluate_new_stt_overtime()
     # evaluate_new_bpe_overtime()
 
-    evaluate_best_stt_raw()
+    # evaluate_best_stt_raw()
     # return
 
-    # evaluate_best_bpe_raw()
+    evaluate_best_bpe_raw()
     # return
 
     # evaluate_best_bpe_model_old()
@@ -534,8 +534,8 @@ def evaluate_best_bpe_raw():
     # post_2015_tok = postprocess_normal_tok(trg_2015)
     # detok_2015_score = bleu(moses_path, ref_2015, post_2015)
     # tok_2015_score = bleu(moses_path, tok_ref_2015, post_2015_tok)
-    # translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
-    translate_with_ensemble(align_2016, src_2016, trg_2016, ensemble_models_path, nematus_path)
+    translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
+    # translate_with_ensemble(align_2016, src_2016, trg_2016, ensemble_models_path, nematus_path)
     post_2016 = postprocess_normal(trg_2016)
     # post_2016_tok = postprocess_normal_tok(trg_2016)
     # detok_2016_score = bleu(moses_path, ref_2016, post_2016)
