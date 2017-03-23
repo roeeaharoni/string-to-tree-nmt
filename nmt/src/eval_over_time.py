@@ -92,7 +92,8 @@ def translate_with_ensemble(alignments_path, dev_src, dev_target, model_paths, n
 def evaluate_best_stt_raw():
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
-    model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.npz.best_bleu'
+    # model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.npz.best_bleu'
+    model_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.iter1140000.npz'
     config_path = base_path + '/git/research/nmt/models/de_en_stt_raw/de_en_stt_raw_model.npz.json'
     moses_path = base_path + '/git/mosesdecoder'
     ensemble_model_paths = \
@@ -129,8 +130,8 @@ def evaluate_best_stt_raw():
     align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
 
     valid_trees_log_2015 = trg_2015_trees + '_validtrees'
-    # translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
-    translate_with_ensemble(align_2015, src_2015, trg_2015_trees, ensemble_model_paths, nematus_path)
+    translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    # translate_with_ensemble(align_2015, src_2015, trg_2015_trees, ensemble_model_paths, nematus_path)
     validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
     post_2015 = postprocess_stt_raw(trg_2015_sents)
 
@@ -290,9 +291,9 @@ def evaluate_new_bpe_overtime():
 
 def main():
     # evaluate_new_stt_overtime()
-    evaluate_new_bpe_overtime()
+    # evaluate_new_bpe_overtime()
 
-    # evaluate_best_stt_raw()
+    evaluate_best_stt_raw()
     # return
 
     # evaluate_best_bpe_raw()
@@ -499,7 +500,9 @@ def evaluate_best_bpe_raw():
     # moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
     # return
     # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
-    model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+    # model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+    model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.iter540000.npz'
+
 
     ensemble_models_path = [
         base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter600000.npz',
@@ -525,8 +528,8 @@ def evaluate_best_bpe_raw():
     align_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
     # ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.en'
     # tok_ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.en'
-    # translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
-    translate_with_ensemble(align_2015, src_2015, trg_2015, ensemble_models_path, nematus_path)
+    translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
+    # translate_with_ensemble(align_2015, src_2015, trg_2015, ensemble_models_path, nematus_path)
     post_2015 = postprocess_normal(trg_2015)
     # post_2015_tok = postprocess_normal_tok(trg_2015)
     # detok_2015_score = bleu(moses_path, ref_2015, post_2015)
