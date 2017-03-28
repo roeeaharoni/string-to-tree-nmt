@@ -32,9 +32,9 @@ BPE_OPERATIONS = 89500
 
 def main():
 
-    train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/train/news-commentary-v8.de-en'
-    dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/dev/newstest2015-deen'
-    test_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/test/newstest2016-deen'
+    train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en'
+    dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen'
+    test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/test/newstest2016-deen'
     preprocess_bllip(train_prefix, 'de', 'en')
     preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
     preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
