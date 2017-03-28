@@ -31,12 +31,21 @@ BPE_OPERATIONS = 89500
 
 
 def main():
+
+    train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/train/news-commentary-v8.de-en'
+    dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/dev/newstest2015-deen'
+    test_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/news-de-en/test/newstest2016-deen'
+    preprocess_bllip(train_prefix, 'de', 'en')
+    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
+    preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
+    return
+
     train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
     test2015_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
     test2016_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
-    # preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix)
-    preprocess_bllip(test2016_prefix, 'de', 'en', train_prefix)
+    # preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix=train_prefix)
+    # preprocess_bllip(test2016_prefix, 'de', 'en', train_prefix=train_prefix)
     return
 
     # train penntrg bpe model
@@ -490,13 +499,11 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
                                  '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
         print 'built dictionaries'
 
-    # print 'finished preprocessing. files to use:'
-    #
-    # # train files
-    # print prefix + '.tok.clean.true.bpe.' + src
-    # print prefix + '.tok.clean.true.bpe.' + trg
+        print 'finished preprocessing. files to use:'
 
-    # TODO: re-train bpe2tree
+        # train files
+        print prefix + '.tok.clean.true.bpe.' + src
+        print prefix + '.tok.clean.true.bpe.' + trg
 
 
 def delete_files(paths):
