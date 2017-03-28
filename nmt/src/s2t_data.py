@@ -438,11 +438,11 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     # truecase source
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
                          prefix + '.tok.penntrg.clean.true.' + src,
-                         train_prefix + '.tok.clean.' + src + '.tcmodel')
+                         train_prefix + '.tok.penntrg.clean.' + src + '.tcmodel')
     # truecase target
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + trg,
                          prefix + '.tok.penntrg.clean.true.' + trg,
-                         train_prefix + '.tok.clean.' + trg + '.tcmodel')
+                         train_prefix + '.tok.penntrg.clean.' + trg + '.tcmodel')
 
     print 'finished truecasing'
 
