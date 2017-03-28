@@ -439,12 +439,22 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
                          prefix + '.tok.penntrg.clean.true.' + src,
                          train_prefix + '.tok.penntrg.clean.' + src + '.tcmodel')
+
     # truecase target
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + trg,
                          prefix + '.tok.penntrg.clean.true.' + trg,
                          train_prefix + '.tok.penntrg.clean.' + trg + '.tcmodel')
 
     print 'finished truecasing'
+
+    # BPE - train (on both sides together)
+    # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
+    if is_train:
+        train_bpe(prefix + '.tok.penntrg.clean.true.' + src,
+                  prefix + '.tok.penntrg.clean.true.' + trg,
+                  BPE_OPERATIONS,
+                  prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+        print 'trained BPE'
 
     # BPE - apply
     # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
