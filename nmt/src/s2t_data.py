@@ -399,6 +399,11 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
         is_train = True
         train_prefix = prefix
 
+    apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
+              prefix + '.tok.penntrg.clean.true.bpe.' + trg,
+              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+    return
+
     # normalize punctuation (mainly spaces near punctuation.)
     # tokenize (-a is aggressive hyphen splitting)
     normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
@@ -447,6 +452,8 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
 
     print 'finished truecasing'
 
+    print 'training BPE...'
+
     # BPE - train (on both sides together)
     # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
     if is_train:
@@ -456,13 +463,22 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
                   prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
         print 'trained BPE'
 
+
     # BPE - apply
+
+    print 'applying BPE...'
     # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
     apply_BPE(prefix + '.tok.penntrg.clean.true.' + src,
               prefix + '.tok.penntrg.clean.true.bpe.' + src,
               train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
 
     print 'applied BPE on source side'
+
+    apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
+              prefix + '.tok.penntrg.clean.true.bpe.' + trg,
+              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+
+    print 'applied BPE on target side (for bpe2bpe model)'
 
     # prepare for BLLIP parsing:
 
