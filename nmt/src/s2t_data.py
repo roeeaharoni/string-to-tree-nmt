@@ -395,11 +395,6 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
         is_train = True
         train_prefix = prefix
 
-    if is_train:
-        build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
-                             '{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, trg))
-    return
-
     # normalize punctuation (mainly spaces near punctuation.)
     # tokenize (-a is aggressive hyphen splitting)
     normalize_tokenize_command_format = 'cat {}.{} | {}/scripts/tokenizer/normalize-punctuation.perl -l {} | \
