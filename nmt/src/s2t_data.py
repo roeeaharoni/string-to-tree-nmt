@@ -2,14 +2,10 @@
 
 """code for processing corpora for string-to-tree nmt"""
 
-import codecs
 from collections import defaultdict
-import os
-import re
 import time
 
 import yoav_trees
-import docopt as do
 import apply_bpe as apply_bpe
 import traceback
 from moses_tools import *
@@ -399,9 +395,9 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
         is_train = True
         train_prefix = prefix
 
-    apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
-              prefix + '.tok.penntrg.clean.true.bpe.' + trg,
-              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+    if is_train:
+        build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
+                             '{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, trg))
     return
 
     # normalize punctuation (mainly spaces near punctuation.)
@@ -529,6 +525,9 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     if is_train:
         build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
                                  '{}.tok.penntrg.clean.true.desc.parsed.linear.bpe.{}'.format(prefix, trg))
+
+        build_nematus_dictionary('{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, src),
+                                 '{}.tok.penntrg.clean.true.bpe.{}'.format(prefix, trg))
         print 'built dictionaries'
 
         print 'finished preprocessing. files to use:'
