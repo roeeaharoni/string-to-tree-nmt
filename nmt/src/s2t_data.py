@@ -12,6 +12,10 @@ from moses_tools import *
 
 from multiprocessing import Pool
 
+import os.path
+from shutil import copyfile
+from src import moses_tools
+
 
 # TTS TODO: use amunmt decoder? nice to have
 # TTS TODO: check how to manipulate decoder in nematus
@@ -26,7 +30,30 @@ NEMATUS_HOME = BASE_PATH + '/git/nematus'
 BPE_OPERATIONS = 89500
 
 
+def test_nist_bleu():
+    base_path = BASE_PATH
+    moses_path = base_path + '/git/mosesdecoder/'
+    src_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-src.de.sgm'
+    ref_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-ref.en.sgm'
+    postprocessed_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+    model_prefix = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz'
+    best_nist = model_prefix + '_best_nist_bleu.txt'
+    nist_score = moses_tools.nist_bleu(moses_path, src_sgm_path, ref_sgm_path, postprocessed_path, 'en')
+
+    if os.path.exists(best_nist):
+        best_score = float(open(best_nist, mode='r', encoding='utf8').readline())
+        if best_score < float(nist_score):
+            copyfile(model_prefix, model_prefix + '_best_nist_bleu.npz')
+    else:
+        open(best_nist, mode='w', encoding='utf8').write(str(nist_score))
+
+
 def main():
+
+    test_nist_bleu()
+    return
+
+
 
     train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen'
