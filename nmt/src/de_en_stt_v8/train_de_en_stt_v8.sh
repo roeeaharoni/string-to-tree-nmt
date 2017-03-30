@@ -10,7 +10,7 @@ nematus=$base_path/git/nematus
 THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.8 $nematus/nematus/nmt.py \
 --datasets $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.de \
 $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.desc.parsed.linear.bpe.en \
---dictionaries $base_path/git/research/nmt/data/news-de-en/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.de.json \
+--dictionaries $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.de.json \
 $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.desc.parsed.linear.bpe.en.json \
 --model $base_path/git/research/nmt/models/de_en_stt_v8/de_en_stt_v8_model.npz \
 --saveFreq 30000 \
