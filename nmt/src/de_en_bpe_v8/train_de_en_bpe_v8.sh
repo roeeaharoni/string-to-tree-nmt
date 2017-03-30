@@ -28,6 +28,6 @@ $base_path/git/research/nmt/data/news-de-en/dev/newstest2015-deen.tok.penntrg.cl
 --dropout_source 0 \
 --dropout_target 0 \
 --maxlen 50 \
---batch_size 80 \
+--batch_size 40 \
 --valid_batch_size 80 \
 --reload
