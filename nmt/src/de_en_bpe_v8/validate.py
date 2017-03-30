@@ -1,4 +1,7 @@
 import os
+from src import moses_tools
+import codecs
+from shutil import copyfile
 
 
 def main():
@@ -33,6 +36,28 @@ def main():
     postprocess_command = './postprocess-en.sh < {} > {}.postprocessed'.format(dev_target, dev_target)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target, dev_target)
+
+    # nist bleu score - log and save best model
+    moses_path = base_path + '/git/mosesdecoder/'
+    src_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-src.de.sgm'
+    ref_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-ref.en.sgm'
+    postprocessed_path = dev_target + '.postprocessed'
+    best_nist_path = model_prefix + '_best_nist_bleu.txt'
+    nist_log = model_prefix + '_nist_bleu.txt'
+    nist_score = moses_tools.nist_bleu(moses_path, src_sgm_path, ref_sgm_path, postprocessed_path, 'en')
+    codecs.open(nist_log, 'a', 'utf8').write('{}\n'.format(nist_score))
+
+    if os.path.exists(best_nist_path):
+        best_score = float(codecs.open(best_nist_path, mode='r', encoding='utf8').readline())
+        if best_score < float(nist_score):
+            print 'new best nist bleu! prev: {} now: {}'.format(best_score, nist_score)
+            copyfile(model_prefix, model_prefix + '_best_nist_bleu.npz')
+            print 'saved new model in: {}'.format(model_prefix + '_best_nist_bleu.npz')
+        else:
+            print 'no improvement. prev: {} now: {}'.format(best_score, nist_score)
+    else:
+        codecs.open(best_nist_path, mode='w', encoding='utf8').write(str(nist_score))
+        copyfile(model_prefix, model_prefix + '_best_nist_bleu.npz')
 
     # get current BLEU, compare to last best model, save as best if improved
     bleu_command = './bleu.sh'
