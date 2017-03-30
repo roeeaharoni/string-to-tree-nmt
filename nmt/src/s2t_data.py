@@ -41,11 +41,11 @@ def test_nist_bleu():
     nist_score = moses_tools.nist_bleu(moses_path, src_sgm_path, ref_sgm_path, postprocessed_path, 'en')
 
     if os.path.exists(best_nist):
-        best_score = float(open(best_nist, mode='r', encoding='utf8').readline())
+        best_score = float(codecs.open(best_nist, mode='r', encoding='utf8').readline())
         if best_score < float(nist_score):
             copyfile(model_prefix, model_prefix + '_best_nist_bleu.npz')
     else:
-        open(best_nist, mode='w', encoding='utf8').write(str(nist_score))
+        codecs.open(best_nist, mode='w', encoding='utf8').write(str(nist_score))
 
 
 def main():
