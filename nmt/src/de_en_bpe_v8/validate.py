@@ -15,9 +15,9 @@ def main():
 
     model_prefix = base_path + '/git/research/nmt/models/{}/{}_model.npz'.format(model_name, model_name)
 
-    dev_src = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen.tok.clean.true.bpe.de'
+    dev_src = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen.tok.penntrg.clean.true.bpe.de'
 
-    dev_target = base_path + '/git/research/nmt/models/{}/newstest2015-deen.tok.clean.true.bpe.de.output.dev'.format(model_name)
+    dev_target = base_path + '/git/research/nmt/models/{}/newstest2015-deen.tok..penntrg.clean.true.bpe.de.output.dev'.format(model_name)
 
     alignments_path = base_path + '/git/research/nmt/models/{}/dev_alignments.txt'.format(model_name)
 
