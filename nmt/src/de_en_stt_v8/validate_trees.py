@@ -72,7 +72,7 @@ def main():
     moses_path = base_path + '/git/mosesdecoder/'
     src_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-src.de.sgm'
     ref_sgm_path = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen-ref.en.sgm'
-    postprocessed_path = dev_target + '.postprocessed'
+    postprocessed_path = dev_target_sents + '.postprocessed'
     best_nist_path = model_prefix + '_best_nist_bleu.txt'
     nist_log = model_prefix + '_nist_bleu.txt'
     nist_score = moses_tools.nist_bleu(moses_path, src_sgm_path, ref_sgm_path, postprocessed_path, 'en')
