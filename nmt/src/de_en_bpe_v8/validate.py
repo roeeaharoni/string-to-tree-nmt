@@ -17,12 +17,12 @@ def main():
 
     dev_src = base_path + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen.tok.penntrg.clean.true.bpe.de'
 
-    dev_target = base_path + '/git/research/nmt/models/{}/newstest2015-deen.tok..penntrg.clean.true.bpe.de.output.dev'.format(model_name)
+    dev_target = base_path + '/git/research/nmt/models/{}/newstest2015-deen.tok.penntrg.clean.true.bpe.de.output.dev'.format(model_name)
 
     alignments_path = base_path + '/git/research/nmt/models/{}/dev_alignments.txt'.format(model_name)
 
     # decode dev set: k - beam size, n - normalize scores by length, p - processes
-    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
+    decode_command = 'THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu3,lib.cnmem=0.09,on_unused_input=warn python {}/nematus/translate.py \
      -m {}.dev.npz \
      -i {} \
      -o {} \
@@ -57,7 +57,7 @@ def main():
             print 'no improvement. prev: {} now: {}'.format(best_score, nist_score)
     else:
         codecs.open(best_nist_path, mode='w', encoding='utf8').write(str(nist_score))
-        copyfile(model_prefix, model_prefix + '_best_nist_bleu.npz')
+        copyfile(model_prefix + '.dev.npz', model_prefix + '_best_nist_bleu.npz')
 
     # get current BLEU, compare to last best model, save as best if improved
     bleu_command = './bleu.sh'
