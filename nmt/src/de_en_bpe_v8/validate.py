@@ -63,7 +63,7 @@ def main():
         copyfile(model_prefix + '.dev.npz', model_prefix + '_best_nist_bleu.npz')
 
     # get current BLEU, compare to last best model, save as best if improved
-    bleu_command = './bleu.sh'
+    bleu_command = '{}/git/research/nmt/src/{}/bleu.sh'.format(base_path, model_name)
     os.system(bleu_command)
 
 
