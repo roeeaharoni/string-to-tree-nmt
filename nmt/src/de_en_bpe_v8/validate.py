@@ -28,7 +28,7 @@ def main():
      -o {} \
      -a {} \
      -k 12 -n -p 5 -v'.format(nematus, model_prefix, dev_src, dev_target, alignments_path)
-    os.system(decode_command)
+    # os.system(decode_command)
 
     print 'finished translating {}'.format(dev_src)
 

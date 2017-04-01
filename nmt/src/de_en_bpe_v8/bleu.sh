@@ -15,7 +15,7 @@ model_prefix=$base_path/git/research/nmt/models/de_en_bpe_v8/de_en_bpe_v8_model.
 ref=$base_path/git/research/nmt/data/news-de-en/dev/newstest2015-deen.en
 
 # dev predictions file
-dev_target=$base_path/git/research/nmt/models/de_en_bpe_v8/newstest2015-deen.tok.clean.true.bpe.de.output.dev.postprocessed
+dev_target=$base_path/git/research/nmt/models/de_en_bpe_v8/newstest2015-deen.tok.penntrg.clean.true.bpe.de.output.dev.postprocessed
 
 # dev alignments file
 dev_alignments=$base_path/git/research/nmt/models/de_en_bpe_v8/dev_alignments.txt
