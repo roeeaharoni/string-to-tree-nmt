@@ -84,6 +84,7 @@ def main():
             print 'new best nist bleu! prev: {} now: {}'.format(best_score, nist_score)
             copyfile(model_prefix + '.dev.npz', model_prefix + '_best_nist_bleu.npz')
             print 'saved new model in: {}'.format(model_prefix + '_best_nist_bleu.npz')
+            codecs.open(best_nist_path, mode='w', encoding='utf8').write(str(nist_score))
         else:
             print 'no improvement. prev: {} now: {}'.format(best_score, nist_score)
     else:
