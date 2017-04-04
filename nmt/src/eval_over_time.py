@@ -6,7 +6,7 @@ import moses_tools
 
 def postprocess(dev_target_sents):
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = '~/git/research/nmt/src/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     return dev_target_sents + '.postprocessed'
@@ -15,7 +15,7 @@ def postprocess(dev_target_sents):
 # non-ptb tokenization, no detok
 def postprocess_normal_tok(dev_target_sents):
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './de_en_bpe_raw/postprocess-en-tok.sh < {} > {}.postprocessed.tok'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = '~/git/research/nmt/src/de_en_bpe_raw/postprocess-en-tok.sh < {} > {}.postprocessed.tok'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed.tok'.format(dev_target_sents, dev_target_sents)
     return dev_target_sents + '.postprocessed.tok'
@@ -24,7 +24,7 @@ def postprocess_normal_tok(dev_target_sents):
 # non-ptb tokenization, no detok
 def postprocess_normal(dev_target_sents):
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './de_en_bpe_raw/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
+    postprocess_command = '~/git/research/nmt/src/de_en_bpe_raw/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(dev_target_sents, dev_target_sents)
     return dev_target_sents + '.postprocessed'
@@ -32,7 +32,7 @@ def postprocess_normal(dev_target_sents):
 
 def postprocess_stt_raw(sents):
     # postprocess stripped trees (remove bpe, de-truecase)
-    postprocess_command = './de_en_stt_raw/postprocess-en.sh < {} > {}.postprocessed'.format(sents,
+    postprocess_command = '~/git/research/nmt/src/de_en_stt_raw/postprocess-en.sh < {} > {}.postprocessed'.format(sents,
                                                                                              sents)
     os.system(postprocess_command)
     print 'postprocessed (de-bped, de-truecase) {} into {}.postprocessed'.format(sents, sents)
