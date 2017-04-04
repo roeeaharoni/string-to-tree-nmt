@@ -44,13 +44,17 @@ def main():
 
     # single model eval
     # eval_over_time.translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
-    # post_2015 = eval_over_time.postprocess_normal(trg_2015)
+    post_2015 = eval_over_time.postprocess_normal(trg_2015)
 
-    eval_over_time.translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
+    # eval_over_time.translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
     post_2016 = eval_over_time.postprocess_normal(trg_2016)
 
     nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
     nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
+
+    print 'nist bleu 2015: {}\n'.format(nist2015)
+
+    print 'nist bleu 2016: {}\n'.format(nist2016)
 
     # ensemble eval
     eval_over_time.translate_with_ensemble(align_2015, src_2015, trg_2015, ensemble_models_path, nematus_path)
