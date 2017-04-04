@@ -17,16 +17,17 @@ def main():
     src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
     ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
 
-    model_path = base_path + '/git/research/nmt/models/{}/{}_model.npz_best_nist_bleu.npz'.format(model_name)
+    model_path = base_path + '/git/research/nmt/models/{}/{}_model.npz_best_nist_bleu.npz'.format(model_name,model_name)
 
     ensemble_models_path = [
-        base_path + '/git/research/nmt/models/{}/{}_model.iter120000.npz'.format(model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter150000.npz'.format(model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter180000.npz'.format(model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter210000.npz'.format(model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter90000.npz'.format(model_name)]
+        base_path + '/git/research/nmt/models/{}/{}_model.iter90000.npz'.format(model_name, model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter120000.npz'.format(model_name,model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter150000.npz'.format(model_name,model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter180000.npz'.format(model_name,model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter210000.npz'.format(model_name,model_name),
+        ]
 
-    config_path = base_path + '/git/research/nmt/models/{}/{}_model.npz.json'.format(model_name)
+    config_path = base_path + '/git/research/nmt/models/{}/{}_model.npz.json'.format(model_name, model_name)
 
     os.system('cp {} {}'.format(config_path, model_path + '.json'))
 
