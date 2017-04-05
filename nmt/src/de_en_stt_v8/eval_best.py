@@ -57,6 +57,8 @@ def main():
     post_2016 = eval_over_time.postprocess_stt_raw(trg_2016_sents)
 
     nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
+
+    print 'evaluating {}'.format(post_2016)
     nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
 
     print 'nist bleu 2015: {}\n'.format(nist2015)
