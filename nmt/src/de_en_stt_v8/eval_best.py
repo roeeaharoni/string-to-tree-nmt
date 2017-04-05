@@ -48,11 +48,11 @@ def main():
     valid_trees_log_2016 = trg_2016_trees + '_validtrees.txt'
 
     # single model eval
-    # eval_over_time.translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    eval_over_time.translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
     eval_over_time.validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
     post_2015 = eval_over_time.postprocess_stt_raw(trg_2015_sents)
 
-    # eval_over_time.translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    eval_over_time.translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
     eval_over_time.validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
     post_2016 = eval_over_time.postprocess_stt_raw(trg_2016_sents)
 
