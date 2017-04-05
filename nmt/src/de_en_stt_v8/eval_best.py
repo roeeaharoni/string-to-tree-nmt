@@ -42,17 +42,17 @@ def main():
 
     src_2016 = base_path + '/git/research/nmt/data/news-de-en/test/newstest2016-deen.tok.penntrg.clean.true.bpe.de'
     trg_2016_trees = base_path + '/git/research/nmt/models/{}/newstest2016-deen.tok.penntrg.clean.true.bpe.de.output.trees.en'.format(model_name)
-    trg_2016_sents = base_path + '/git/research/nmt/models/{}/newstest2016-deen.tok.penntrg.clean.true.bpe.de.output.trees.en'.format(
+    trg_2016_sents = base_path + '/git/research/nmt/models/{}/newstest2016-deen.tok.penntrg.clean.true.bpe.de.output.sents.en'.format(
         model_name)
     align_2016 = base_path + '/git/research/nmt/models/{}/newstest2016-deen.tok.penntrg.clean.true.bpe.de.output.en.alignments.txt'.format(model_name)
     valid_trees_log_2016 = trg_2016_trees + '_validtrees.txt'
 
     # single model eval
-    eval_over_time.translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
+    # eval_over_time.translate(align_2015, src_2015, trg_2015_trees, model_path, nematus_path)
     eval_over_time.validate_and_strip_trees(trg_2015_sents, valid_trees_log_2015, trg_2015_trees)
     post_2015 = eval_over_time.postprocess_stt_raw(trg_2015_sents)
 
-    eval_over_time.translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
+    # eval_over_time.translate(align_2016, src_2016, trg_2016_trees, model_path, nematus_path)
     eval_over_time.validate_and_strip_trees(trg_2016_sents, valid_trees_log_2016, trg_2016_trees)
     post_2016 = eval_over_time.postprocess_stt_raw(trg_2016_sents)
 
