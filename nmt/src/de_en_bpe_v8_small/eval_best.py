@@ -43,10 +43,10 @@ def main():
     align_2016 = base_path + '/git/research/nmt/models/{}/newstest2016-deen.tok.penntrg.clean.true.bpe.de.output.en.alignments.txt'.format(model_name)
 
     # single model eval
-    # eval_over_time.translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
+    eval_over_time.translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
     post_2015 = eval_over_time.postprocess_normal(trg_2015)
 
-    # eval_over_time.translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
+    eval_over_time.translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
     post_2016 = eval_over_time.postprocess_normal(trg_2016)
 
     nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
@@ -59,12 +59,12 @@ def main():
     # ensemble eval
     trg_2015_ens = trg_2015 + '_ens'
     align_2015_ens = align_2015 + '_ens'
-    # eval_over_time.translate_with_ensemble(align_2015_ens, src_2015, trg_2015_ens, ensemble_models_path, nematus_path)
+    eval_over_time.translate_with_ensemble(align_2015_ens, src_2015, trg_2015_ens, ensemble_models_path, nematus_path)
     post_2015_ens = eval_over_time.postprocess_normal(trg_2015_ens)
 
     trg_2016_ens = trg_2016 + '_ens'
     align_2016_ens = align_2016 + '_ens'
-    # eval_over_time.translate_with_ensemble(align_2016_ens, src_2016, trg_2016_ens, ensemble_models_path, nematus_path)
+    eval_over_time.translate_with_ensemble(align_2016_ens, src_2016, trg_2016_ens, ensemble_models_path, nematus_path)
     post_2016_ens = eval_over_time.postprocess_normal(trg_2016_ens)
 
     nist2015ens = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015_ens, 'en')
