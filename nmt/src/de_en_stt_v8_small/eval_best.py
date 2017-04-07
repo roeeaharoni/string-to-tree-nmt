@@ -20,11 +20,11 @@ def main():
     model_path = base_path + '/git/research/nmt/models/{}/{}_model.npz_best_nist_bleu.npz'.format(model_name,model_name)
 
     ensemble_models_path = [
+        base_path + '/git/research/nmt/models/{}/{}_model.iter110000.npz'.format(model_name,model_name),
         base_path + '/git/research/nmt/models/{}/{}_model.iter120000.npz'.format(model_name,model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter150000.npz'.format(model_name,model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter180000.npz'.format(model_name,model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter210000.npz'.format(model_name,model_name),
-        base_path + '/git/research/nmt/models/{}/{}_model.iter240000.npz'.format(model_name, model_name)
+        base_path + '/git/research/nmt/models/{}/{}_model.iter130000.npz'.format(model_name,model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter140000.npz'.format(model_name,model_name),
+        base_path + '/git/research/nmt/models/{}/{}_model.iter150000.npz'.format(model_name, model_name)
         ]
 
     config_path = base_path + '/git/research/nmt/models/{}/{}_model.npz.json'.format(model_name, model_name)
