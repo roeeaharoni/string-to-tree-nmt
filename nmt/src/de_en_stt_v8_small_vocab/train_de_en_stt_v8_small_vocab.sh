@@ -5,7 +5,8 @@ export PYTHONPATH=$base_path/git/research/nmt
 
 # path to nematus ( https://www.github.com/rsennrich/nematus )
 nematus=$base_path/git/nematus
-model_name=de_en_stt_v8_small_vocab
+
+model_name="de_en_stt_v8_small_vocab"
 
 # train model with nematus
 THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.8 $nematus/nematus/nmt.py \
