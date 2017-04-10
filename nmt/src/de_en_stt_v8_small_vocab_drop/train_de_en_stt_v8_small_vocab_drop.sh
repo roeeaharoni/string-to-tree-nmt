@@ -24,7 +24,6 @@ THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.8 $nematus/nem
 --external_validation_script $base_path/git/research/nmt/src/$model_name/validate_trees.sh \
 --optimizer adadelta \
 --lrate 0.0001 \
---alpha_c 0.0 \
 --clip_c 1.0 \
 --dropout_embedding 0.2 \
 --dropout_hidden 0.2 \
