@@ -30,7 +30,7 @@ THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu0,lib.cnmem=0.8 $nematus/nem
 --dropout_source 0.1 \
 --dropout_target 0.1 \
 --maxlen 150 \
---batch_size 40 \
---valid_batch_size 10 \
+--batch_size 80 \
+--valid_batch_size 80 \
 --reload \
 --tie_decoder_embeddings
