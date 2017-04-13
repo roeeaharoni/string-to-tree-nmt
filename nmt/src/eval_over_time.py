@@ -4,6 +4,25 @@ import yoav_trees
 import moses_tools
 
 
+def main():
+    # evaluate_new_stt_overtime()
+    # evaluate_new_bpe_overtime()
+
+    evaluate_best_stt_raw()
+
+    evaluate_best_bpe_raw()
+    return
+
+    # evaluate_best_bpe_model_old()
+    # return
+
+    # eval_old_stt_overtime()
+    # return
+
+    # evaluate_old_bpe_overtime()
+    # return
+
+
 def postprocess(dev_target_sents):
     # postprocess stripped trees (remove bpe, de-truecase)
     postprocess_command = '~/git/research/nmt/src/postprocess-en.sh < {} > {}.postprocessed'.format(dev_target_sents, dev_target_sents)
@@ -89,6 +108,125 @@ def translate_with_ensemble(alignments_path, dev_src, dev_target, model_paths, n
     print 'finished translating {}'.format(dev_src)
 
 
+def evaluate_best_bpe_raw():
+    base_path = '/home/nlp/aharonr6'
+
+    # base_path = '~'
+    # base_path = '/Users/roeeaharoni'
+    nematus_path = base_path + '/git/nematus'
+    moses_path = base_path + '/git/mosesdecoder'
+
+    # sgm files newstest2016
+    src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
+    ref_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
+
+    # sgm files newstest2015
+    src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
+    ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
+
+    # prediction_path_stt_2015 = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best'
+    # prediction_path_stt_2016 = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.sents.postprocessed'
+    # stt results
+    # 0.2835
+    # nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_stt_2016, 'en')
+    # 0.2736
+    # nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_stt_2015, 'en')
+    # prediction_path_bpe_2015 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
+    # prediction_path_bpe_2016 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best.postprocessed'
+    # bpe results
+    # 0.2820
+    # moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_bpe_2016, 'en')
+    # 0.2719
+    # moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
+    # return
+    # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
+    # model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
+    model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.iter540000.npz'
+
+
+    ensemble_models_path = [
+        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter600000.npz',
+        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter630000.npz',
+        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter660000.npz',
+        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter690000.npz',
+        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter720000.npz']
+
+    config_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
+
+    os.system('cp {} {}'.format(config_path, model_path + '.json'))
+
+    for model in ensemble_models_path:
+        os.system('cp {} {}'.format(config_path, model + '.json'))
+
+    src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
+
+    trg_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.best.en'
+    align_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.best.txt'
+
+    trg_2015_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.ens.en'
+    align_2015_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.ens.alignments.txt'
+
+    # ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.en'
+    # tok_ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.en'
+
+    src_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.bpe.de'
+
+    trg_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.best.en'
+    align_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.best.txt'
+
+    trg_2016_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.ens.output.en'
+    align_2016_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.ens.alignments.txt'
+
+    # ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.en'
+    # tok_ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.en'
+
+    translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
+    post_2015 = postprocess_normal(trg_2015)
+
+    # post_2015_tok = postprocess_normal_tok(trg_2015)
+    # detok_2015_score = bleu(moses_path, ref_2015, post_2015)
+    # tok_2015_score = bleu(moses_path, tok_ref_2015, post_2015_tok)
+
+    translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
+    post_2016 = postprocess_normal(trg_2016)
+
+    nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
+    nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
+
+    # nist bleu: 27.33
+    print 'nist bleu 2015: {}'.format(nist2015)
+    # nist bleu 2016: 31.19
+    print 'nist bleu 2016: {}'.format(nist2016)
+
+    translate_with_ensemble(align_2015_ens, src_2015, trg_2015_ens, ensemble_models_path, nematus_path)
+    post_2015_ens = postprocess_normal(trg_2015_ens)
+
+    translate_with_ensemble(align_2016_ens, src_2016, trg_2016_ens, ensemble_models_path, nematus_path)
+    post_2016_ens = postprocess_normal(trg_2016)
+
+    # post_2016_tok = postprocess_normal_tok(trg_2016)
+    # detok_2016_score = bleu(moses_path, ref_2016, post_2016)
+    # tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
+    # predictions_path_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+    # predictions_path_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en.postprocessed'
+
+    nist2015_ens = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015_ens, 'en')
+    nist2016_ens = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016_ens, 'en')
+
+
+    # nist bleu 2015: 27.33
+    print 'nist bleu 2015: {}'.format(nist2015)
+    # nist bleu 2016: 31.19
+    print 'nist bleu 2016: {}'.format(nist2016)
+
+    # nist bleu 2015:
+    print 'nist bleu ens. 2015: {}'.format(nist2015_ens)
+    # nist bleu 2016:
+    print 'nist bleu ens. 2016: {}'.format(nist2016_ens)
+
+    return
+
+
 def evaluate_best_stt_raw():
     base_path = '/home/nlp/aharonr6'
     nematus_path = base_path + '/git/nematus'
@@ -121,15 +259,15 @@ def evaluate_best_stt_raw():
     # src/references 2016
     src_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.bpe.de'
 
-    trg_2015_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.trees.en'
-    trg_2015_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.sents.en'
-    align_2015 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt'
-    valid_trees_log_2015 = trg_2015_trees + '_validtrees'
+    trg_2015_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.trees.best.en'
+    trg_2015_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.sents.best.en'
+    align_2015 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.best.txt'
+    valid_trees_log_2015 = trg_2015_trees + '_validtrees_best'
 
-    trg_2016_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.trees.en'
-    trg_2016_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.sents.en'
-    align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
-    valid_trees_log_2016 = trg_2016_trees + '_validtrees'
+    trg_2016_trees = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.trees.best.en'
+    trg_2016_sents = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.output.sents.best.en'
+    align_2016 = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.best.txt'
+    valid_trees_log_2016 = trg_2016_trees + '_validtrees_best'
 
     trg_2015_trees_ens = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.trees.ens.en'
     trg_2015_sents_ens = base_path + '/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.sents.ens.en'
@@ -314,26 +452,6 @@ def evaluate_new_bpe_overtime():
         os.system('rm {}'.format(bpe_bleu_path + '.json'))
 
 
-def main():
-    # evaluate_new_stt_overtime()
-    # evaluate_new_bpe_overtime()
-
-    evaluate_best_stt_raw()
-    return
-
-    evaluate_best_bpe_raw()
-    return
-
-    # evaluate_best_bpe_model_old()
-    # return
-
-    # eval_old_stt_overtime()
-    # return
-
-    # evaluate_old_bpe_overtime()
-    # return
-
-
 def evaluate_old_bpe_overtime():
     bpe_model_files = ['de_en_bpe_model.iter660000.npz',
                        'de_en_bpe_model.iter630000.npz',
@@ -490,125 +608,6 @@ def evaluate_best_bpe_model_old():
     postprocessed_path = postprocess(test_target)
     score = moses_tools.bleu(moses_path, test_ref_path, postprocessed_path)
     print score
-    return
-
-
-def evaluate_best_bpe_raw():
-    base_path = '/home/nlp/aharonr6'
-
-    # base_path = '~'
-    # base_path = '/Users/roeeaharoni'
-    nematus_path = base_path + '/git/nematus'
-    moses_path = base_path + '/git/mosesdecoder'
-
-    # sgm files newstest2016
-    src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-src.de.sgm'
-    ref_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-deen-ref.en.sgm'
-
-    # sgm files newstest2015
-    src_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-src.de.sgm'
-    ref_sgm_2015 = base_path + '/git/research/nmt/data/WMT16/all/dev/newstest2015-deen-ref.en.sgm'
-
-    # prediction_path_stt_2015 = base_path + '/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best'
-    # prediction_path_stt_2016 = base_path + '/git/research/nmt/models/de_en_stt/newstest2016-deen-src.penn.tok.true.de.bpe.output.sents.postprocessed'
-    # stt results
-    # 0.2835
-    # nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_stt_2016, 'en')
-    # 0.2736
-    # nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_stt_2015, 'en')
-    # prediction_path_bpe_2015 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best'
-    # prediction_path_bpe_2016 = base_path + '/git/research/nmt/models/de_en_bpe/newstest2016-deen-src.tok.true.de.bpe.output.dev.postprocessed.best.postprocessed'
-    # bpe results
-    # 0.2820
-    # moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, prediction_path_bpe_2016, 'en')
-    # 0.2719
-    # moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, prediction_path_bpe_2015, 'en')
-    # return
-    # translate and evaluate bleu with de_en_bpe_raw model on newstest2015, newstest2016
-    # model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.npz.best_bleu'
-    model_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.iter540000.npz'
-
-
-    ensemble_models_path = [
-        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter600000.npz',
-        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter630000.npz',
-        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter660000.npz',
-        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter690000.npz',
-        base_path + '/git/research/nmt/models/de_en_bpe_raw/' + 'de_en_bpe_raw_model.iter720000.npz']
-
-    config_path = base_path + '/git/research/nmt/models/de_en_bpe_raw/de_en_bpe_raw_model.npz.json'
-
-    os.system('cp {} {}'.format(config_path, model_path + '.json'))
-
-    for model in ensemble_models_path:
-        os.system('cp {} {}'.format(config_path, model + '.json'))
-
-    src_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.bpe.de'
-
-    trg_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en'
-    align_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt'
-
-    trg_2015_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.ens.en'
-    align_2015_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.ens.alignments.txt'
-
-    # ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.en'
-    # tok_ref_2015 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen.tok.clean.true.en'
-
-    src_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.bpe.de'
-
-    trg_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en'
-    align_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.alignments.txt'
-
-    trg_2016_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.ens.output.en'
-    align_2016_ens = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.ens.alignments.txt'
-
-    # ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.en'
-    # tok_ref_2016 = base_path + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen.tok.clean.true.en'
-
-    translate(align_2015, src_2015, trg_2015, model_path, nematus_path)
-    post_2015 = postprocess_normal(trg_2015)
-
-    # post_2015_tok = postprocess_normal_tok(trg_2015)
-    # detok_2015_score = bleu(moses_path, ref_2015, post_2015)
-    # tok_2015_score = bleu(moses_path, tok_ref_2015, post_2015_tok)
-
-    translate(align_2016, src_2016, trg_2016, model_path, nematus_path)
-    post_2016 = postprocess_normal(trg_2016)
-
-    nist2015 = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015, 'en')
-    nist2016 = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016, 'en')
-
-    # nist bleu: 27.33
-    print 'nist bleu 2015: {}'.format(nist2015)
-    # nist bleu 2016: 31.19
-    print 'nist bleu 2016: {}'.format(nist2016)
-
-    translate_with_ensemble(align_2015_ens, src_2015, trg_2015_ens, ensemble_models_path, nematus_path)
-    post_2015_ens = postprocess_normal(trg_2015_ens)
-
-    translate_with_ensemble(align_2016_ens, src_2016, trg_2016_ens, ensemble_models_path, nematus_path)
-    post_2016_ens = postprocess_normal(trg_2016)
-
-    # post_2016_tok = postprocess_normal_tok(trg_2016)
-    # detok_2016_score = bleu(moses_path, ref_2016, post_2016)
-    # tok_2016_score = bleu(moses_path, tok_ref_2016, post_2016_tok)
-    # predictions_path_2016 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2016-deen.tok.clean.true.bpe.de.output.en.postprocessed'
-    # predictions_path_2015 = base_path + '/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.en.postprocessed'
-
-    nist2015_ens = moses_tools.nist_bleu(moses_path, src_sgm_2015, ref_sgm_2015, post_2015_ens, 'en')
-    nist2016_ens = moses_tools.nist_bleu(moses_path, src_sgm_2016, ref_sgm_2016, post_2016_ens, 'en')
-
-
-    # nist bleu 2015: 27.33
-    print 'nist bleu 2015: {}'.format(nist2015)
-    # nist bleu 2016: 31.19
-    print 'nist bleu 2016: {}'.format(nist2016)
-
-    # nist bleu 2015:
-    print 'nist bleu ens. 2015: {}'.format(nist2015_ens)
-    # nist bleu 2016:
-    print 'nist bleu ens. 2016: {}'.format(nist2016_ens)
-
     return
 
 
