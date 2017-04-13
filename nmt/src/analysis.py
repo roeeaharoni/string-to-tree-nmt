@@ -907,6 +907,7 @@ def main(file1, file2):
 
 
 if __name__ == "__main__":
+    main('bla','bla')
     parser = argparse.ArgumentParser()
     # '/Users/mnadejde/Documents/workspace/MTMA2016/models/wmt16_systems/en-de/test.alignment'
     parser.add_argument('--input', '-i', type=argparse.FileType('r'),
