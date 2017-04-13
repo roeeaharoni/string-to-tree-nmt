@@ -28,7 +28,7 @@ THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.8 $nematus/nem
 --dropout_hidden 0.2 \
 --dropout_source 0.1 \
 --dropout_target 0.1 \
---maxlen 80 \
+--maxlen 400 \
 --batch_size 40 \
 --valid_batch_size 80 \
 --reload
