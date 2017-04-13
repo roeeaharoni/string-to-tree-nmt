@@ -358,7 +358,7 @@ def inspect_alignment_matrices(file1, file2=None):
             bpe_score = get_diagonal_subsequent_reordering_score(mma2, source_labels2, target_labels2)
 
         # if tree_score > 4:
-        to_show = [261, 39, 1227, 1146, 614, 943, 1135, 415, 865]
+        to_show = [602, 261, 39, 1227, 1146, 614, 943, 1135, 415, 865]
         if (count - 1) in to_show:
             plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, count)
 
@@ -705,61 +705,131 @@ def plot_tree_with_alignments(tree, alignments_mtx, input_labels, output_labels)
 
 def distortion_over_time():
     stt_model_files = [
-        'de_en_stt_model.iter1320000.npz',
-        'de_en_stt_model.iter1290000.npz',
-        'de_en_stt_model.iter1260000.npz',
-        'de_en_stt_model.iter1230000.npz',
-        'de_en_stt_model.iter1200000.npz',
-        'de_en_stt_model.iter1170000.npz',
-        'de_en_stt_model.iter1140000.npz',
-        'de_en_stt_model.iter1110000.npz',
-        'de_en_stt_model.iter1080000.npz',
-        'de_en_stt_model.iter1050000.npz',
-        'de_en_stt_model.iter1020000.npz',
-        'de_en_stt_model.iter990000.npz',
-        'de_en_stt_model.iter960000.npz',
-        'de_en_stt_model.iter930000.npz',
-        'de_en_stt_model.iter900000.npz',
-        'de_en_stt_model.iter870000.npz',
-        'de_en_stt_model.iter840000.npz',
-        'de_en_stt_model.iter810000.npz',
-        'de_en_stt_model.iter780000.npz',
-        'de_en_stt_model.iter750000.npz',
-        'de_en_stt_model.iter720000.npz',
-        'de_en_stt_model.iter690000.npz',
-        'de_en_stt_model.iter660000.npz',
-        'de_en_stt_model.iter630000.npz',
-        'de_en_stt_model.iter600000.npz',
-        'de_en_stt_model.iter570000.npz',
-        'de_en_stt_model.iter540000.npz',
-        'de_en_stt_model.iter510000.npz',
-        'de_en_stt_model.iter480000.npz',
-        'de_en_stt_model.iter450000.npz',
-        'de_en_stt_model.iter420000.npz',
-        'de_en_stt_model.iter390000.npz',
-        'de_en_stt_model.iter360000.npz',
-        'de_en_stt_model.iter330000.npz',
-        'de_en_stt_model.iter300000.npz',
-        'de_en_stt_model.iter270000.npz',
-        'de_en_stt_model.iter240000.npz',
-        'de_en_stt_model.iter210000.npz',
-        'de_en_stt_model.iter180000.npz',
-        'de_en_stt_model.iter150000.npz',
-        'de_en_stt_model.iter120000.npz',
-        'de_en_stt_model.iter90000.npz',
-        'de_en_stt_model.iter60000.npz',
-        'de_en_stt_model.iter30000.npz']
+        'de_en_stt_raw_model.iter1230000.npz',
+        'de_en_stt_raw_model.iter1200000.npz',
+        'de_en_stt_raw_model.iter1170000.npz',
+        'de_en_stt_raw_model.iter1140000.npz',
+        'de_en_stt_raw_model.iter1110000.npz',
+        'de_en_stt_raw_model.iter1080000.npz',
+        'de_en_stt_raw_model.iter1050000.npz',
+        'de_en_stt_raw_model.iter1020000.npz',
+        'de_en_stt_raw_model.iter990000.npz',
+        'de_en_stt_raw_model.iter960000.npz',
+        'de_en_stt_raw_model.iter930000.npz',
+        'de_en_stt_raw_model.iter900000.npz',
+        'de_en_stt_raw_model.iter870000.npz',
+        'de_en_stt_raw_model.iter840000.npz',
+        'de_en_stt_raw_model.iter810000.npz',
+        'de_en_stt_raw_model.iter780000.npz',
+        'de_en_stt_raw_model.iter750000.npz',
+        'de_en_stt_raw_model.iter720000.npz',
+        'de_en_stt_raw_model.iter690000.npz',
+        'de_en_stt_raw_model.iter660000.npz',
+        'de_en_stt_raw_model.iter630000.npz',
+        'de_en_stt_raw_model.iter600000.npz',
+        'de_en_stt_raw_model.iter570000.npz',
+        'de_en_stt_raw_model.iter540000.npz',
+        'de_en_stt_raw_model.iter510000.npz',
+        'de_en_stt_raw_model.iter480000.npz',
+        'de_en_stt_raw_model.iter450000.npz',
+        'de_en_stt_raw_model.iter420000.npz',
+        'de_en_stt_raw_model.iter390000.npz',
+        'de_en_stt_raw_model.iter360000.npz',
+        'de_en_stt_raw_model.iter330000.npz',
+        'de_en_stt_raw_model.iter300000.npz',
+        'de_en_stt_raw_model.iter270000.npz',
+        'de_en_stt_raw_model.iter240000.npz',
+        'de_en_stt_raw_model.iter210000.npz',
+        'de_en_stt_raw_model.iter180000.npz',
+        'de_en_stt_raw_model.iter150000.npz',
+        'de_en_stt_raw_model.iter120000.npz',
+        'de_en_stt_raw_model.iter90000.npz',
+        'de_en_stt_raw_model.iter60000.npz',
+        'de_en_stt_raw_model.iter30000.npz']
+
+    # stt_model_files = [
+    #     'de_en_stt_model.iter1320000.npz',
+    #     'de_en_stt_model.iter1290000.npz',
+    #     'de_en_stt_model.iter1260000.npz',
+    #     'de_en_stt_model.iter1230000.npz',
+    #     'de_en_stt_model.iter1200000.npz',
+    #     'de_en_stt_model.iter1170000.npz',
+    #     'de_en_stt_model.iter1140000.npz',
+    #     'de_en_stt_model.iter1110000.npz',
+    #     'de_en_stt_model.iter1080000.npz',
+    #     'de_en_stt_model.iter1050000.npz',
+    #     'de_en_stt_model.iter1020000.npz',
+    #     'de_en_stt_model.iter990000.npz',
+    #     'de_en_stt_model.iter960000.npz',
+    #     'de_en_stt_model.iter930000.npz',
+    #     'de_en_stt_model.iter900000.npz',
+    #     'de_en_stt_model.iter870000.npz',
+    #     'de_en_stt_model.iter840000.npz',
+    #     'de_en_stt_model.iter810000.npz',
+    #     'de_en_stt_model.iter780000.npz',
+    #     'de_en_stt_model.iter750000.npz',
+    #     'de_en_stt_model.iter720000.npz',
+    #     'de_en_stt_model.iter690000.npz',
+    #     'de_en_stt_model.iter660000.npz',
+    #     'de_en_stt_model.iter630000.npz',
+    #     'de_en_stt_model.iter600000.npz',
+    #     'de_en_stt_model.iter570000.npz',
+    #     'de_en_stt_model.iter540000.npz',
+    #     'de_en_stt_model.iter510000.npz',
+    #     'de_en_stt_model.iter480000.npz',
+    #     'de_en_stt_model.iter450000.npz',
+    #     'de_en_stt_model.iter420000.npz',
+    #     'de_en_stt_model.iter390000.npz',
+    #     'de_en_stt_model.iter360000.npz',
+    #     'de_en_stt_model.iter330000.npz',
+    #     'de_en_stt_model.iter300000.npz',
+    #     'de_en_stt_model.iter270000.npz',
+    #     'de_en_stt_model.iter240000.npz',
+    #     'de_en_stt_model.iter210000.npz',
+    #     'de_en_stt_model.iter180000.npz',
+    #     'de_en_stt_model.iter150000.npz',
+    #     'de_en_stt_model.iter120000.npz',
+    #     'de_en_stt_model.iter90000.npz',
+    #     'de_en_stt_model.iter60000.npz',
+    #     'de_en_stt_model.iter30000.npz']
     stt_model_files.reverse()
 
-    bpe_model_files = ['de_en_bpe_model.iter660000.npz',
-                       'de_en_bpe_model.iter630000.npz',
-                       'de_en_bpe_model.iter600000.npz',
-                       'de_en_bpe_model.iter570000.npz',
-                       'de_en_bpe_model.iter540000.npz',
-                       'de_en_bpe_model.iter510000.npz',
-                       'de_en_bpe_model.iter480000.npz',
-                       'de_en_bpe_model.iter450000.npz',
-                       'de_en_bpe_model.iter420000.npz']
+    bpe_model_files = [
+        'de_en_bpe_raw_model.iter720000.npz',
+        'de_en_bpe_raw_model.iter690000.npz',
+        'de_en_bpe_raw_model.iter660000.npz',
+        'de_en_bpe_raw_model.iter630000.npz',
+        'de_en_bpe_raw_model.iter600000.npz',
+        'de_en_bpe_raw_model.iter570000.npz',
+        'de_en_bpe_raw_model.iter540000.npz',
+        'de_en_bpe_raw_model.iter510000.npz',
+        'de_en_bpe_raw_model.iter480000.npz',
+        'de_en_bpe_raw_model.iter450000.npz',
+        'de_en_bpe_raw_model.iter420000.npz',
+        'de_en_bpe_raw_model.iter390000.npz',
+        'de_en_bpe_raw_model.iter360000.npz',
+        'de_en_bpe_raw_model.iter330000.npz',
+        'de_en_bpe_raw_model.iter300000.npz',
+        'de_en_bpe_raw_model.iter270000.npz',
+        'de_en_bpe_raw_model.iter240000.npz',
+        'de_en_bpe_raw_model.iter210000.npz',
+        'de_en_bpe_raw_model.iter180000.npz',
+        'de_en_bpe_raw_model.iter150000.npz',
+        'de_en_bpe_raw_model.iter120000.npz',
+        'de_en_bpe_raw_model.iter90000.npz',
+        'de_en_bpe_raw_model.iter60000.npz',
+        'de_en_bpe_raw_model.iter30000.npz'
+    ]
+
+    # bpe_model_files = ['de_en_bpe_model.iter660000.npz',
+    #                    'de_en_bpe_model.iter630000.npz',
+    #                    'de_en_bpe_model.iter600000.npz',
+    #                    'de_en_bpe_model.iter570000.npz',
+    #                    'de_en_bpe_model.iter540000.npz',
+    #                    'de_en_bpe_model.iter510000.npz',
+    #                    'de_en_bpe_model.iter480000.npz',
+    #                    'de_en_bpe_model.iter450000.npz',
+    #                    'de_en_bpe_model.iter420000.npz']
     # bpe_model_files = ['de_en_bpe_model.iter390000.npz',
     #                    'de_en_bpe_model.iter360000.npz',
     #                    'de_en_bpe_model.iter330000.npz',
@@ -775,12 +845,22 @@ def distortion_over_time():
     #                    'de_en_bpe_model.iter30000.npz']
     bpe_model_files.reverse()
 
-    stt_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
-    bpe_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/overtime'
+    # stt_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt/overtime'
+    # bpe_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe/overtime'
 
+    stt_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_stt_raw/overtime'
+    bpe_prefix = '/home/nlp/aharonr6/git/research/nmt/models/de_en_bpe_raw/overtime'
 
+    print 'bpe:\n'
     for filepath in bpe_model_files:
         alignment_path = '{}/{}_dev_alignments.txt'.format(bpe_prefix, filepath)
+        scores = get_distortion_from_alignments_file(alignment_path)
+        avg = numpy.sum(scores)/len(scores)
+        print filepath, '\t', avg
+
+    print 'stt:\n'
+    for filepath in stt_model_files:
+        alignment_path = '{}/{}_dev_alignments.txt'.format(stt_prefix, filepath)
         scores = get_distortion_from_alignments_file(alignment_path)
         avg = numpy.sum(scores)/len(scores)
         print filepath, '\t', avg
@@ -811,8 +891,8 @@ def get_distortion_from_alignments_file(filepath):
 
 def main(file1, file2):
     # compare_sentence_level_bleu()
-
-    inspect_alignment_matrices(file1, file2)
+    distortion_over_time()
+    # inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
