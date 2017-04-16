@@ -54,7 +54,8 @@ def toTree(lst):
 
 if __name__ == '__main__':
     # data = list(read("dev_alignments.txt.best.txt"))
-    data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt/dev_alignments.txt.best"))
+    # data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt/dev_alignments.txt.best"))
+    data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt"))
     sources = [x[0] for x in data]
     targets = [x[1] for x in data]
     trees = [toTree(x) for x in targets]
@@ -86,13 +87,14 @@ if __name__ == '__main__':
             typ = align['type']+"_e"
             aligns.append({'sid':si2,'tid':ti,'a':align['a'],'type':typ})
 
-    max_amount = 1000
+    max_amount = 1300
     print "TREES = [ %s ]" % ",".join(js.dumps(toJson(x)) for x in trees[:max_amount])
     print "SOURCES = [ %s ]" % ",".join("%s" % x for x in sources[:max_amount])
     print "ALIGNS = %s" % (js.dumps(all_alignments[:max_amount]),)
 
     # data_bpe = list(read("research/nmt/models/de_en_wmt16/dev_alignments.txt",read_trees=False))
-    data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/dev_alignments.txt.best", read_trees=False))
+    # data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/dev_alignments.txt.best", read_trees=False))
+    data_bpe = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt", read_trees=False))
     sources_bpe = [x[0] for x in data_bpe]
     targets_bpe = [x[1] for x in data_bpe]
     alignments_bpe = [x[2] for x in data_bpe]
