@@ -27,19 +27,36 @@ BASE_PATH = '/home/nlp/aharonr6'
 MOSES_HOME = BASE_PATH + '/git/mosesdecoder'
 BPE_HOME = BASE_PATH + '/git/subword-nmt'
 NEMATUS_HOME = BASE_PATH + '/git/nematus'
-BPE_OPERATIONS = 89500
+BPE_OPERATIONS = 45000
+MAX_SENT_LEN = 50
 
 
 def main():
 
-    test_nist_bleu()
+    # preproc cs_en
+    train_prefix = BASE_PATH + '/git/research/nmt/data/news-cs-en/train/news-commentary-v8.cs-en'
+    dev_prefix = BASE_PATH + '/git/research/nmt/data/news-cs-en/dev/newstest2015-csen'
+    test_prefix = BASE_PATH + '/git/research/nmt/data/news-cs-en/test/newstest2016-csen'
+    preprocess_bllip(train_prefix, 'cs', 'en')
+    preprocess_bllip(dev_prefix, 'cs', 'en', train_prefix=train_prefix)
+    preprocess_bllip(test_prefix, 'cs', 'en', train_prefix=train_prefix)
+
+    # preproc ru_en
+    train_prefix = BASE_PATH + '/git/research/nmt/data/news-ru-en/train/news-commentary-v8.ru-en'
+    dev_prefix = BASE_PATH + '/git/research/nmt/data/news-ru-en/dev/newstest2015-ruen'
+    test_prefix = BASE_PATH + '/git/research/nmt/data/news-ru-en/test/newstest2016-ruen'
+    preprocess_bllip(train_prefix, 'ru', 'en')
+    preprocess_bllip(dev_prefix, 'ru', 'en', train_prefix=train_prefix)
+    preprocess_bllip(test_prefix, 'ru', 'en', train_prefix=train_prefix)
+
     return
+
 
     train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen'
     test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/test/newstest2016-deen'
-    preprocess_bllip(train_prefix, 'de', 'en')
-    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
+    # preprocess_bllip(train_prefix, 'de', 'en')
+    # preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
     preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
     return
 
@@ -437,7 +454,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     # $mosesdecoder/scripts/training/clean-corpus-n.perl data/corpus.tok $SRC $TRG data/corpus.tok.clean 1 80
 
     if is_train:
-        length_threshold = 80
+        length_threshold = MAX_SENT_LEN
     else:
         length_threshold = 999
     clean_command = '{}/scripts/training/clean-corpus-n.perl {}.tok.penntrg {} {} {}.tok.penntrg.clean 1 {}'.format(
@@ -456,6 +473,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
 
     # truecase - apply
     # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
+
     # truecase source
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
                          prefix + '.tok.penntrg.clean.true.' + src,
