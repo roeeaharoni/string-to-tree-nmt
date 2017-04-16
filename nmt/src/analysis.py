@@ -20,7 +20,7 @@ from matplotlib.cbook import get_sample_data
 
 import pydot
 
-import plotly
+# import plotly
 
 import yoav_trees
 
@@ -335,8 +335,8 @@ def inspect_alignment_matrices(file1, file2=None):
     count = 0
     syntax_based_higher = 0
     bpe_based_higher = 0
-    high_bpe = defaultdict(int)
-    high_syntax = defaultdict(int)
+    bpe_distortion_bins = defaultdict(int)
+    syntax_distortion_bins = defaultdict(int)
     while (file1):
         count += 1
         # print count
@@ -358,24 +358,28 @@ def inspect_alignment_matrices(file1, file2=None):
             bpe_score = get_diagonal_subsequent_reordering_score(mma2, source_labels2, target_labels2)
 
         # if tree_score > 4:
-        to_show = [602, 261, 39, 1227, 1146, 614, 943, 1135, 415, 865]
+        # example id's from web tree view
+        to_show = [1103]
+        # 435, 2142, 2076, 340, 1970, 1658, 1565, 1103
+        # to_show = [602, 261, 39, 1227, 1146, 614, 943, 1135, 415, 865, 456]
         if (count - 1) in to_show:
             plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, count)
 
-        if bpe_score < tree_score:
-            print count
-            syntax_based_higher += 1
-        else:
-            bpe_based_higher += 1
+        # if bpe_score < tree_score:
+        #     print count
+        #     syntax_based_higher += 1
+        # else:
+        #     bpe_based_higher += 1
             # (target_len, source_len) = no_tree_matrix.shape
 
+        # here we compute distortion score bins
         for k in xrange(30):
             # if tree_score == 0:
             #     print 'neg'
             if bpe_score >= k and bpe_score < k+1:
-                high_bpe[k] += 1
+                bpe_distortion_bins[k] += 1
             if tree_score >= k and tree_score < k+1:
-                high_syntax[k] += 1
+                syntax_distortion_bins[k] += 1
 
         # image_path_prefix = '/Users/roeeaharoni/git/research/nmt/src/plots/'
         # file_path = image_path_prefix + str(count) + '.png'
@@ -406,15 +410,15 @@ def inspect_alignment_matrices(file1, file2=None):
         if not line2:
             break
 
-    print 'syntax had more reordering in: ', syntax_based_higher
-    print 'bpe had more reordering in: ', bpe_based_higher
+    # print 'syntax had more reordering in: ', syntax_based_higher
+    # print 'bpe had more reordering in: ', bpe_based_higher
 
-    print 'bpe high'
+    print 'bpe distortion bins'
     for k in xrange(30):
-        print k, '\t', high_bpe[k]
-    print 'tree high'
+        print k, '\t', bpe_distortion_bins[k]
+    print 'tree distortion bins'
     for k in xrange(30):
-        print k, '\t', high_syntax[k]
+        print k, '\t', syntax_distortion_bins[k]
         # print 'bpe high {}'.format(high_bpe)
         # print 'syntax high {}'.format(high_syntax)
 
@@ -459,11 +463,13 @@ def compare_sentence_level_bleu():
 
     scores_tree = compute_sent_level_bleu_scores(
         '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
-        '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best')
+        '/Users/roeeaharoni/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.sents.best.en.postprocessed')
+        # '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.sents.dev.postprocessed.best')
 
     scores_bpe = compute_sent_level_bleu_scores(
         '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
-        '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best')
+        '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe_raw/newstest2015-deen.tok.clean.true.bpe.de.output.best.en.postprocessed')
+        # '/Users/roeeaharoni/git/research/nmt/models/de_en_bpe/newstest2015-deen-src.tok.true.de.bpe.output.dev.postprocessed.best')
 
     # scores_bpe = compute_sent_level_bleu_scores(
     #     '/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-ref.en',
@@ -472,7 +478,8 @@ def compare_sentence_level_bleu():
     source_sentences = codecs.open('/Users/roeeaharoni/git/research/nmt/data/WMT16/de-en/dev/newstest2015-deen-src.de',
                                    'r', 'utf-8').readlines()
 
-    output_trees = codecs.open('/Users/roeeaharoni/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev.best',
+    # output_trees = codecs.open('/Users/roeeaharoni/git/research/nmt/models/de_en_stt/newstest2015-deen-src.tok.true.de.bpe.output.trees.dev.best',
+    output_trees = codecs.open('/Users/roeeaharoni/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.output.trees.best.en',
                                    'r', 'utf-8').readlines()
 
     diffs = []
@@ -500,7 +507,7 @@ def compare_sentence_level_bleu():
     # large positive diffs = bpe is better
     out_format = u'id: {}\n\ndiff: {}\n\nsrc:\n{}\nref:\n{}\nstripped tree ({}):\n{}\ntree:\n{}\nbpe ({}):\n{} \n\n'
 
-    comparison_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_stt/bleu_comparison.txt'
+    comparison_path = '/Users/roeeaharoni/git/research/nmt/models/de_en_stt_raw/bleu_comparison.txt'
     diffs.sort(key=lambda x: x['diff'],reverse=True)
     with codecs.open(comparison_path, 'w', 'utf-8') as comparison_file:
         for i, d in enumerate(diffs):
@@ -891,8 +898,10 @@ def get_distortion_from_alignments_file(filepath):
 
 def main(file1, file2):
     # compare_sentence_level_bleu()
-    distortion_over_time()
-    # inspect_alignment_matrices(file1, file2)
+    # distortion_over_time()
+    # compare_sentence_level_bleu()
+    # return
+    inspect_alignment_matrices(file1, file2)
 
     # cnt1, cnt2 = get_distortion_step_sizes(file1, file2)
     # cnt1 = sorted(cnt1.items(), key=itemgetter(0))
@@ -907,7 +916,7 @@ def main(file1, file2):
 
 
 if __name__ == "__main__":
-    main('bla','bla')
+    # main('bla','bla')
     parser = argparse.ArgumentParser()
     # '/Users/mnadejde/Documents/workspace/MTMA2016/models/wmt16_systems/en-de/test.alignment'
     parser.add_argument('--input', '-i', type=argparse.FileType('r'),
