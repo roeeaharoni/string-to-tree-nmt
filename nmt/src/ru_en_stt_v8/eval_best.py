@@ -40,7 +40,7 @@ def main():
     align_2015 = base_path + '/git/research/nmt/models/{}/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru.output.en.alignments.txt'.format(model_name)
     valid_trees_log_2015 = trg_2015_trees + '_validtrees.txt'
 
-    src_2016 = base_path + '/git/research/nmt/data/news-ru-en/test/small_vocab/newstest2016-ruen.tok.penntrg.clean.true.bpe.ru'
+    src_2016 = base_path + '/git/research/nmt/data/news-ru-en/test/newstest2016-ruen.tok.penntrg.clean.true.bpe.ru'
     trg_2016_trees = base_path + '/git/research/nmt/models/{}/newstest2016-ruen.tok.penntrg.clean.true.bpe.ru.output.trees.en'.format(model_name)
     trg_2016_sents = base_path + '/git/research/nmt/models/{}/newstest2016-ruen.tok.penntrg.clean.true.bpe.ru.output.sents.en'.format(
         model_name)
