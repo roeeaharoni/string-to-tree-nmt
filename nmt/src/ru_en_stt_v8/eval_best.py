@@ -7,7 +7,7 @@ def main():
     # base_path = '/Users/roeeaharoni'
     nematus_path = base_path + '/git/nematus'
     moses_path = base_path + '/git/mosesdecoder'
-    model_name = 'cs_en_stt_v8'
+    model_name = 'ru_en_stt_v8'
 
     # sgm files newstest2016
     src_sgm_2016 = base_path + '/git/research/nmt/data/WMT16/all/test/newstest2016-ruen-src.ru.sgm'
@@ -34,7 +34,7 @@ def main():
     for model in ensemble_models_path:
         os.system('cp {} {}'.format(config_path, model + '.json'))
 
-    src_2015 = base_path + '/git/research/nmt/data/news-cs-en/dev/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru'
+    src_2015 = base_path + '/git/research/nmt/data/news-ru-en/dev/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru'
     trg_2015_trees = base_path + '/git/research/nmt/models/{}/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru.output.trees.en'.format(model_name)
     trg_2015_sents = base_path + '/git/research/nmt/models/{}/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru.output.sents.en'.format(model_name)
     align_2015 = base_path + '/git/research/nmt/models/{}/newstest2015-ruen.tok.penntrg.clean.true.bpe.ru.output.en.alignments.txt'.format(model_name)
