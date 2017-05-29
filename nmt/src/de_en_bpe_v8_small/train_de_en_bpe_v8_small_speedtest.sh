@@ -6,7 +6,7 @@ base_path=/home/nlp/aharonr6
 nematus=$base_path/git/nematus
 
 # train model with nematus
-THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.8 $nematus/nematus/nmt.py \
+THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.8,dnn.enabled=False $nematus/nematus/nmt.py \
 --datasets $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.de \
            $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.en \
 --dictionaries $base_path/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en.tok.penntrg.clean.true.bpe.de.json \
