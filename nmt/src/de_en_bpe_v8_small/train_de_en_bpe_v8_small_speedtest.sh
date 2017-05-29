@@ -21,7 +21,6 @@ THEANO_FLAGS=mode=FAST_RUN,floatX=float32,device=gpu1,lib.cnmem=0.8 $nematus/nem
 --external_validation_script $base_path/git/research/nmt/src/de_en_bpe_v8_small/validate.sh \
 --optimizer adadelta \
 --lrate 0.0001 \
---alpha_c 0.0 \
 --clip_c 1.0 \
 --dropout_embedding 0 \
 --dropout_hidden 0 \
