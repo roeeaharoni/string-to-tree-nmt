@@ -359,8 +359,8 @@ def inspect_alignment_matrices(file1, file2=None):
 
         # if tree_score > 4:
         # example id's from web tree view
-        to_show = [1103]
-        # 435, 2142, 2076, 340, 1970, 1658, 1565, 1103
+        to_show = [503, 844, 1103, 328, 456]
+        # 435, 2142, 2076, 340, 1970, 1658, 1565, 1103 -
         # to_show = [602, 261, 39, 1227, 1146, 614, 943, 1135, 415, 865, 456]
         if (count - 1) in to_show:
             plot_heat_map(mma, target_labels, source_labels, mma2, target_labels2, source_labels2, count)
