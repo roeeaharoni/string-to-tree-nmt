@@ -308,12 +308,12 @@ function d3TreeAlign(treeData, sentData, alignData, bpeData, bpeSourceData, bpeA
 
     // add tree alignments
     baseSvg.append("g").selectAll("line").data(alignData).enter().append("line")
-        .attr("x1",d=>id2nodes[+d.tid].x)
+        .attr("x1", d=>id2nodes[+d.tid].x)
         //.attr("y1",d=>id2nodes[+d.tid].y)
-        .attr("y1",d=>id2nodes[+d.tid].y+12)
-        .attr("x2",d=>d.type.endsWith("_e") ? id2nodes[+d.sid].x : sentNodes[+d.sid].m + offset)
-        .attr("y2",d=>d.type.endsWith("_e") ? id2nodes[+d.sid].y : sentNodes[+d.sid].y - 5)
-        .attr("stroke",d=> type2color[d.type](d.a) )
+        .attr("y1", d=>id2nodes[+d.tid].y + 12)
+        .attr("x2", d=>d.type.endsWith("_e") ? id2nodes[+d.sid].x : sentNodes[+d.sid].m + offset)
+        .attr("y2", d=>d.type.endsWith("_e") ? id2nodes[+d.sid].y - 8 : sentNodes[+d.sid].y - 5)
+        .attr("stroke", d=> type2color[d.type](d.a) )
 
     // The BPE
     var positions = x_position_sent_words(baseSvg, bpeSourceData)

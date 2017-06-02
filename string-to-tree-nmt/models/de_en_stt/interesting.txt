@@ -1734,3 +1734,202 @@ tree:
 
 bpe (BLEU = 25.21, 50.0/36.4/20.0/11.1 (BP=1.000, ratio=1.000, hyp_len=12, ref_len=12)):
 On websites, the issue of asbestos is now frequently addressed in schools.
+
+
+
+id: 13 (raw) (better reordering)
+
+src:
+
+ref:
+
+tree:
+George webster accused of hotel rapes in Naim and Pitlochry
+
+bpe:
+George webster due to hotel rapes in Naim and Pitlochry charged
+
+
+id: 281 (raw) (better reodering)
+
+src:
+...diese Tour...
+
+ref:
+
+tree:
+the tour has been offered to interested parties in various specialist journals
+
+bpe:
+available in various journals, this tour has been offered to the public
+
+
+id: 328 (raw)
+
+src:
+...test du mal mit...
+
+ref:
+
+tree:
+could you stop saying "I love you"?
+
+bpe:
+can you say with the "i love you" stop?
+
+
+id: 329 (raw)
+
+src:
+doch auf , mich zu umarmen
+
+ref:
+
+tree:
+stop hugging me!
+
+bpe:
+stop me to hug!
+
+
+id: 435 (raw) (better reordering)
+
+src:
+
+Achenbach habe fur...
+
+tree:
+Achenbach has bought valuebles for Alberecht for 121 million euros.
+
+bpe:
+Achenbach have purchased a value of 121 million Euros for Albrecht.
+
+
+id: 456 (raw) (better reordering)
+
+src:
+Bis dahin gab es in Kollbach im Schulverband Petershausen-Kollbach drei Klassen und in Petershausen fünf.
+
+ref:
+Until then, the school district association of Petershausen-Kollbach had three classes in Kollbach and five in Petershausen.
+
+tree:
+until then, in Kollbach there were three classes and five classes in Petershausen.
+
+bpe:
+until then there were three classes and in Petershausen five at the school board in Petershausen-Kollbach.
+
+
+id: 503 (raw) (better reordering)
+
+src:
+Dutzende türkischer Polizisten wegen "Verschwörung" gegen die Regierung festgenommen
+
+ref:
+Tens of Turkish Policemen Arrested over 'Plotting' against Gov't
+
+tree:
+dozens of Turkish police arrested for "conspiracy" against the government.
+
+bpe:
+dozens of turkish policemen on "conspiracy" against the government arrested.
+
+
+id: 582 (raw) (verb not missing)
+
+src:
+Nacktfotos von Jennifer Lawrence durch Hacker im Internet veröffentlicht
+
+ref:
+Nude photos of Jennifer Lawrence leaked online by hacker
+
+
+tree:
+naked photos by Jennifer Lawrence published by hackers on the Internet.
+
+bpe:
+naked pics of Jennifer Lawrence by hackers on the Internet
+
+
+id: 627 (raw) (better reordering)
+
+src:
+Die Menschen wollten zu Beginn einer Melodie ganz sicher sein, wo sie enden würde.
+
+ref:
+People wanted to be sure, when a tune began, exactly where it was going to end.
+
+tree:
+people wanted to be sure where they would end at the beginning of a melody.
+
+bpe:
+people wanted to be quite safe at the beginning of a melody where they would end.
+
+
+id: 844 (raw) (not missing verb)
+
+src:
+Die Menschen in London weinten, als ich unsere Geschichte erzählte.
+
+ref:
+People in London were crying when I told our story.
+
+tree:
+the people of london wept as I told our story.
+
+bpe:
+the people of London, when I told our story.
+
+
+id: 1043 (raw) (better reordering)
+
+src:
+...in denen wir doch gesund...
+
+tree:
+the hospitals, in which we are supposed to be healthy, have already been identified as the source of this lethal carcinogen.
+
+bpe:
+even in the hospitals in which we are supposed to be healthy, the initial consequences of this deadly carcinogen have already been identified.
+
+
+id: 1048 (raw) (nice reordering)
+
+
+id: 1094 (raw) (cool coordination exmaple)
+
+
+id: 1103 (raw) (negation)
+
+src:
+Er ging einen Monat nicht zu Arbeit.
+
+ref:
+He ended up spending a month off work.
+
+tree:
+he did not go to work for a month.
+
+bpe:
+he went one month to work.
+
+id: 1768
+
+diff: 1.07
+
+src:
+"Sorry, aber für zwölf Euro hat man einfach mehr erwartet", äußert sich Melanie Meier auf der Veranstaltungsseite.
+
+ref:
+"Sorry, but for twelve euros, I really expected more", Melanie Meier commented on the event's page.
+
+stripped tree (BLEU = 21.87, 62.5/33.3/14.3/7.7 (BP=1.000, ratio=1.000, hyp_len=16, ref_len=16)):
+"Sorry, but for twelve euros you just expected more," Melanie Meier says on the event page.
+
+tree:
+(S1 (S `` (ADVP Sor@@ ry )ADVP , but (PP for (NP (NP twelve euros )NP (SBAR (S (NP you )NP (ADVP just )ADVP (VP expected (NP more )NP )VP )S )SBAR )NP )PP , '@@ ' (NP Mel@@ anie Meier )NP (VP says (PP on (NP the event page )NP )PP )VP . )S )S1
+
+bpe (BLEU = 20.80, 53.3/35.7/15.4/8.3 (BP=0.936, ratio=0.938, hyp_len=15, ref_len=16)):
+"Sorry, but for twelve euros you simply expected, Melanie Meier is on the event site.
+
+
