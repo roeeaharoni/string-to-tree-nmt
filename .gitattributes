@@ -1,2 +1,4 @@
 *.ru linguist-language=Text
 *.ru linguist-documentation
+*.cs linguist-language=Text
+*.cs linguist-documentation
