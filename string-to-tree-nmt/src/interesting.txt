@@ -1,0 +1,1936 @@
+line id: 23 (better reordering)
+
+src:
+Die Premierminister Indiens und Japans trafen sich in Tokio.
+
+ref:
+That's why I'm proud to introduce the Employee Empowerment Act with civil rights icon John Lewis.
+
+
+bpe2tree:
+That is why I am proud to present the Staff Regulations Act together with the civil rights representative of John Lewis.
+
+
+bpe2bpe:
+That is why I am proud, together with the civil rights activist John Lewis, that the Staff Regulations Act.
+
+
+
+line id: 30 (that militarised autocracy Hedki Tojos would be replaced... vs. the militarised autocracy would replace...)
+
+src:
+Als die Vereinigten Staaten nach dem Zweiten Weltkrieg Japan besetzte, ermutigten General Douglas Mac Arthur und sein Stab das Land dazu, eine Verfassung zu verabschieden, die sicherstellen solle, dass die militarisierte Autokratie Hedki Tojos durch Demokratie ersetzt würde.
+
+
+ref:
+When the United States occupied Japan after World War II, General Douglas MacArthur and his aides encouraged the country to adopt a constitution designed to assure that Hideki Tojo's militarized autocracy would be replaced with democracy.
+
+
+bpe2tree:
+When the United States occupied Japan after World War II, General Douglas Mac Arthur and his staff encouraged the country to adopt a constitution that would ensure that militarised autocracy Hedki Tojos would be replaced by democracy.
+
+
+bpe2bpe:
+When the United States occupied Japan after World War II, General Douglas Mac and his staff encouraged the country to adopt a constitution that would ensure that the militarised autocracy would replace Hedki Tojos with democracy.
+
+
+
+line id: 31 (better parenthesis prediction and better translation of text in parenthesis)
+
+src:
+In vollem Bewusstsein dessen, dass die Arbeiter und ihre Gewerkschaften bei der Schaffung eines neuen Japan eine Rolle einnahmen, verwendeten sie eine Sprache, die explizit anerkannte, dass "die Rechte der Arbeiter auf Vereinigung und gemeinsames Verhandeln und Handeln garantiert sind."
+
+
+ref:
+Fully aware that workers and their unions had a role to play in shaping the new Japan, they included language that explicitly recognized that "the right of workers to organize and to bargain and act collectively is guaranteed."
+
+
+bpe2tree:
+In full awareness of the fact that workers and their trade unions have a role to play in creating a new Japan, they used a language that explicitly recognised that "the rights of workers in unification and joint negotiation and action are guaranteed."
+
+
+bpe2bpe:
+In full awareness of the fact that the workers and their trade unions have a role in creating a new Japan, they used a language that explicitly acknowledged that "workers" rights to union and joint negotiation and action are guaranteed."
+
+
+
+line id: 39 (better reordering - tmp vs. mpt)
+
+src:
+Wie Pastor Martin Luther King Jr. vor fünfzig Jahren sagte:
+
+ref:
+As the Reverend Martin Luther King Jr. said fifty years ago:
+
+
+bpe2tree:
+As Pastor Martin Luther King Jr. said fifty years ago:
+
+
+bpe2bpe:
+As Pastor Martin Luther King Jr. fifty years ago said:
+
+
+line id: 41 (better tense, punctuation)
+
+src:
+Jetzt wissen alle, dass die Arbeiterbewegung die Stärke der Nation nicht einschränkte, sondern sie vergrößerte.
+
+ref:
+Now everyone knows that the labor movement did not diminish the strength of the nation but enlarged it.
+
+bpe2tree:
+Now, everyone knows that the labor movement did not limit the strength of the nation, but increased it.
+
+bpe2bpe:
+Now everyone knows that the labor movement does not constrain the strength of the nation, but enlarged it.
+
+
+
+line id: 42 (better reordering (ident. to ref) - production levels vs. levels of production)
+
+src:
+Durch die Anhebung des Lebensstandards von Millionen Menschen hat Arbeit auf wundersame Weise einen Markt für die Industrie geschaffen und die gesamte Nation auf unvorstellbare Produktionsniveaus angehoben.
+
+ref:
+By raising the living standards of millions, labor miraculously created a market for industry and lifted the whole nation to undreamed of levels of production.
+
+bpe2tree:
+By increasing the standard of living of millions of people, labor has created a market for industry and has increased the entire nation to unimaginable levels of production.
+
+bpe2bpe:
+By raising the living standards of millions of people, work has miraculously created a market for the industry and raised the entire nation towards unimaginable production levels.
+
+
+line id: 43 (redundant don't in bpe2bpe, better translation - history)
+
+src:
+Diejenigen, die die Arbeit angreifen, vergessen diese einfachen Wahrheiten, aber die Geschichte bewahrt sie.
+
+ref:
+Those who attack labor forget these simple truths, but history remembers them.
+
+bpe2tree:
+Those who attack the work forget these simple truths, but history preserves it.
+
+bpe2bpe:
+Those who attack the work don't forget those simple truths, but the story preserves them.
+
+
+
+line id: 61 (better reordering)
+
+src:
+Wenn alle übrigen Ärzte im Staat dazu gezwungen werden, keine Abtreibungen mehr durchzuführen, würde dieser Arzt aus Angst um seine Sicherheit die Operation nicht mehr durchführen, sagte die Gruppe.
+
+ref:
+If all other doctors in the state are forced to stop performing abortions, that doctor, fearful for his safety, would stop carrying out the procedure, the group said.
+
+bpe2tree:
+If all the other doctors in the state are forced not to carry out abortions, this doctor would no longer do the surgery out of fear of his safety.
+
+bpe2bpe:
+If all the other doctors in the state are forced to do no more abortions, this doctor for fear for his safety would no longer perform the surgery, the group said.
+
+
+
+line id: 73 (more reordering - outside the city women vs. women who live outside the city)
+
+src:
+Obwohl die Studie nicht untersuchte, warum außerhalb der Stadt lebende Frauen mit höherer Wahrscheinlichkeit an Eierstockkrebs starben, vermutet Dr. Jordan eine verspätete Diagnose und den mangelnden Zugang zu den besten Behandlungszentren als mögliche Faktoren dafür.
+
+ref:
+Although the study was not designed to determine why women living outside the city were more likely to die from ovarian cancer, Dr Jordan suggested delayed diagnosis and inability to access best treatment might be factors.
+
+bpe2tree:
+Although the study did not investigate why women who live outside the city died of higher probability of cancer of eggs, Dr. Jordan suspected a belated diagnosis and the lack of access to the best treatment centers as possible factors.
+
+bpe2bpe:
+Although the study did not investigate why outside the city women died with a higher probability of ovarian cancer, Dr. Jordan assumed a delayed diagnosis and lack of access to the best treatment centers as possible factors for doing so.
+
+
+line id: 120 (Friday reordering, nice reordering of entire phrases)
+
+src:
+Die Ankläger legten am Freitag dem Büro des Staatsanwaltes von Mallorca Beweise für Erpressungen durch Polizisten und Angestellte der Stadt Calvià vor.
+
+ref:
+The claimants presented proof of extortion by policemen and Calvià Town Hall civil servants at Mallorca's public prosecutor's office on Friday.
+
+bpe2tree:
+On Friday, the prosecutor presented evidence of blackmail by police and employees of the city of Calvià to the office of the Public Prosecutor of Mallorca.
+
+bpe2bpe:
+The prosecutors filed evidence Friday of the attorney's office of Mallorca evidence of extortion by police officers and employees of the town of Calvià.
+
+
+line id: 122 (very large phrase reordering)
+
+src:
+Hauptkommissar José Antonio Navarro wurde nach Korruptionsvorwürfen gegen ihn von mehreren Geschäftsleuten aus Punta Ballena, der Straße, in der die meisten Bars und Nachtclubs von Magaluf liegen, in Untersuchungshaft genommen.
+
+ref:
+Chief Inspector José Antonio Navarro has been remanded in custody following corruption claims made against him by several businessmen from Punta Ballena, the street where most of Magaluf's bars and nightclubs are located.
+
+bpe2tree:
+After corruption charges against him by several businessmen from Punta Ballena, the street where most of the bars and night clubs of Magaluf lie in custody, the main Commissioner, José Antonio Navarro, was taken into custody detention.
+
+bpe2bpe:
+Chief Commissioner José Antonio Navarro has been remanded in custody after allegations of corruption against him by several businessmen from Punta Ballena, the road where most of the bars and nightclubs of Magaluf lie.
+
+
+
+line id: 129 (better translation - 18 years old vs. 18th century)
+
+src:
+Magaluf machte in diesem Sommer aufgrund eines viralen YouTube-Videos internationale Schlagzeilen, in dem ein 18jähriger britischer Tourist gezeigt wurde, der an 24 Männern während einer Sauftour Fellatio vollzog.
+
+ref:
+Magaluf made international headlines this summer as a result of a viral YouTube video which showed an 18-year-old British holidaymaker performing fellatio on 24 men during a pub crawl.
+
+bpe2tree:
+In this summer due to a viral YouTube video, Magaluf released international headlines in which an 18-year-old British tourist was shown to live in 24 men during a walk Fellatio.
+
+bpe2bpe:
+Magaluf made international headlines this summer because of a viral YouTube video, in which an 18th-century British tourist showed up to 24 men during a sacking Fellatio.
+
+
+
+line id: 147 (more reordering - in shortest time)
+
+src:
+Aber dahinter steckt eine Überlegung: Wenn das Kabel nicht wäre, würden in kürzester Zeit sämtliche Hörer herrenlos im Haus herumfliegen, und das wäre noch bedeutend mehr retro.
+
+ref:
+But it started me thinking: If the cable was not there, all the handsets would be lying scattered around the house in no time at all - and that would be even more retro.
+
+bpe2tree:
+But there is a thought behind it: If the cable would not be, it would be possible to fly all the listeners in the house in the shortest possible time, and that would be a lot more than that.
+
+bpe2bpe:
+But there is one reasoning behind this: If the cable was not, in the shortest time, all the listeners would be able to fly around the house and that would be much more retro.
+
+
+line id: 149 (better translation with reordering- tommorow-today)
+
+src:
+Nein, Tippfehler: elektronischen) Sektor die Regel, dass die Weltneuheit von heute der Elektroschrott von morgen ist, gekauft - veraltet.
+
+ref:
+No - a typing error - electronics) sector, the basic rule is that the latest wonder of today is electronic rubbish tomorrow - once bought, it's out of date.
+
+bpe2tree:
+No, typos: Electronic -RRB- sector is the rule that the novelty of today is the electric scrap of tomorrow - bought - outdated.
+
+bpe2bpe:
+No, typos: Electronic) is the rule that the world's novelty of tomorrow's electric waste is bought - outdated.
+
+
+
+line id: 153 (more reordering - the press office promises us vs.  promises us the press office.)
+
+src:
+Der Laie, der früher Waschmaschine und CD-Spieler blind beherrschte, begreift heute nicht einmal den Zweck der Geräte, die mit unfassbar eitlem Expertensprech vor ihm ausgebreitet werden: "Connected Home, Wearables, Health Care und Urban Technologies" verspricht uns die Pressestelle.
+
+ref:
+The layman, who once knew, blind, how to operate a washing machine and a CD-Player, is today faced with highfalutin expert talk about an array of gadgets, the purpose of which he doesn't even understand. "Connected Home, Wearables, Health Care and Urban Technologies," are what the press office promise us.
+
+bpe2tree:
+The avalanche that once blindly dominated washing machines and CD players nowadays does not even understand the purpose of the devices that will spread to him with untouchable expertise in front of him: "Connected Home, Wearables, Health Care and Urban Technologies" the press office promises us.
+
+bpe2bpe:
+The Laie, who has previously been blind to washing machines and CD players, does not even understand the purpose of the devices that are spread with unfathomable expert talk in front of him: "Connected Home, Wearables, Health Care and Urban Technologies" promises us the press office.
+
+
+
+line id: 199 (reordering - after... time place manner vs. time manner place)
+
+src:
+Im Dezember 2013 reichte der Bundesrat nach langer Vorbereitung einen neuen Antrag in Karlsruhe ein.
+
+ref:
+In December 2013 the Bundesrat submitted a further banning action to the constitutional court, which is based in Karlsruhe, after spending a long time preparing the case.
+
+bpe2tree:
+In December 2013, the Federal Council submitted a new application in Karlsruhe after a long period of preparation.
+
+bpe2bpe:
+In December 2013, after long preparations, a new application was submitted in Karlsruhe.
+
+
+
+line id: 227 (better reordering - It was not)
+
+src:
+Von einer neun Meter breiten Straße war und ist nicht die Rede.
+
+ref:
+It was not - and will not be - a matter of a nine metre-wide road.
+
+bpe2tree:
+It was not part of a nine-metre road and did not speak.
+
+bpe2bpe:
+Of a nine metre long road, and is not the talk.
+
+
+line id: 246 (more reordering - not easy to take the decision vs. the decision hasn't been easy)
+
+src:
+Die Entscheidung ist mir nicht leicht gefallen, sie ist über mehrere Monate gereift.
+
+ref:
+"It was not an easy decision to make, but I've been thinking about it for months.
+
+bpe2tree:
+It is not easy for me to take the decision; it has been aged over several months.
+
+bpe2bpe:
+The decision hasn't been easy for me, it has matured over several months.
+
+
+
+line id: 242 (more reordering - the town had no vs. not possible from the town)
+
+src:
+Von Seiten der Stadt wollte man sich bisher nicht zu dem Vorhaben äußern.
+
+ref:
+Meanwhile, the town council refused to comment.
+
+bpe2tree:
+In the past, the town had no intention of expressing itself on the project.
+
+bpe2bpe:
+It was not possible to comment on the project from the point of view of the city.
+
+
+
+line id: 260 (more reordering - wear complaints vs. complaints of wear)
+
+src:
+Hierzu kommen einige andere verschleißbedingte Beschwerden.
+
+ref:
+I've also got some other minor issues related - wear and tear.
+
+bpe2tree:
+To achieve this, there are some other complaints of wear.
+
+bpe2bpe:
+In this connection, a number of other wearable complaints come about.
+
+
+
+line id: 271 (two reorderings vs. 1: april->domestic->fell->0.2 vs. domestic->fell->0.2->april, time manner-manner time)
+
+diff: 14.75
+
+src:
+Das Bruttoinlandsprodukt sank von April bis Ende Juni 2014 im Vergleich zum Vorquartal um 0,2 Prozent.
+
+ref:
+The Gross Domestic Product sank from April to the end of June 2014 by 0.2 percent in comparison with the previous quarter.
+
+stripped tree (BLEU = 58.92, 81.0/70.0/57.9/44.4 (BP=0.953, ratio=0.955, hyp_len=21, ref_len=22)):
+Gross domestic product fell by 0.2 percent in comparison with the prior quarter from April to the end of June 2014.
+
+tree:
+(TOP (S (NP gross domestic product )NP (VP fell (PP by (NP 0.2 percent )NP )PP (PP in (NP (NP comparison )NP (PP with (NP the prior quarter )NP )PP )NP )PP (PP (PP from (NP April )NP )PP (PP to (NP (NP the end )NP (PP of (NP June 2014 )NP )PP )NP )PP )PP )VP . )S )TOP
+
+bpe (BLEU = 44.17, 75.0/57.9/44.4/29.4 (BP=0.905, ratio=0.909, hyp_len=20, ref_len=22)):
+Gross domestic product fell 0.2 per cent from April to the end of June 2014 compared to the previous quarter.
+
+
+
+line id: 1 (exaggerated reordering)
+
+src:
+Indiens neuer Premierminister Narendra Modi trifft bei seinem ersten wichtigen Auslandsbesuch seit seinem Wahlsieg im Mai seinen japanischen Amtskollegen Shinzo Abe in Toko, um wirtschaftliche und sicherheitspolitische Beziehungen zu besprechen.
+
+ref:
+India's new prime minister, Narendra Modi, is meeting his Japanese counterpart, Shinzo Abe, in Tokyo to discuss economic and security ties, on his first major foreign visit since winning May's election.
+
+bpe2tree:
+India's new Prime Minister, Narendra Modi, hits Shinzo Abe's Japanese counterpart Shinzo in Toko since his election victory in May to discuss economic and security relations.
+
+bpe2bpe:
+India's new prime minister, Narendra Modi, is taking his Japanese counterpart Shinzo Abe in Toko to discuss economic and security relations during his first major foreign visit since his victory in May.
+
+
+
+line id: 7 (more reordering - petrol->bathdate->125 vs. 125->gas station->bathdate - manner place vs. place-manner)
+
+src:
+Verkehrspolizisten in Karratha versuchten heute morgen, ein blaues Motorrad zu stoppen, nachdem sie es dabei beobachtet hatten, wie es mit 125 km/h eine Tankstelle auf der Bathdate Road verließ.
+
+ref:
+Traffic police on patrol in Karratha this morning tried to pull over a blue motorcycle when they spotted it reaching 125km/h as it pulled out of a service station on Bathgate Road.
+
+bpe2tree:
+Traffic police in Karratha tried this morning to stop a blue motorcycle after they watched it as it left a petrol station on the Bathdate Road with 125 km @/@ h.
+
+bpe2bpe:
+Traffic police in Karratha were trying this morning to stop a blue motorbike after they watched it, as it left 125 mph at a gas station on the Bathdate Road.
+
+
+
+line id: 9 (more reordering - description of the driver vs. the drivers description)
+
+src:
+Das Motorrad sowie eine Person, die der Beschreibung des Fahrers entsprach wurden später bei einem Haus im Walcott Way in Bulgarra gesehen.
+
+ref:
+The motorcycle and a person matching the description of the rider was then spotted at a house on Walcott Way in Bulgarra.
+
+bpe2tree:
+The motorcycle and a person who corresponded to the description of the driver were seen later in a house in the Walcott Way in Bulgarra.
+
+bpe2bpe:
+The motorcycle as well as a person who described the driver's description were seen later at a house in the Walcott Way in Bulgarra.
+
+
+
+line id: 37 (more reordering - should be protected)
+
+src:
+Als dieses Land anderen Ländern dabei beriet, wie man zivile und demokratische Gesellschaften formen könne, erklärten Amerikaner, dass das Recht auf die Gründung einer Gewerkschaft - und darauf, dass diese Gewerkschaft dann an Kollektivverhandlungen als gleichwertiger Partner mit Unternehmen und Regierungsstellen teilnehmen dürfe - geschützt werden müsse.
+
+ref:
+When this country counseled other countries on how to forge civil and democratic societies, Americans explained that the right to organize a trade union - and to have that trade union engage in collective bargaining as an equal partner with corporations and government agencies - had to be protected.
+
+bpe2tree:
+When this country taught other countries how to shape civil and democratic societies, Americans said that the right to establish a union should be protected and that these unions should participate in collective bargaining as an equal partner with companies and government agencies.
+
+bpe2bpe:
+As this country berated other countries into how to shape civil and democratic societies, Americans declared that the right to the establishment of a union - and that this union should then participate in collective bargaining as an equal partner with businesses and government bodies - must be protected.
+
+
+
+line id: 48 (better translation - lawyers said vs. telling lawyers)
+
+src:
+Ein US-Bundesrichter stoppte am Sonntag vorläufig die Umsetzung eines Gesetzes in Louisiana, von dem Anwälte sagen, dass es vermutlich zur Schließung aller fünf Abtreibungskliniken des Staates geführt hätte.
+
+ref:
+A U.S. federal judge on Sunday temporarily blocked enforcement of a Louisiana law that advocates say would likely have closed all five abortion clinics in the state.
+
+bpe2tree:
+On Sunday, on Sunday, a US regulator stopped the implementation of a law in Louisiana, where lawyers said that it would probably have led to the closure of all of the state's five abortion clinics.
+
+bpe2bpe:
+A U.S. federal judge temporarily halted the implementation of a law in Louisiana on Sunday, telling lawyers that it was likely to lead to closure of all of the state's five abortion clinics.
+
+
+
+line id: 1011 (better translation - important to doctors - doctors are important)
+
+src:
+Lawson wusste, dass den Ärzten die Diagnosen und Krankheiten wichtig sind, während die Behandelten überwiegend mit etwas ganz anderem beschäftigt sind: Schmerz.
+
+ref:
+Lawson understood that while doctors are captivated by diagnoses and diseases, those being treated are overwhelmingly concerned with something else entirely: pain.
+
+bpe2tree:
+Lawson knew that diagnoses and diseases are important to doctors, while the treated mainly deals with something quite different: Pain.
+
+bpe2bpe:
+Lawson knew that doctors are important to diagnoses and disease, while the treats are predominantly engaged with something quite another: Pain.
+
+
+
+line id: 1043 (better translation - we are supposed to become vs. we are to be in relative clause)
+
+diff: 16.2
+
+src:
+Auch in den Krankenhäusern, in denen wir doch gesund werden sollen, sind schon als Ausgangsherde dieses tödlichen Karzinogens ausgemacht worden.
+
+ref:
+Even the hospitals that are meant to make us better have been reservoirs of this deadly carcinogen.
+
+stripped tree (BLEU = 16.20, 50.0/21.1/11.1/5.9 (BP=1.000, ratio=1.176, hyp_len=20, ref_len=17)):
+The hospitals where we are supposed to become healthy have already been identified as the source of this deadly carcinogen.
+
+tree:
+(TOP (S (NP (NP the hospitals )NP (SBAR (WHADVP where )WHADVP (S (NP we )NP (VP are (VP supposed (S (VP to (VP become (ADJP healthy )ADJP )VP )VP )S )VP )VP )S )SBAR )NP (VP have (ADVP already )ADVP (VP been (VP identified (PP as (NP (NP the source )NP (PP of (NP this deadly carcin@@ ogen )NP )PP )NP )PP )VP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 37.5/8.7/0.0/0.0 (BP=1.000, ratio=1.412, hyp_len=24, ref_len=17)):
+Even in the hospitals in which we are to be healthy, we have already been identified as the starting point for this deadly carcinogens.
+
+
+line id: 1076 (more reordering)
+
+src:
+Es ist weniger tödlich als andere Asbestformen, wird jedoch dennoch von der EU und der WHO als "großes Gesundheitsrisiko" mit möglicher Todesfolge angesehen.
+
+ref:
+It is less lethal than other forms of asbestos, but it's still considered a "major health hazard" that can kill by the EU and WHO.
+
+bpe2tree:
+It is less fatal than other forms of asbestos, but it is regarded as a "major health risk" by the EU and by the WHO, with possible death order.
+
+bpe2bpe:
+It is less lethal than other forms of asbestos, but it is nonetheless viewed by the EU and the WHO as "major health risk" with possible death row.
+
+
+
+line id: 1131 (much more reordering - entire subtree - great example - place manner vs. manner place)
+
+src:
+Asbest wurde aufgrund seiner fabelhaften isolierenden und flammhemmenden Eigenschaften häufig in Büros, Geschäften, Bibliotheken und Stadthallen verwendet.
+
+ref:
+Asbestos was frequently used in offices, shops, libraries and town halls for its marvellous insulating and flame-retarding properties.
+
+bpe2tree:
+Asbestos has often been used in offices, shops, libraries and cities because of its fabulous isolation and flame retardant properties.
+
+bpe2bpe:
+Because of its fabulous isolation and flame retardant properties, asbestos was often used in offices, shops, libraries and townspeople.
+
+
+line id: 1331 (better reordering - says - relative clause - says that)
+
+diff: 3.14
+
+src:
+Während weiße Frauen nun die Themen Rasse und Geschlecht in den feministischen Mainstreamkreisen verbinden, sagt Angela Hattery, Professorin für Frauen und Geschlechterforschung an der George Mason University, dass ihre Vorgängerinnen das Gegenteil taten.
+
+ref:
+While white women are now combining issues of race and gender in mainstream feminist spheres, Angela Hattery, women and gender studies professor at George Mason University, says their predecessors did the opposite.
+
+stripped tree (BLEU = 31.44, 80.6/46.7/27.6/10.7 (BP=0.968, ratio=0.969, hyp_len=31, ref_len=32)):
+While white women now combine racial and gender in feminist mainstream circles, Angela Hattery, professor of women and gender research at George Mason University, says that its predecessors did the opposite.
+
+tree:
+(TOP (S (SBAR while (S (NP white women )NP (ADVP now )ADVP (VP combine (NP racial and gender )NP (PP in (NP feminist mainstream circles )NP )PP )VP )S )SBAR , (NP (NP Angela H@@ atter@@ y )NP , (NP (NP professor )NP (PP of (NP (NP women and gender research )NP (PP at (NP George Mas@@ on University )NP )PP )NP )PP )NP , )NP (VP says (SBAR that (S (NP its predecessors )NP (VP did (NP the opposite )NP )VP )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 28.30, 68.6/41.2/24.2/9.4 (BP=1.000, ratio=1.094, hyp_len=35, ref_len=32)):
+While white women now combine the themes of race and gender in the feminist mainstream, says Angela Hattery, a professor of women and gender research at George Mason University that her predecessors did the opposite.
+
+
+line id: 1435 (more reordering - better translation of relative clause - which is...)
+
+diff: 10.84
+
+src:
+Zugleich droht der stark von internationalen Firmen abhängigen Region ein Imageschaden - mit weit reichenden Folgen.
+
+ref:
+At the same time, the image of the region, which is heavily reliant on international companies, is under threat, and this has far-reaching consequences.
+
+stripped tree (BLEU = 33.51, 73.7/55.6/35.3/25.0 (BP=0.769, ratio=0.792, hyp_len=19, ref_len=24)):
+At the same time, the region, which is heavily dependent on international firms, threatens an image with far-reaching consequences.
+
+tree:
+(TOP (S (PP at (NP the same time )NP )PP , (NP (NP the region )NP , (SBAR (WHNP which )WHNP (S (VP is (ADJP heavily dependent (PP on (NP international firms )NP )PP )ADJP )VP )S )SBAR , )NP (VP threatens (NP (NP an image )NP (PP with (NP far-reaching consequences )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 22.67, 57.9/44.4/23.5/12.5 (BP=0.769, ratio=0.792, hyp_len=19, ref_len=24)):
+bpe (BLEU = 22.67, 57.9/44.4/23.5/12.5 (BP=0.769, ratio=0.792, hyp_len=19, ref_len=24)):
+At the same time, the region's heavily dependent region threatens an image of the image - with far-reaching consequences.
+
+
+
+line id: 1551 (both repeated "as a result")
+
+src:
+Die NATO wird durch die geplanten Stationierungen in Osteuropa infolge der Ukraine-Krise nicht ihre Vereinbarung mit Russland brechen.
+
+ref:
+NATO will not break their agreements with Russian as a result of their planned deployment to East Europe in response to the Ukrainian crisis.
+
+bpe2tree:
+NATO will not break with Russia as a result of the planned deployment in Eastern Europe as a result of the Ukraine crisis.
+
+bpe2bpe:
+NATO is not going to break its agreement with Russia as a result of the planned stationing in eastern Europe as a result of the Ukraine crisis.
+
+
+
+line id: 1569 (better translation, more reordering)
+
+diff: 0.0
+
+src:
+Ein Freibrief für alle komplizierten Details ist es aber nicht.
+
+ref:
+However, there is still no charter explaining all the complex details.
+
+stripped tree (BLEU = 0.00, 45.5/10.0/0.0/0.0 (BP=1.000, ratio=1.000, hyp_len=11, ref_len=11)):
+It is not, however, a licence for all the complicated details.
+
+tree:
+(TOP (S (NP it )NP (VP is not , (ADVP however )ADVP , (NP (NP a licence )NP (PP for (NP all the complicated details )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 36.4/10.0/0.0/0.0 (BP=1.000, ratio=1.000, hyp_len=11, ref_len=11)):
+However, a carte blanche for all the complicated details is not.
+
+
+
+line id: 1580 (better translation, reordering in VP)
+
+src:
+CSU-Chef Horst Seehofer warnte daraufhin davor, im Kabinett Mautkonzepte gegen den federführenden Minister zu entwickeln.
+
+ref:
+As a result, the leader of the CSU, Horst Seehofer, warned about developing toll concepts in the cabinet against the Minister in charge.
+
+bpe2tree:
+As a result, Horst Seehofer, head of the CSU, warned against developing toll concepts against the relevant minister in the Cabinet.
+
+bpe2bpe:
+In the cabinet, Horst Seehofer warned that in the cabinet, toll concepts should be developed against the leading minister.
+
+
+
+line id: 1586 (more reordering, better translation)
+
+src:
+Seehofer hatte wegen der Mautkritik aus Reihen der CDU Koalitionstreue verlangt.
+
+ref:
+Seehofer has demanded loyalty to the coalition following criticism of the tolls from members of the CDU.
+
+bpe2tree:
+As a result of toll criticism from the ranks of the CDU coalition, Seehofer had called for coalitions to be made.
+
+bpe2bpe:
+Seehofer had asked for tolls from rows from the CDU coalition.
+
+
+
+line id: 1599 (better translation - become worse over time vs. are worse, in a relative clause - dass)
+
+src:
+Erkrankte leiden auch an Taubheitsgefühlen oder Schmerzen. Die Krankheit ist unheilbar und fortschreitend, was bedeutet, dass die Symptome mit der Zeit schlimmer werden.
+
+ref:
+Sufferers can also experience numbness or pain and the condition is incurable and progressive, meaning symptoms get worse over time.
+
+bpe2tree:
+Disease is also affected by deafness and pain; the disease is incurable and progressive, meaning that the symptoms are getting worse over time.
+
+bpe2bpe:
+The disease is incurable and progressive, which means that the symptoms are worse.
+
+
+
+line id: 1663 (better translation - in the course of the call)
+
+src:
+Immer wieder kam der Funktionär der regierenden Kommunistischen Partei Chinas im Laufe des Gesprächs auf dieses Anliegen der Zwölf-Millionen-Metropole zurück.
+
+ref:
+Time and time again throughout the conversation, the official of the ruling communist party in China came back to this wish of the twelve million people metropolis.
+
+bpe2tree:
+Time and again, the functional-level of the ruling Communist Party in China came back in the course of the call to this concern of the twelve-million metropolis.
+
+bpe2bpe:
+Time and again, China's ruling Communist Party came back to this concern of the twelve-million metropolis.
+
+
+line id: 1664 (better translation of relative clause - which is... - das)
+
+src:
+Guangzhou, das in Deutschland auch Kanton genannt wird, sei eine der reichsten Städte Chinas, warb Li.
+
+ref:
+Guangzhou, which is also known as Canton in Germany, is one of the richest cities in China Li advertised.
+
+bpe2tree:
+Guangzhou, which is also known as the canton in Germany, is one of the richest cities in China.
+
+bpe2bpe:
+Guangzhou, also known in Germany, is one of China's richest cities, waiting Li.
+
+
+
+id: 1686 (more syntactic - which is harshly... relative clause)
+
+diff: -9.99
+
+
+src:
+Das Vorgehen gegen die Funktionäre aus Guangzhou ist Teil einer landesweiten Kampagne gegen die Korruption in Partei und Verwaltung, die von Staatschef Xi Jinping mit Härte durchgesetzt wird.
+
+ref:
+The action taken against the officials from Guangzhou is part of the nationwide campaign against corruption in parties and the administration, which was rigorously implemented by the head of state, Xi Jinping.
+
+stripped tree (BLEU = 19.39, 79.2/39.1/18.2/9.5 (BP=0.717, ratio=0.750, hyp_len=24, ref_len=32)):
+The action against Guangzhou officials is part of a nationwide campaign against corruption in party and administration, which is harshly enforced by Xi Jinping.
+
+tree:
+(TOP (S (NP (NP the action )NP (PP against (NP Guangzhou officials )NP )PP )NP (VP is (NP (NP part )NP (PP of (NP (NP a nationwide campaign )NP (PP against (NP (NP corruption )NP (PP in (NP party and administration )NP )PP , (SBAR (WHNP which )WHNP (S (VP is (VP (ADVP harsh@@ ly )ADVP enforced (PP by (NP Xi Jin@@ ping )NP )PP )VP )VP )S )SBAR )NP )PP )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 29.38, 72.0/45.8/30.4/22.7 (BP=0.756, ratio=0.781, hyp_len=25, ref_len=32)):
+The action against officials from Guangzhou is part of a nationwide campaign against corruption in party and administration backed by force by leader Xi Jinping.
+
+
+
+line id: 1702 (more reordering - better translation, relative pronoun die)
+
+src:
+Für Autos und Staubsauger, die ab heute in den Handel kommen, gelten künftig strengere Umweltstandards.
+
+ref:
+Strict environmental standards for the future shall apply to all cars and vacuum cleaners that go on sale as of today.
+
+bpe2tree:
+In future, stricter environmental standards will apply to cars and vacuum cleaners who are trading today.
+
+bpe2bpe:
+For cars and vacuum cleaners that are now in trade, stricter environmental standards will apply in the future.
+
+
+
+line id: 1752 (more reordering)
+
+src:
+Deshalb stehe einer Wiederholung der großen Party im kommenden Jahr nichts entgegen.
+
+ref:
+As such, nothing is going to stop them from repeating the big party next year.
+
+bpe2tree:
+This is why there is nothing like a repeat of the big party next year.
+
+bpe2bpe:
+That is why a repeat of the big party will be nothing against the coming year.
+
+
+
+line id: 1801 (more reordering - deals)
+
+src:
+Ausgesprochen unterschiedlich schienen bisher die Standpunkte, wie mit der Geschichte der Wolfratshauser Burg und einem möglichen Wiederaufbau umgegangen werden soll.
+
+ref:
+Their points of view are now markedly different with regard to how the history of Wolfratshausen castle and the possible reconstruction of it should be handled.
+
+bpe2tree:
+So far, positions have been very different, as is the way to deal with the history of the Wolfratshauser Castle and a possible reconstruction.
+
+bpe2bpe:
+There has been a lot of different views as to how the history of the Wolfratsher castle and possible reconstruction are to be dealt with.
+
+
+
+line id: 1811 (more reordering - at the moment vs. according to)
+
+src:
+Momentan zählt der Verein laut dem 74-Jährigen rund 40 Mitglieder.
+
+ref:
+At the moment, the club has around 40 members according to the 74 year old.
+
+bpe2tree:
+According to the 74-year-old association, the association is currently part of more than 40 members.
+
+bpe2bpe:
+At present, the club counts about 40 members, according to the 74-year-old.
+
+
+
+
+line id: 1818 (more reordering)
+
+src:
+Der Tölzer wolle an dem Projekt "aber sehr gerne weiter mitarbeiten".
+
+ref:
+The man from Tölz would, however, "like to continue working with them" on the project.
+
+bpe2tree:
+As part of the project, Tölzer wanted to continue working on the project.
+
+bpe2bpe:
+The Tölzer wanted to continue with the project "but very happy to continue working."
+
+
+
+line id: 1882 (more reordering - hollywood)
+
+src:
+Im Gegensatz zu den derzeit schwachen Kassenergebnissen der Hollywoodproduktionen erzielte Netflix in jüngster Zeit Umsätze mit den Streaming-Inhalten in Höhe von 1,2 Milliarden Dollar, fast doppelt so viel wie im vergangenen Jahr, in dem der Umsatz 837 Millionen Dollar betrug.
+
+ref:
+In contrast to Hollywood's current box office slump, Netflix recently saw revenue from its streaming content service reach $1.2bn, almost doubling last year's figure of $837m.
+
+bpe2tree:
+In contrast to Hollywood's currently weak performance in cash flow, Netflix has recently generated revenues of $1.2 billion, almost as much as last year, when sales accounted for $837 million.
+
+bpe2bpe:
+Unlike the currently weak cash returns of the Hollywood productions, Netflix recently posted sales with the streaming content of $1.2 billion, almost twice as much as last year, in which sales were $837 million.
+
+
+
+line id: 1885 (more reordering - summer)
+
+src:
+Aufgrund der im Sommer 2015 zu erwartenden potentiellen Kassenschlager, darunter Avengers: Age of Ultron, Minions und Jurassic World sind andere Vertreter der Filmindustrie jedoch optimistischer:
+
+ref:
+With summer 2015 set to usher in a slate of potential big box office hits, including Avengers: Age of Ultron, Minions and Jurassic World, other figures within the film industry are feeling more optimistic.
+
+bpe2tree:
+According to Age of Ultron, Minions and Jurassic World in summer 2015, other representatives of the film industry are more optimistic:
+
+bpe2bpe:
+In the summer of 2015, including Avengers: Age of Ultron, Minions, and Jurassic World, other representatives of the film industry are more optimistic:
+
+
+
+line id: 1894 (more reordering - geismar)
+
+src:
+Bei den Damen spielt der TTV Geismar in der Verbandsliga, die Torpedo-Zweite in der Landesliga.
+
+ref:
+For the women, TTV Geismar does play in the Verbandsliga, and the Torpedo's second team plays in the Landesliga.
+
+bpe2tree:
+TTV Geismar is a member of the Association for Women, Torpedo-Second in the National League.
+
+bpe2bpe:
+At the ladies, the TTV Geismar plays in the league table, the goal-line second in the National League.
+
+
+
+line id: 1899 (more reordering - league)
+
+src:
+In der Bezirksliga starten laufen Torpedo III und Sattenhausen/Wöllmarshausen auf.
+
+ref:
+In the regional league, Torpedo III and Sattenhausen/Wöllmarshausen are taking to the field.
+
+bpe2tree:
+Torpedo III and Sattenhausen/Wöllgraben run up in the district league.
+
+bpe2bpe:
+In the league table run Torpedo III and Sattenhausen/WöllMarschausen.
+
+
+
+line id: 1953 (more reordering - position time, better translation)
+
+src:
+Als Schrammel am 13. Novmember 2010 zum bisher letzten Mal in einer Bundesligapartie getroffen hatte, war das noch für Ried.
+
+ref:
+13th of November 2010 was, until now, the last time that Schrammel had scored in a team from the Bundesliga, and that was with Ried.
+
+bpe2tree:
+When Schrammel met in a Bundesligapartie on 13 November 2010, that was still for Ried.
+
+bpe2bpe:
+As a scrum on Nov. 13 Nov. 13, 2010, to the last time in a federal ballpark, it was still for Ried.
+
+
+
+line id: 1955 (more reoredring)
+
+src:
+"Für mich ist das etwas ganz besonderes, ich bin ja aus dem Rapid-Nachwuchs", sagte Schrammel.
+
+ref:
+"That is something quite special for me, I am Rapid offspring", Schrammel said.
+
+bpe2tree:
+"For me this is something very special," said Mr Schrammel, who is in favour of me.
+
+bpe2bpe:
+"For me this is something very special, I'm from the rapid-offspring," Schrammel said.
+
+
+
+line id: 1962 (more reordering - stadium season)
+
+src:
+Barisic befand sogar, dass man "in vielen Spielen zuvor besser als heute" gewesen sei - gegen "die stärkste Mannschaft, die in dieser Saison in diesem Stadion gespielt hat".
+
+ref:
+Barisic even decided that the team had previously played "better in other games than today", and against "the strongest team to play in the stadium this season".
+
+bpe2tree:
+Barisic even found `in many games better than today '- against "the strongest team played in this stadium in this season."
+
+bpe2bpe:
+Barisic even found that "in many games before, you've been better than today" - against "the strongest team to have played this season in this stadium."
+
+
+
+line id: 1975 (better translation)
+
+src:
+Er mahnte freilich zu konzentriertem Weiterarbeiten: "Man darf das nicht immer schwarz und weiß sehen.
+
+ref:
+Of course, he spoke about focused and continued work: "You don't have to always see things black and white.
+
+bpe2tree:
+He warned, of course, that there is a need for concentration: `You must not always see that in black and white.
+
+bpe2bpe:
+But he warned about focusing further: "You cannot always see black and white.
+
+
+
+line id: 1998 (reoredring - meadows)
+
+src:
+Demnach sollen bis vor etwa 80 Jahren die Ziegenhirten ihre Tiere von Unterweißenbrunn aus auf die mühselig gerodeten und von Steinen befreiten Wiesen getrieben haben.
+
+ref:
+According to his research, up to around 80 years ago, the goat herders are said to have led their animals out of Unterweissenbrunn along the arduous, cleared and stoneless meadows.
+
+bpe2tree:
+Thus, until about 80 years ago, those who were living in the goat should have driven their animals from Unterweißenbrunn to the meadows which were laborious and freed from stones.
+
+bpe2bpe:
+As a result, up to 80 years ago, the goalkeepers were forced to take their animals from Unterweißenbrunn into the labyrinthine and uncontaminated meadows.
+
+
+
+
+line id: 2002 (more reordering - be careful)
+
+src:
+Beim Betreten der Steinansammlungen sollte man aber Vorsicht walten lassen, denn der von der Sonne aufgewärmte Basalt ist auch für Kreuzottern ein beliebter Aufenthaltsort.
+
+ref:
+One should exercise caution when treading over the mass of stone because the sun-warmed basalt is also a popular whereabouts for the European viper.
+
+bpe2tree:
+However, you should be careful when entering the stone collections, as the basalt heated by the sun is also a popular location for those who are tempted by the sun.
+
+bpe2bpe:
+When entering the buildings, you should be careful, because the basalt crushed by the sun is also a favourite place for cruises.
+
+
+
+
+line id: 2018 (more reordering - president)
+
+src:
+Gegenüber den konservativen Vertretern mit Kommissionspräsident Jean-Claude Juncker und dem als Ratspräsidenten nominierten Polen Donald Tusk werde, so die vorherrschende Meinung in Rom, damit ein politischer Ausgleich hergestellt.
+
+ref:
+In opposition to the conservative representatives, Commission President Jean-Claude Juncker and the Pole Donald Tusk, who was named as Council President, were voted in, so the prevailing opinion in Rome, in order to achieve a political balance.
+
+bpe2tree:
+Compared with the conservative representatives with the President of the Commission and with the Poland of Donald Tusk who were nominated as President of the Council, the prevailing opinion in Rome has resulted in a political balance.
+
+bpe2bpe:
+Against the Conservative representatives with Commission President Jean-Claude Juncker and the former President of the Council, Donald Tusk, the prevailing opinion in Rome will make political balance possible.
+
+
+
+line id: 2031 (better translation more reordering)
+
+src:
+Den Vorhaltungen in Brüssel, die neue EU-Außenbeauftragte habe zu wenig diplomatische Erfahrung, fehle es also an Substanz, wird in der PD gekontert.
+
+ref:
+The claims in Brussels that the new EU-Foreign Minister has too little diplomatic experience and therefore lacks clout, is rebutted by the PD.
+
+bpe2tree:
+Recruitment in Brussels, which has too little diplomatic experience in Brussels, which is something it lacks in substance, is being worked out in the PD.
+
+bpe2bpe:
+In Brussels, the new EU foreign envoy has too little diplomatic experience, so in the case of substance, there is a lack of substance.
+
+
+
+line id: 2090 (more reordering)
+
+src:
+Großbritannien sah bis zur Endphase der 150-jährigen Kolonialregierung in Hongkong keinerlei demokratische Elemente vor.
+
+ref:
+Britain made no mention of democracy for Hong Kong until the dying days of about 150 years of colonial rule.
+
+bpe2tree:
+Britain had no democratic elements until the final phase of the 150-year-old colonial government in Hong Kong.
+
+bpe2bpe:
+Until the end of the 150th century in Hong Kong, Britain did not foresee any democratic elements.
+
+
+
+line id: 2105 (more reordering)
+
+src:
+Die vor fünf Monaten annektierte Halbinsel im Schwarzen Meer ist der Heimathafen für den Großteil der russischen Marine sowie ein wichtiger Handelshafen und historische Küstenregion.
+
+ref:
+The Black Sea peninsula annexed five months ago is home to Russia's main naval fleet as well as commercial maritime facilities and historic coastal resorts.
+
+bpe2tree:
+The peninsula in the Black Sea, which was annexed five months ago, is the home port for most of the Russian navy, as well as an important commercial port and a historic coastal region.
+
+bpe2bpe:
+The peninsula, which was annexed five months ago in the Black Sea, is the home port for most of the Russian navy, as well as a major commercial port and historical coastal region.
+
+
+line id: 2107 (more reordering - in his speech)
+
+src:
+Der ukrainische Präsident Petro Poroshenko schlug bei seiner Rede zur Amtseinführung am 7. Juni vor, dass die ukrainische Gesetzgebung - nach Neuwahlen - Zusätze zur Verfassung bedenken solle, mit denen den jeweiligen Gebieten eine größere Kontrolle über ihre Finanzen und den Status der Sprachen eingeräumt wird.
+
+ref:
+Ukrainian President Petro Poroshenko proposed during his inauguration speech on June 7 that Ukrainian lawmakers - after new elections -- weigh constitutional amendments to give more control to the disparate regions over their finances and the status of languages.
+
+bpe2tree:
+In his speech at his inauguration on 7 June, Ukraine's President Petro Poroshenko suggested that Ukrainian legislation - following new elections - should take account of the Constitution, in which greater control over its finances and the status of languages is given to the relevant areas.
+
+bpe2bpe:
+The Ukrainian President, Petro Poroshenko, in his speech on the inauguration of the inauguration on 7 June, suggested that Ukraine's legislation - after new elections - should reflect amendments to the Constitution, which will grant greater control over their own finances and the status of languages in each area.
+
+
+line id: 2148 (more reordering - after 45)
+
+src:
+Der ganz in Rot auftretende Grünen-Politiker aus dem Kreistag - rotes Dress, rotes Bike - machte am Start noch etwas auf Understatement ("Jede Menge Profis, da ist Ankommen das Ziel!"), erwies sich dann aber am Berg doch als halber Profi und ging nach 45 Minuten ohne Atemnot durchs Ziel.
+
+ref:
+The Green Politician, wearing all red, from the municipal council - red clothes, red bike - looked to be taking it gently ("Quit some professionals here, so it's all about finishing!") - and then looked almost like a pro himself as he arrived at the end 45 minutes later without pausing for breath.
+
+bpe2tree:
+The green man in red - red dress in red - started at the start of something at the start ("Every amount of professional, there is the goal!), but after 45 minutes without breath, it proved to be at the top of the mountain and went to the finish after 45 minutes.
+
+bpe2bpe:
+The whole thing in red - red dress, red bike - made the start yet something on understatement ("Every crowd of professionals, there's been an end to the goal!"), but turned out to be half a professional and went after 45 minutes without any breathing problems.
+
+
+
+id: 261 (better translation - I was able to control my head)
+
+diff: 20.52
+
+src:
+Schon am Anfang des Jahres habe ich gemerkt, dass ich zwar meinen Kopf steuern, aber meinen Körper nicht täuschen kann", erklärte Glandorf im Interview dem Magazin "Handball Time".
+
+ref:
+At the beginning of the year I realized that I was able to control my head, but I couldn`t play tricks with my body," he explained in an interview with German magazine Handball Time.
+
+stripped tree (BLEU = 37.01, 60.6/40.6/32.3/26.7 (BP=0.970, ratio=0.971, hyp_len=33, ref_len=34)):
+Even at the beginning of the year, I noticed that I was able to control my head, but my body is unable to deceive," Glandorf explained in the interview the magazine "Handball Time.''
+
+tree:
+(TOP (S (PP (ADVP even )ADVP at (NP (NP the beginning )NP (PP of (NP the year )NP )PP )NP )PP , (S (NP I )NP (VP noticed (SBAR that (S (NP I )NP (VP was (ADJP able (S (VP to (VP control (NP my head )NP )VP )VP )S )ADJP )VP )S )SBAR )VP )S , but (S (NP my body )NP (VP is (ADJP unable (S (VP to (VP deceive )VP )VP )S )ADJP )VP )S , &apos;&apos; (NP G@@ land@@ orf )NP (VP explained (PP in (NP the interview )NP )PP (NP the magazine `` Hand@@ ball Time . )NP )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 16.49, 51.7/25.0/14.8/7.7 (BP=0.842, ratio=0.853, hyp_len=29, ref_len=34)):
+Even at the beginning of the year, I noticed that while I'm steering my head, but my body can't fool," Glandorf explained in the interview the magazine "Handball Time."
+
+
+id: 1771 (better translation - try to get on their feet)
+
+diff: 7.03
+
+src:
+Ich finde es sehr gut, dass manche nicht nur dumm quatschen, sondern auch wirklich versuchen etwas auf die Beine zu stellen.
+
+ref:
+I think it is really good that some people are not just standing around talking rubbish, but are actually making a real effort to get something up and running.
+
+stripped tree (BLEU = 30.90, 60.0/41.7/30.4/22.7 (BP=0.852, ratio=0.862, hyp_len=25, ref_len=29)):
+I think it is very good that some people are not just being foolish, but also that they really try to get on their feet.
+
+tree:
+(TOP (S (NP I )NP (VP think (SBAR (S (NP it )NP (VP is (ADJP very good )ADJP (SBAR (SBAR that (S (NP some people )NP (VP are not (ADVP just )ADVP (VP being (ADJP foolish )ADJP )VP )VP )S )SBAR , (CONJP but also )CONJP (SBAR that (S (NP they )NP (ADVP really )ADVP (VP try (S (VP to (VP get (PP on (NP their feet )NP )PP )VP )VP )S )VP )S )SBAR )SBAR )VP )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 23.87, 60.9/31.8/23.8/20.0 (BP=0.770, ratio=0.793, hyp_len=23, ref_len=29)):
+I find it very good that some people are not just stupid, but we are actually trying to do something about their legs.
+
+
+
+id: 1227 (better reordering)
+
+diff: 37.68
+
+src:
+Jetzt ist keine Spur der Tumore mehr sichtbar.
+
+ref:
+Now there is no sign of the tumours.
+
+stripped tree (BLEU = 37.68, 71.4/50.0/40.0/25.0 (BP=0.867, ratio=0.875, hyp_len=7, ref_len=8)):
+Now there is no trace of tumors.
+
+tree:
+(TOP (S (ADVP now )ADVP (NP there )NP (VP is (NP (NP no trace )NP (PP of (NP tum@@ ors )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 55.6/12.5/0.0/0.0 (BP=1.000, ratio=1.125, hyp_len=9, ref_len=8)):
+Now no trace of the tumors is more visible.
+
+
+id: 237 (more reordering - last week)
+
+diff: 32.38
+
+src:
+Peer Medau hatte vergangene Woche die Eltern der Kinderkrippe über die Pläne der Hochschule informiert.
+
+ref:
+Peer Medau informed the parents of the children's nursery about the plans, last week.
+
+stripped tree (BLEU = 32.38, 66.7/42.9/23.1/16.7 (BP=1.000, ratio=1.071, hyp_len=15, ref_len=14)):
+Peer Medau had informed the parents of the kindergarten last week about the College's plans.
+
+tree:
+(TOP (S (NP peer Med@@ au )NP (VP had (VP informed (NP (NP the parents )NP (PP of (NP the kindergarten )NP )PP )NP (NP last week )NP (PP about (NP (NP the College &apos;s )NP plans )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 66.7/27.3/0.0/0.0 (BP=0.846, ratio=0.857, hyp_len=12, ref_len=14)):
+
+
+
+id: 1590 (much more reordering - according to...)
+
+diff: 28.99
+
+src:
+Inländische Autobesitzer dürfen laut Koalitionsvertrag aber nicht zusätzlich belastet werden.
+
+ref:
+According to the coalition agreement, car owners in German must not, however, have to face additional charges.
+
+stripped tree (BLEU = 28.99, 68.8/40.0/21.4/15.4 (BP=0.939, ratio=0.941, hyp_len=16, ref_len=17)):
+However, according to the Coalition Agreement, domestic car owners must not be burdened with additional charges.
+
+tree:
+(TOP (S (ADVP however )ADVP , (PP according (PP to (NP the Coalition Agreement )NP )PP )PP , (NP domestic car owners )NP (VP must not (VP be (VP burdened (PP with (NP additional charges )NP )PP )VP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 41.7/18.2/0.0/0.0 (BP=0.659, ratio=0.706, hyp_len=12, ref_len=17)):
+Domestic car owners may not be charged, however, under the Coalition Agreement.
+
+
+
+id: 1146 (better translation)
+
+diff: 28.05
+
+src:
+Mit die größte Schwierigkeit war der Perspektivwechsel von der Position eines Arztes zu der eines Patienten.
+
+ref:
+One of the hardest things was moving from the position of doctor to that of patient.
+
+stripped tree (BLEU = 28.05, 63.2/33.3/23.5/12.5 (BP=1.000, ratio=1.188, hyp_len=19, ref_len=16)):
+The greatest difficulty was the change of perspective from the position of a doctor to that of a patient.
+
+tree:
+(TOP (S (NP the greatest difficulty )NP (VP was (NP (NP the change )NP (PP of (NP perspective )NP )PP (PP (PP from (NP (NP the position )NP (PP of (NP a doctor )NP )PP )NP )PP (PP to (NP (NP that )NP (PP of (NP a patient )NP )PP )NP )PP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 50.0/5.9/0.0/0.0 (BP=1.000, ratio=1.125, hyp_len=18, ref_len=16)):
+With the greatest difficulty, the change of perspective was from a doctor's position on that of a patient.
+
+
+id: 223 (more reordering - in the middle of june)
+
+diff: 25.46
+
+src:
+So sei die Familie Medau bereits "Mitte Juni mündlich über das Ansinnen der Hochschule informiert worden.
+
+ref:
+He said that the Medau family "were informed about the plans of the college in the middle of June.
+
+stripped tree (BLEU = 25.46, 70.6/50.0/26.7/7.1 (BP=0.889, ratio=0.895, hyp_len=17, ref_len=19)):
+In the middle of June, the Medau family was verbally informed about the request of the university.
+
+tree:
+(TOP (S (PP in (NP (NP the middle )NP (PP of (NP June )NP )PP )NP )PP , (NP the Med@@ au family )NP (VP was (ADVP verb@@ ally )ADVP (VP informed (PP about (NP (NP the request )NP (PP of (NP the university )NP )PP )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 50.0/28.6/10.0/0.0 (BP=1.000, ratio=1.158, hyp_len=22, ref_len=19)):
+As a result, the Medau family had already been informed "in the middle of June orally about the idea of the university.
+
+
+
+id: 1669 (better syntax - which was served)
+
+diff: 25.43
+
+src:
+Daraufhin stieß der Funktionär aus Guangzhou mit Schäfer-Gümbel an - allerdings mit Rotwein, der zu dem Essen serviert wurde.
+
+ref:
+After that, the official from Guangzhou clicked glasses with Schäfer-Gümbel - albeit with red wine, which was served with dinner.
+
+stripped tree (BLEU = 25.43, 42.1/27.8/23.5/18.8 (BP=0.949, ratio=0.950, hyp_len=19, ref_len=20)):
+As a result, Guangzhou, which operated with Schäfer Gümbel, joined it with red wine, which was served to dinner.
+
+tree:
+(TOP (S (PP as (NP a result )NP )PP , (NP (NP Guangzhou )NP , (SBAR (WHNP which )WHNP (S (VP operated (PP with (NP Schä@@ fer Gü@@ mb@@ el )NP )PP )VP )S )SBAR , )NP (VP joined (NP it )NP (PP with (NP (NP red wine )NP , (SBAR (WHNP which )WHNP (S (VP was (VP served (PP to (NP dinner )NP )PP )VP )VP )S )SBAR )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 42.1/16.7/5.9/0.0 (BP=0.949, ratio=0.950, hyp_len=19, ref_len=20)):
+As a result, the official from Guangzhou, with shepherd Gümbel, met - but with red wine served to eat.
+
+
+id: 419 (more reordering - continue to occur)
+
+diff: 22.96
+
+src:
+Im Umland kommt es immer wieder zu blutigen Kämpfen mit der jemenitischen Armee.
+
+ref:
+In the surrounding areas of the town, bloody clashes with the Yemeni army have continued unabated.
+
+stripped tree (BLEU = 22.96, 61.5/41.7/27.3/10.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+In the surrounding area, bloody battles with the Yemeni army continue to occur.
+
+tree:
+(TOP (S (PP in (NP the surrounding area )NP )PP , (NP (NP bloody battles )NP (PP with (NP the Y@@ emen@@ i army )NP )PP )NP (VP continue (S (VP to (VP occur )VP )VP )S )VP . )S )TOP
+
+bpe (BLEU = 0.00, 53.8/33.3/18.2/0.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+In the surrounding area, there is always bloody fighting with the Yemeni army.
+
+
+
+
+id: 1448 (better reordering - more local)
+
+diff: 21.6
+
+src:
+Der Schützenverein "Tannenwald" Berngau feiert von 12. bis 14. September sein 50-jähriges Gründungsfest.
+
+ref:
+The gun club "Tannenwald" in Berngau is celebrating its 50th anniversary from 12th to 14th September.
+
+stripped tree (BLEU = 41.81, 84.6/50.0/45.5/40.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+The "Tannenwald" Berngau is celebrating its 50th anniversary from 12 to 14 September.
+
+tree:
+(TOP (S (NP the `` Tann@@ en@@ wald &apos;&apos; Bern@@ gau )NP (VP is (VP celebrating (NP its 50th anniversary )NP (PP from (NP (QP 12 to 14 )QP September )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 20.21, 69.2/33.3/18.2/10.0 (BP=0.794, ratio=0.812, hyp_len=13, ref_len=16)):
+From 12th to 14th September, the "Tannenwald" Berngau Festival celebrates its 50th anniversary.
+
+
+id: 251 (better translation)
+
+diff: 20.74
+
+src:
+Seine Ideen und Ansätze haben mich genauso begeistert, wie sie auch meine langjährigen Mitspieler und meine Nachfolger begeistern werden.
+
+ref:
+His ideas and approach to the game have always inspired me, as I am sure they will also inspire my long-term teammates and my successors, too.
+
+stripped tree (BLEU = 20.74, 54.5/33.3/20.0/10.5 (BP=0.834, ratio=0.846, hyp_len=22, ref_len=26)):
+His ideas and approaches have impressed me just as much, as they will also inspire my long-time fellow players and my successors.
+
+tree:
+(TOP (S (NP his ideas and approaches )NP (VP have (VP impressed (NP me )NP (ADVP just as much )ADVP , (SBAR as (S (NP they )NP (VP will (ADVP also )ADVP (VP inspire (NP (NP my long-time fellow players )NP and (NP my successors )NP )NP )VP )VP )S )SBAR )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 55.0/26.3/5.6/0.0 (BP=0.741, ratio=0.769, hyp_len=20, ref_len=26)):
+His ideas and ideas have been as enthusiastic about me as they will inspire my longtime players and my successors.
+
+
+id: 846 (better reordering - grateful...)
+
+diff: 20.71
+
+src:
+Sie war Cherie Blair und ihrer Stiftung dankbar für den Preis und die Möglichkeit, im Herbst 2004 nach London zu reisen.
+
+ref:
+She was grateful to 'Cherie Blair and her foundation for that award and the opportunity to go to London in autumn 2004.
+
+stripped tree (BLEU = 40.00, 70.8/52.2/36.4/19.0 (BP=1.000, ratio=1.091, hyp_len=24, ref_len=22)):
+She was grateful to Cherie Blair and her foundation for the prize and the opportunity to travel to London in the fall of 2004.
+
+tree:
+(TOP (S (NP she )NP (VP was (ADJP grateful (PP to (NP (NP Cher@@ ie Blair )NP and (NP her foundation )NP )NP )PP (PP for (NP (NP the prize )NP and (NP the opportunity (S (VP to (VP travel (PP to (NP London )NP )PP (PP in (NP (NP the fall )NP (PP of (NP 2004 )NP )PP )NP )PP )VP )VP )S )NP )NP )PP )ADJP )VP . )S )TOP
+
+bpe (BLEU = 19.29, 60.9/31.8/14.3/5.0 (BP=1.000, ratio=1.045, hyp_len=23, ref_len=22)):
+She was Cherie Blair and her foundation thankful for the prize and the ability to travel to London in the fall of 2004.
+
+
+id: 1262 (more reordering - UK...)
+
+diff: 20.69
+
+src:
+Ein Berufungsgericht bestätigt die erste erfolgreiche Personenschadensersatzklage in Großbritannien wegen Kontakts mit Asbest.
+
+ref:
+Court of Appeal confirms the first successful personal injury claim in Britain as a result of asbestos exposure.
+
+stripped tree (BLEU = 35.27, 63.2/44.4/29.4/18.8 (BP=1.000, ratio=1.056, hyp_len=19, ref_len=18)):
+A court of appeal confirms the UK's first successful appeal against asbestos as a result of contacts with asbestos.
+
+tree:
+(TOP (S (NP (NP a court )NP (PP of (NP appeal )NP )PP )NP (VP confirms (NP (NP (NP the UK &apos;s )NP first successful appeal )NP (PP against (NP asbestos )NP )PP )NP (PP as (NP (NP a result )NP (PP of (NP (NP contacts )NP (PP with (NP asbestos )NP )PP )NP )PP )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 14.58, 36.8/16.7/11.8/6.2 (BP=1.000, ratio=1.056, hyp_len=19, ref_len=18)):
+An appeals court confirms the first successful strike at personnel in the United Kingdom because of contact with asbestos.
+
+
+id: 872
+
+diff: 20.15
+
+src:
+Der Junge, dessen schreckliches Bild nach der Belagerung zum Symbol der Greuel von Beslan wurde
+
+ref:
+The boy whose shocking image after the siege came to define the horror of Beslan
+
+stripped tree (BLEU = 20.15, 56.2/26.7/14.3/7.7 (BP=1.000, ratio=1.067, hyp_len=16, ref_len=15)):
+The Young, whose terrible image after the siege became the symbol of the atrocities of Beslan
+
+tree:
+(TOP (NP (NP the Young )NP , (SBAR (WHNP (WHNP whose terrible image )WHNP (PP after (NP the siege )NP )PP )WHNP (S (VP became (NP (NP the symbol )NP (PP of (NP (NP the atrocities )NP (PP of (NP Beslan )NP )PP )NP )PP )NP )VP )S )SBAR )NP )TOP
+
+bpe (BLEU = 0.00, 68.8/33.3/14.3/0.0 (BP=1.000, ratio=1.067, hyp_len=16, ref_len=15)):
+The boy whose terrible image was revealed after the siege to symbolize the Greuel of Beslan
+
+
+id: 277 (different reordering - on sunday)
+
+diff: 20.05
+
+src:
+Die Burgmannstadt Horstmar erlebte am Sonntag eine Invasion niederländischer "Fietzenfahrer".
+
+ref:
+The city of Horstmar experienced an invasion of Dutch "Fietzen riders" on Sunday.
+
+stripped tree (BLEU = 50.09, 69.2/50.0/45.5/40.0 (BP=1.000, ratio=1.000, hyp_len=13, ref_len=13)):
+On Sunday, the Burgmannstadt town of Horstmar experienced an invasion of Dutch "Fietzenriders."
+
+tree:
+(TOP (S (PP on (NP Sunday )NP )PP , (NP (NP the Burg@@ mann@@ stadt town )NP (PP of (NP Hor@@ st@@ mar )NP )PP )NP (VP experienced (NP (NP an invasion )NP (PP of (NP Dutch `` Fi@@ etz@@ en@@ riders . )NP )PP )NP )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 30.04, 75.0/45.5/30.0/11.1 (BP=0.920, ratio=0.923, hyp_len=12, ref_len=13)):
+The Burgmannstadt Horstmar witnessed an invasion of Dutch "Fiber riders" on Sunday.
+
+
+id: 1398 (more reordering - explained)
+
+diff: 19.21
+
+src:
+Das Gebäude habe wahrscheinlich zu einer Villa Rustica, einem landwirtschaftlichen Gut, gehört, erläuterte die Archäologin Dr. Jennifer Morscheiser.
+
+ref:
+The building probably belonged to a Villa Rustica, an agricultural manor, archaeologist Dr. Jennifer Morscheiser explained.
+
+stripped tree (BLEU = 76.25, 88.2/81.2/73.3/64.3 (BP=1.000, ratio=1.062, hyp_len=17, ref_len=16)):
+The building probably belonged to a Villa Rustica, an agricultural commodity, the archaeologist Dr. Jennifer Morscheiser explained.
+
+tree:
+(TOP (S (S (NP the building )NP (ADVP probably )ADVP (VP belonged (PP to (NP (NP a Villa Rus@@ tica )NP , (NP an agricultural commodity )NP )NP )PP )VP )S , (NP the archae@@ ologist Dr. Jennifer Mor@@ schei@@ ser )NP (VP explained )VP . )S )TOP
+
+bpe (BLEU = 57.04, 70.6/56.2/53.3/50.0 (BP=1.000, ratio=1.062, hyp_len=17, ref_len=16)):
+The building probably belonged to a Villa Rustica, an agricultural commodity, explained the archaeologist Dr Jennifer Morscheiser.
+
+
+id: 2010 (better translation - to be won this year)
+
+diff: 19.12
+
+src:
+Wie bei früheren Serien der Main-Post in vergangenen Jahren gibt es auch heuer wieder Preise zu gewinnen, wenn sie die richtige Lösung haben.
+
+ref:
+As with the other Main-Post series over the years, there are prizes to be won again this year if you guess the correct answer.
+
+stripped tree (BLEU = 19.12, 57.7/32.0/16.7/4.3 (BP=1.000, ratio=1.083, hyp_len=26, ref_len=24)):
+As with previous series of the main post in recent years, there are also prizes to be won this year if they have the right solution.
+
+tree:
+(TOP (S (PP as (PP with (NP (NP previous series )NP (PP of (NP (NP the main post )NP (PP in (NP recent years )NP )PP )NP )PP )NP )PP )PP , (NP there )NP (VP are (ADVP also )ADVP (NP (NP prizes )NP (SBAR (S (VP to (VP be (VP won (NP this year )NP (SBAR if (S (NP they )NP (VP have (NP the right solution )NP )VP )S )SBAR )VP )VP )VP )S )SBAR )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 43.5/18.2/4.8/0.0 (BP=0.957, ratio=0.958, hyp_len=23, ref_len=24)):
+As with earlier series from the Main Post in past years, there are also prizes to win when they have the right solution.
+
+
+id: 602 (more reordering - over several years)
+
+diff: 18.16
+
+src:
+Über mehrere Jahre hatte niemand in dem Haus gelebt.
+
+ref:
+No one had lived in the house for several years.
+
+stripped tree (BLEU = 71.89, 100.0/87.5/71.4/66.7 (BP=0.895, ratio=0.900, hyp_len=9, ref_len=10)):
+No one lived in the house for several years.
+
+tree:
+(TOP (S (NP no one )NP (VP lived (PP in (NP the house )NP )PP (PP for (NP several years )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 53.73, 70.0/55.6/50.0/42.9 (BP=1.000, ratio=1.000, hyp_len=10, ref_len=10)):
+Over several years, no one had lived in the house.
+
+
+id: 1692 (less under-translation, more reordering)
+
+diff: 17.29
+
+src:
+Die südchinesische Metropole am Perlfluss ist dabei mit ihrer Wirtschaftskraft fast so stark wie ganz Hessen.
+
+ref:
+The South China metropolis, which lies on the Pearl River, is almost as strong as the whole of Hessen thanks to its economic power.
+
+stripped tree (BLEU = 35.47, 65.0/47.4/38.9/29.4 (BP=0.819, ratio=0.833, hyp_len=20, ref_len=24)):
+The southern Chinese metropolis of Pearl River is almost as strong as the whole of Hessen, with its economic power.
+
+tree:
+(TOP (S (NP (NP the southern Chinese metropolis )NP (PP of (NP Pearl River )NP )PP )NP (VP is (ADJP (ADJP almost as strong )ADJP (PP as (NP (NP the whole )NP (PP of (NP Hessen )NP )PP )NP )PP )ADJP , (PP with (NP its economic power )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 18.18, 52.9/37.5/20.0/14.3 (BP=0.662, ratio=0.708, hyp_len=17, ref_len=24)):
+The South Chinese metropolis at the Pearl River is almost as strong as it is in Hessen.
+
+
+
+id: 2107 (more reordering - during his speech)
+
+diff: 16.23
+
+src:
+Der ukrainische Präsident Petro Poroshenko schlug bei seiner Rede zur Amtseinführung am 7. Juni vor, dass die ukrainische Gesetzgebung - nach Neuwahlen - Zusätze zur Verfassung bedenken solle, mit denen den jeweiligen Gebieten eine größere Kontrolle über ihre Finanzen und den Status der Sprachen eingeräumt wird.
+
+ref:
+Ukrainian President Petro Poroshenko proposed during his inauguration speech on June 7 that Ukrainian lawmakers - after new elections -- weigh constitutional amendments to give more control to the disparate regions over their finances and the status of languages.
+
+stripped tree (BLEU = 32.76, 63.2/40.5/25.0/20.0 (BP=0.974, ratio=0.974, hyp_len=38, ref_len=39)):
+During his speech on 7 June, Ukrainian President Petro Poroshenko proposed that Ukrainian legislation, after new elections, should take account of the constitution of the constitution, which gives greater control over their finances and the status of languages.
+
+tree:
+(TOP (S (PP during (NP (NP his speech )NP (PP on (NP 7 )NP )PP (NP June )NP )NP )PP , (NP Ukrainian President Pet@@ ro Por@@ o@@ shenko )NP (VP proposed (SBAR that (S (NP Ukrainian legislation )NP , (PP after (NP new elections )NP )PP , (VP should (VP take (NP (NP account )NP (PP of (NP (NP the constitution )NP (PP of (NP (NP the constitution )NP , (SBAR (WHNP which )WHNP (S (VP gives (NP (NP greater control )NP (PP over (NP (NP their finances )NP and (NP (NP the status )NP (PP of (NP languages )NP )PP )NP )NP )PP )NP )VP )S )SBAR )NP )PP )NP )PP )NP )VP )VP )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 16.53, 46.9/22.9/10.6/6.5 (BP=1.000, ratio=1.256, hyp_len=49, ref_len=39)):
+The Ukrainian President, Petro Poroshenko, in his speech on the inauguration of the inauguration on 7 June, suggested that Ukraine's legislation - after new elections - should reflect amendments to the Constitution, which will grant greater control over their own finances and the status of languages in each area.
+
+
+
+id: 512 (more reordering - brought)
+
+diff: 14.11
+
+src:
+Dieser Tag ist traditionell ein wichtiger Tag für Familien, und wie Tausende anderer ukrainischer Eltern brachte Premierminister Arsenij Jazenjuk seine Tochter in die Schule.
+
+ref:
+The day is traditionally a big one for families, and like thousands of other Ukrainian parents, Prime Minister Arseny Yatsenyuk took his daughter to school.
+
+stripped tree (BLEU = 42.99, 64.0/50.0/39.1/27.3 (BP=1.000, ratio=1.000, hyp_len=25, ref_len=25)):
+This day is traditionally an important day for families and, like thousands of other Ukrainian parents, Prime Minister Arsenij Jazenjuk brought his daughter to school.
+
+tree:
+(TOP (S (S (NP this day )NP (VP is (ADVP traditionally )ADVP (NP (NP an important day )NP (PP for (NP families )NP )PP )NP )VP )S and , (S (PP like (NP (NP thousands )NP (PP of (NP other Ukrainian parents )NP )PP )NP )PP , (NP Prime Minister Arsen@@ i@@ j Jaz@@ en@@ ju@@ k )NP (VP brought (NP his daughter )NP (PP to (NP school )NP )PP )VP )S . )S )TOP
+
+bpe (BLEU = 28.88, 64.0/45.8/26.1/9.1 (BP=1.000, ratio=1.000, hyp_len=25, ref_len=25)):
+This day is traditionally an important day for families, and as thousands of other Ukrainian parents brought Prime Minister Arsenij Jazenjuk his daughter to school.
+
+
+id: 179 (more reordering - much to learn - learn alot)
+
+diff: 13.69
+
+src:
+Er appellierte an die Kinder, viel zu lernen und sagte "wir werden dafür sorgen, dass ihr Wissen erwerbt und bieten euch Sicherheit."
+
+ref:
+He urged the children to study hard and said "we will make sure to provide you with knowledge and provide you with security."
+
+stripped tree (BLEU = 28.31, 56.5/31.8/23.8/15.0 (BP=1.000, ratio=1.000, hyp_len=23, ref_len=23)):
+He appealed to the children to learn a lot and said "we will make sure that their knowledge is acquired and provides security
+
+tree:
+(TOP (S (NP he )NP (VP (VP appealed (PP to (NP the children )NP )PP (S (VP to (VP learn (NP a lot )NP )VP )VP )S )VP and (VP said `` (S (NP we )NP (VP will (VP make (ADJP sure (SBAR that (S (NP their knowledge )NP (VP (VP is (VP acquired )VP )VP and (VP provides (NP security )NP )VP )VP )S )SBAR )ADJP )VP )VP )S )VP )VP )S )TOP
+
+bpe (BLEU = 14.62, 57.1/20.0/10.5/5.6 (BP=0.909, ratio=0.913, hyp_len=21, ref_len=23)):
+He appealed to the children, much to learn and said "we will ensure that their knowledge is acquired and provide security."
+
+
+id: 585 (more reordering - dared to use...)
+
+diff: 13.5
+
+src:
+Ein Vertreter des Stars aus "Die Tribute von Panem" bestätigte, dass die Fotos von Lawrence echt seien und klagte den Hacker wegen "eklatanter Verletzung der Privatsphäre" an.
+
+ref:
+A representative for the star of "The Hunger Games" confirmed the photos of Lawrence were real and blasted the hacker for "a flagrant violation of privacy."
+
+stripped tree (BLEU = 13.50, 51.9/19.2/8.0/4.2 (BP=1.000, ratio=1.038, hyp_len=27, ref_len=26)):
+A representative of the star of "The Tribute of panem" confirmed that Lawrence's photos were authentic and that the hacker dared to use" blatant infringement of privacy.''
+
+tree:
+(TOP (S (NP (NP a representative )NP (PP of (NP (NP the star )NP (PP of `` (NP (NP The Tri@@ bute )NP (PP of (NP pan@@ em )NP )PP )NP &apos;&apos; )PP )NP )PP )NP (VP confirmed (SBAR (SBAR that (S (NP (NP Lawrence &apos;s )NP photos )NP (VP were (ADJP authentic )ADJP )VP )S )SBAR and (SBAR that (S (NP the h@@ acker )NP (VP dared (S (VP to (VP use `` (NP (NP blatant infringement )NP (PP of (NP privacy )NP )PP )NP . )VP )VP )S )VP )S )SBAR )SBAR )VP &apos;&apos; )S )TOP
+
+bpe (BLEU = 0.00, 63.0/23.1/4.0/0.0 (BP=1.000, ratio=1.038, hyp_len=27, ref_len=26)):
+A representative of the stars from "The Tribute of panem" confirmed that the photos were of Lawrence's real and complained the hacker was "blatant violation of privacy."
+
+
+
+id: 87 (more reordering - this year)
+
+diff: 11.83
+
+src:
+Er prognostizierte für dieses Jahr außerdem eine verbesserte Marktsituation wegen des besseren Wetters nach unfreundlichen Wetterbedingungen im März und April letzten Jahres.
+
+ref:
+It also predicted an improved market this year due to better weather following unfavourable conditions in March and April last year.
+
+stripped tree (BLEU = 34.34, 64.0/45.8/26.1/18.2 (BP=1.000, ratio=1.190, hyp_len=25, ref_len=21)):
+He also predicted an improved market situation this year because of the better weather after unfriendly weather conditions in March and April of last year.
+
+tree:
+(TOP (S (NP he )NP (ADVP also )ADVP (VP predicted (NP an improved market situation )NP (NP this year )NP (PP because of (NP (NP the better weather )NP (PP after (NP (NP un@@ friendly weather conditions )NP (PP in (NP March and April )NP )PP (PP of (NP last year )NP )PP )NP )PP )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 22.51, 56.5/31.8/14.3/10.0 (BP=1.000, ratio=1.095, hyp_len=23, ref_len=21)):
+He predicted this year's improved market situation because of the better weather after unfriendly weather conditions in March and April of last year.
+
+
+id: 275 (more reordering - entire phrase, missed the verb)
+
+diff: 0.0
+
+src:
+Dank des starken Jahresauftakts ergibt sich für das erste Halbjahr insgesamt ein BIP-Plus von 0,8 Prozent gegenüber der zweiten Jahreshälfte 2013.
+
+ref:
+Due to the strong start to the year, figures for first half-year GDP were up 0.8 percent from the second quarter of 2013.
+
+stripped tree (BLEU = 0.00, 38.7/16.7/3.4/0.0 (BP=1.000, ratio=1.348, hyp_len=31, ref_len=23)):
+Thanks to the strong annual performance, a total of 0.8 percent of GDP will be achieved in the first six months of the year compared with the second half of 2013.
+
+tree:
+(TOP (S (NP (NP thanks )NP (PP to (NP the strong annual performance )NP )PP )NP , (NP (NP a total )NP (PP of (NP (NP 0.8 percent )NP (PP of (NP GDP )NP )PP )NP )PP )NP (VP will (VP be (VP achieved (PP in (NP (NP the first six months )NP (PP of (NP the year )NP )PP )NP )PP (PP compared (PP with (NP (NP the second half )NP (PP of (NP 2013 )NP )PP )NP )PP )PP )VP )VP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 46.2/24.0/4.2/0.0 (BP=1.000, ratio=1.130, hyp_len=26, ref_len=23)):
+Thanks to the strong annual takedown of the first half of the year, there is a 0.8% GDP increase compared to the second half of 2013.
+
+
+id: 456 (better translation of complex sentence with coordination)
+
+diff: 44.2
+
+src:
+Bis dahin gab es in Kollbach im Schulverband Petershausen-Kollbach drei Klassen und in Petershausen fünf.
+
+ref:
+Until then, the school district association of Petershausen-Kollbach had three classes in Kollbach and five in Petershausen.
+
+stripped tree (BLEU = 44.20, 83.3/72.7/60.0/55.6 (BP=0.659, ratio=0.706, hyp_len=12, ref_len=17)):
+Until then, there were three classes in Kollbach and five in Petershausen.
+
+tree:
+(TOP (S (PP until (NP then )NP )PP , (NP there )NP (VP were (NP (NP (NP three classes )NP (PP in (NP Koll@@ bach )NP )PP )NP and (NP (NP five )NP (PP in (NP Peter@@ shausen )NP )PP )NP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 60.0/28.6/0.0/0.0 (BP=0.875, ratio=0.882, hyp_len=15, ref_len=17)):
+Until then, there was three classes and in Petershausen five in Kollbach im Schulverband Petershausen-Kollbach.
+
+
+id: 509 (more reordering - was then primeminister vs. was primeminister at that time)
+
+diff: -2.75
+
+src:
+Der türkische Präsident Recep Tayyip Erdogan (der damals Premierminister war) beschrieb ihr Vorgehen als Teil der Aktivitäten, die von dem islamistischen Geistlichen Fethulla Güllen gegen ihn und andere Personen in Machtpositionen angeführt werden.
+
+ref:
+Turkish President Recep Tayyip Erdogan (who was Prime Minister back then) described their actions as part of activity conducted by Islamist cleric Fethullah Gullen against him and others in power.
+
+stripped tree (BLEU = 31.37, 53.8/34.2/27.0/19.4 (BP=1.000, ratio=1.300, hyp_len=39, ref_len=30)):
+Turkish President Recep Tayyip Erdogan (who was prime minister at that time) described her actions as part of the activities that are cited by the Islamist cleric's propensity to slate against him and other people in positions of power.
+
+tree:
+(TOP (S (NP (NP Turkish President Rec@@ ep Tay@@ yip Erdogan )NP (PRN -LRB- (SBAR (WHNP who )WHNP (S (VP was (NP prime minister )NP (PP at (NP that time )NP )PP )VP )S )SBAR -RRB- )PRN )NP (VP described (NP her actions )NP (PP as (NP (NP part )NP (PP of (NP (NP the activities )NP (SBAR (WHNP that )WHNP (S (VP are (VP cited (PP by (NP (NP (NP the Islamist cler@@ ic &apos;s )NP prop@@ ensity )NP (PP to (NP sl@@ ate )NP )PP (PP against (NP (NP him )NP and (NP (NP other people )NP (PP in (NP (NP positions )NP (PP of (NP power )NP )PP )NP )PP )NP )NP )PP )NP )PP )VP )VP )S )SBAR )NP )PP )NP )PP )VP . )S )TOP
+
+bpe (BLEU = 34.12, 62.5/41.9/30.0/17.2 (BP=1.000, ratio=1.067, hyp_len=32, ref_len=30)):
+Turkish President Recep Tayyip Erdogan (who was then prime minister) described her actions as part of the activities led by Islamist cleric Fethulla manslaughter against him and other people in power positions.
+
+
+id: 715 (better translation - without prejudice vs. prejudiced)
+
+diff: 0.0
+
+src:
+Das hier ist ein vorurteilsfreier Arbeitsplatz.
+
+ref:
+This is a prejudice-free workplace.
+
+stripped tree (BLEU = 0.00, 42.9/33.3/20.0/0.0 (BP=1.000, ratio=1.400, hyp_len=7, ref_len=5)):
+This is a free job without prejudice.
+
+tree:
+(TOP (S (NP this )NP (VP is (NP (NP a free job )NP (PP without (NP prejudice )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 50.0/40.0/25.0/0.0 (BP=1.000, ratio=1.200, hyp_len=6, ref_len=5)):
+This is a prejudiced job here.
+
+
+id: 763 (interesting - trying to complete ungrammatical)
+
+diff: 0.0
+
+src:
+Eine Angabe über 50 gibt eine Expansion an.
+
+ref:
+A figure above 50 indicates expansion.
+
+stripped tree (BLEU = 0.00, 11.1/0.0/0.0/0.0 (BP=1.000, ratio=1.500, hyp_len=9, ref_len=6)):
+There is an expansion of more than 50 countries.
+
+tree:
+(TOP (S (NP there )NP (VP is (NP (NP an expansion )NP (PP of (NP (QP more than 50 )QP countries )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 0.00, 22.2/0.0/0.0/0.0 (BP=1.000, ratio=1.500, hyp_len=9, ref_len=6)):
+An indication of more than 50 is an expansion.
+
+
+id: 785 (full phrase reoredring)
+
+diff: -36.4
+
+src:
+Die Tragödie vereinte West und Ost in Abscheu, und verwandelte sich dann überraschenderweise in Handlung und Hoffnung für die Zukunft mitten im schlimmsten Elend.
+
+ref:
+The tragedy united east and west in revulsion, which amazingly then turned to action and hope for the future in the direst misery.
+
+stripped tree (BLEU = 0.00, 51.7/21.4/7.4/0.0 (BP=1.000, ratio=1.261, hyp_len=29, ref_len=23)):
+The tragedy united the West and the East in disgust, and, surprisingly, turned surprisingly in the midst of the worst misery in action and in hope for the future.
+
+tree:
+(TOP (S (NP the tragedy )NP (VP (VP united (NP (NP the West )NP and (NP the East )NP )NP (PP in (NP dis@@ g@@ ust )NP )PP )VP , and (PRN , (ADVP surprisingly )ADVP , )PRN (VP turned (ADVP surprisingly )ADVP (PP in (NP (NP the midst )NP (PP of (NP (NP the worst misery )NP (PP (PP in (NP action )NP )PP and (PP in (NP (NP hope )NP (PP for (NP the future )NP )PP )NP )PP )PP )NP )PP )NP )PP )VP )VP . )S )TOP
+
+bpe (BLEU = 36.40, 69.2/40.0/29.2/21.7 (BP=1.000, ratio=1.130, hyp_len=26, ref_len=23)):
+The tragedy united West and East in disgust, and then turned surprisingly into action and hope for the future in the middle of the worst misery.
+
+
+id: 998 (better translation - more reordering - good thing vs. matter of luck)
+
+diff: -9.27
+
+src:
+Auch wenn Sie ein LCD haben, ist es schwierig, dies unter Wasser anzusehen, und die richtige Bildeinstellung ist eine Glückssache.
+
+ref:
+Even if you have an LCD, it's going to hard to see it underwater, and composing your shot will be a hit-or-miss process.
+
+stripped tree (BLEU = 24.71, 47.8/27.3/19.0/15.0 (BP=1.000, ratio=1.000, hyp_len=23, ref_len=23)):
+Even if you have an LCD, it is difficult to see this under water and the right picture is a matter of luck.
+
+tree:
+(TOP (S (SBAR even if (S (NP you )NP (VP have (NP an LCD )NP )VP )S )SBAR , (S (NP it )NP (VP is (ADJP difficult )ADJP (S (VP to (VP see (NP this )NP (PP under (NP water )NP )PP )VP )VP )S )VP )S and (S (NP the right picture )NP (VP is (NP (NP a matter )NP (PP of (NP luck )NP )PP )NP )VP )S . )S )TOP
+
+bpe (BLEU = 33.98, 59.1/42.9/30.0/21.1 (BP=0.956, ratio=0.957, hyp_len=22, ref_len=23)):
+Even if you have an LCD, it's hard to look at it underwater, and the right image setting is a good thing.
+
+
+id: 1006 (better translation - less under translation)
+
+diff: 33.69
+
+src:
+Das ist auch an Land ein guter Rat, aber er ist unter Wasser umso wichtiger wegen der schlechten Lichtverhältnisse.
+
+ref:
+This is great advice for shooting on dry land, but it is even more important underwater because of the dim lighting conditions.
+
+stripped tree (BLEU = 33.69, 66.7/40.0/26.3/22.2 (BP=0.953, ratio=0.955, hyp_len=21, ref_len=22)):
+This is also a good advice on land, but it is even more important under water because of poor light conditions.
+
+tree:
+(TOP (S (S (NP this )NP (VP is (ADVP also )ADVP (NP (NP a good advice )NP (PP on (NP land )NP )PP )NP )VP )S , but (S (NP it )NP (VP is (ADJP (ADVP even more )ADVP important )ADJP (PP under (NP water )NP )PP (PP because of (NP poor light conditions )NP )PP )VP )S . )S )TOP
+
+bpe (BLEU = 0.00, 57.1/30.0/10.5/0.0 (BP=0.953, ratio=0.955, hyp_len=21, ref_len=22)):
+This is good advice to land as well, but it is all the more important because of the poor light conditions.
+
+
+
+id: 1270 (better reordering of entire phrase in the end, also done by the ref)
+
+diff: -5.2
+
+src:
+Asbest ist in mehr als 50 Ländern verboten, weißer Asbest wird allerdings weiterhin in vielen Ländern der Erde als preiswertes Baumaterial verwendet.
+
+ref:
+Asbestos is banned in more than 50 countries, but white asbestos is still used as a cheap building material in many parts of the world.
+
+stripped tree (BLEU = 41.98, 75.0/56.5/36.4/23.8 (BP=0.959, ratio=0.960, hyp_len=24, ref_len=25)):
+Asbestos is prohibited in more than 50 countries, but white asbestos continues to be used as a commodity in many countries of the world.
+
+tree:
+(TOP (S (S (NP asbestos )NP (VP is (VP prohibited (PP in (NP (QP more than 50 )QP countries )NP )PP )VP )VP )S , but (S (NP white asbestos )NP (VP continues (S (VP to (VP be (VP used (PP as (NP (NP a commodity )NP (PP in (NP (NP many countries )NP (PP of (NP the world )NP )PP )NP )PP )NP )PP )VP )VP )VP )S )VP )S . )S )TOP
+
+bpe (BLEU = 47.18, 73.1/52.0/37.5/34.8 (BP=1.000, ratio=1.040, hyp_len=26, ref_len=25)):
+Asbestos is banned in more than 50 countries, but white asbestos continues to be used in many countries of the earth as a suitable building material.
+
+
+
+id: 1480 (more reordering - tradition came to the center)
+
+diff: -18.41
+
+src:
+Neben dem Schießsport haben Veranstaltungen wie Bockstechen, Faschings- und Königsball, Vereinsausflug und Weihnachtsfeier Tradition.
+
+ref:
+In addition to shooting, events such as Bockstechen, Fasching and Königsball, club excursions and also Christmas celebrations are all club traditions.
+
+stripped tree (BLEU = 0.00, 41.7/17.4/9.1/0.0 (BP=1.000, ratio=1.143, hyp_len=24, ref_len=21)):
+In addition to the shooting range there is a tradition of events such as chests, carnival and royal ball, club football and Christmas party.
+
+tree:
+(TOP (S (PP in (NP (NP addition )NP (PP to (NP the shooting range )NP )PP )NP )PP (NP there )NP (VP is (NP (NP a tradition )NP (PP of (NP (NP events )NP (PP such as (NP (NP ch@@ ests )NP , (NP carnival and royal ball )NP , (NP club football )NP and (NP Christmas party )NP )NP )PP )NP )PP )NP )VP . )S )TOP
+
+bpe (BLEU = 18.41, 52.4/25.0/15.8/5.6 (BP=1.000, ratio=1.000, hyp_len=21, ref_len=21)):
+In addition to the shooting, events such as Bockstand, Carnival and the Royal ball, the club and the Christmas party tradition.
+
+
+id: 1127 (more reordering - for patients life saving/life saving for patients), better translation
+
+diff: 7.9
+
+src:
+Es zeigt sich, dass über mehrere Jahrzehnte nach dem Krieg Krankenhäuser für die Patienten möglicherweise lebensrettend waren, aber lebensbedrohlich für die behandelnden Ärzte.
+
+ref:
+For several decades after the war, it turns out, hospitals were potentially life-saving places for patients, but life-threatening places for the doctors who treated them.
+
+stripped tree (BLEU = 28.50, 64.3/37.0/23.1/12.0 (BP=1.000, ratio=1.120, hyp_len=28, ref_len=25)):
+It turns out that over several decades after the war, hospitals have probably been life-saving for patients, but they are life-threatening for the doctors who are treating them.
+
+tree:
+(TOP (S (NP it )NP (VP turns (PRT out )PRT (SBAR that (S (PP over (NP (NP several decades )NP (PP after (NP the war )NP )PP )NP )PP , (S (NP hospitals )NP (VP have (ADVP probably )ADVP (VP been (ADJP life-@@ saving )ADJP (PP for (NP patients )NP )PP )VP )VP )S , but (S (NP they )NP (VP are (ADJP life-@@ threatening )ADJP (PP for (NP (NP the doctors )NP (SBAR (WHNP who )WHNP (S (VP are (VP treating (NP them )NP )VP )VP )S )SBAR )NP )PP )VP )S )S )SBAR )VP . )S )TOP
+
+bpe (BLEU = 20.60, 59.1/33.3/15.0/10.5 (BP=0.873, ratio=0.880, hyp_len=22, ref_len=25)):
+It turns out that several decades after the war, hospitals for patients may have been life-saving, but life-threatening for the attending doctors.
+
+
+id: 1135 (better reordering - in schools)
+
+diff: 3.71
+
+src:
+Auf Webseiten wird das Thema Asbest in Schulen jetzt häufig angesprochen.
+
+ref:
+Websites have sprung up to address the issue of asbestos in schools.
+
+stripped tree (BLEU = 28.92, 38.5/33.3/27.3/20.0 (BP=1.000, ratio=1.083, hyp_len=13, ref_len=12)):
+On web pages, the issue of asbestos in schools is frequently mentioned now.
+
+tree:
+(TOP (S (PP on (NP web pages )NP )PP , (NP (NP the issue )NP (PP of (NP asbestos )NP )PP (PP in (NP schools )NP )PP )NP (VP is (ADVP frequently )ADVP (VP mentioned (ADVP now )ADVP )VP )VP . )S )TOP
+
+bpe (BLEU = 25.21, 50.0/36.4/20.0/11.1 (BP=1.000, ratio=1.000, hyp_len=12, ref_len=12)):
+On websites, the issue of asbestos is now frequently addressed in schools.
+
+
+
+id: 13 (raw) (better reordering)
+
+src:
+
+ref:
+
+tree:
+George webster accused of hotel rapes in Naim and Pitlochry
+
+bpe:
+George webster due to hotel rapes in Naim and Pitlochry charged
+
+
+id: 281 (raw) (better reodering)
+
+src:
+...diese Tour...
+
+ref:
+
+tree:
+the tour has been offered to interested parties in various specialist journals
+
+bpe:
+available in various journals, this tour has been offered to the public
+
+
+id: 328 (raw)
+
+src:
+...test du mal mit...
+
+ref:
+
+tree:
+could you stop saying "I love you"?
+
+bpe:
+can you say with the "i love you" stop?
+
+
+id: 329 (raw)
+
+src:
+doch auf , mich zu umarmen
+
+ref:
+
+tree:
+stop hugging me!
+
+bpe:
+stop me to hug!
+
+
+id: 435 (raw) (better reordering)
+
+src:
+
+Achenbach habe fur...
+
+tree:
+Achenbach has bought valuebles for Alberecht for 121 million euros.
+
+bpe:
+Achenbach have purchased a value of 121 million Euros for Albrecht.
+
+
+id: 456 (raw) (better reordering)
+
+src:
+Bis dahin gab es in Kollbach im Schulverband Petershausen-Kollbach drei Klassen und in Petershausen fünf.
+
+ref:
+Until then, the school district association of Petershausen-Kollbach had three classes in Kollbach and five in Petershausen.
+
+tree:
+until then, in Kollbach there were three classes and five classes in Petershausen.
+
+bpe:
+until then there were three classes and in Petershausen five at the school board in Petershausen-Kollbach.
+
+
+id: 503 (raw) (better reordering)
+
+src:
+Dutzende türkischer Polizisten wegen "Verschwörung" gegen die Regierung festgenommen
+
+ref:
+Tens of Turkish Policemen Arrested over 'Plotting' against Gov't
+
+tree:
+dozens of Turkish police arrested for "conspiracy" against the government.
+
+bpe:
+dozens of turkish policemen on "conspiracy" against the government arrested.
+
+
+id: 582 (raw) (verb not missing)
+
+src:
+Nacktfotos von Jennifer Lawrence durch Hacker im Internet veröffentlicht
+
+ref:
+Nude photos of Jennifer Lawrence leaked online by hacker
+
+
+tree:
+naked photos by Jennifer Lawrence published by hackers on the Internet.
+
+bpe:
+naked pics of Jennifer Lawrence by hackers on the Internet
+
+
+id: 627 (raw) (better reordering)
+
+src:
+Die Menschen wollten zu Beginn einer Melodie ganz sicher sein, wo sie enden würde.
+
+ref:
+People wanted to be sure, when a tune began, exactly where it was going to end.
+
+tree:
+people wanted to be sure where they would end at the beginning of a melody.
+
+bpe:
+people wanted to be quite safe at the beginning of a melody where they would end.
+
+
+id: 844 (raw) (not missing verb)
+
+src:
+Die Menschen in London weinten, als ich unsere Geschichte erzählte.
+
+ref:
+People in London were crying when I told our story.
+
+tree:
+the people of london wept as I told our story.
+
+bpe:
+the people of London, when I told our story.
+
+
+id: 1043 (raw) (better reordering)
+
+src:
+...in denen wir doch gesund...
+
+tree:
+the hospitals, in which we are supposed to be healthy, have already been identified as the source of this lethal carcinogen.
+
+bpe:
+even in the hospitals in which we are supposed to be healthy, the initial consequences of this deadly carcinogen have already been identified.
+
+
+id: 1048 (raw) (nice reordering)
+
+
+id: 1094 (raw) (cool coordination exmaple)
+
+
+id: 1103 (raw) (negation)
+
+src:
+Er ging einen Monat nicht zu Arbeit.
+
+ref:
+He ended up spending a month off work.
+
+tree:
+he did not go to work for a month.
+
+bpe:
+he went one month to work.
+
+id: 1768
+
+diff: 1.07
+
+src:
+"Sorry, aber für zwölf Euro hat man einfach mehr erwartet", äußert sich Melanie Meier auf der Veranstaltungsseite.
+
+ref:
+"Sorry, but for twelve euros, I really expected more", Melanie Meier commented on the event's page.
+
+stripped tree (BLEU = 21.87, 62.5/33.3/14.3/7.7 (BP=1.000, ratio=1.000, hyp_len=16, ref_len=16)):
+"Sorry, but for twelve euros you just expected more," Melanie Meier says on the event page.
+
+tree:
+(S1 (S `` (ADVP Sor@@ ry )ADVP , but (PP for (NP (NP twelve euros )NP (SBAR (S (NP you )NP (ADVP just )ADVP (VP expected (NP more )NP )VP )S )SBAR )NP )PP , '@@ ' (NP Mel@@ anie Meier )NP (VP says (PP on (NP the event page )NP )PP )VP . )S )S1
+
+bpe (BLEU = 20.80, 53.3/35.7/15.4/8.3 (BP=0.936, ratio=0.938, hyp_len=15, ref_len=16)):
+"Sorry, but for twelve euros you simply expected, Melanie Meier is on the event site.
+
+
