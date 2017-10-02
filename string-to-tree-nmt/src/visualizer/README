@@ -28,3 +28,4 @@ in this case modify the limit in reader.py, i.e.:
 
 max_amount = 1000
 
+d3Tree.minimal.js holds all the logic for the actual d3 visualization in case visual modifications are needed.
