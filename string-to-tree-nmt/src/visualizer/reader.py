@@ -55,7 +55,7 @@ def toTree(lst):
 if __name__ == '__main__':
     # data = list(read("dev_alignments.txt.best.txt"))
     # data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt/dev_alignments.txt.best"))
-    data = list(read("/Users/roeeaharoni/git/research/nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt"))
+    data = list(read("/Users/roeeaharoni/git/research/string-to-tree-nmt/models/de_en_stt_raw/newstest2015-deen.tok.clean.true.bpe.de.alignments.txt"))
     sources = [x[0] for x in data]
     targets = [x[1] for x in data]
     trees = [toTree(x) for x in targets]

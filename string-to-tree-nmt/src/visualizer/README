@@ -1,0 +1,30 @@
+Code for reading alignment files of string-to-tree translations (in Nematus-format)
+and displaying them in a nice web interface in comparison to string-to-string translations.
+
+To use, first update the following paths in reader.py:
+
+data = list(read(...
+
+and:
+
+data_bpe = list(read(...
+
+to point to the alignment files.
+
+then run:
+
+python reader.py
+
+change this line in s2t/index.html:
+
+<script src="data_raw.js"></script>
+
+to point to your new data file.
+
+finally browse to s2t/index.html
+
+note that in some cases the data is too large to be loaded to the browser.
+in this case modify the limit in reader.py, i.e.:
+
+max_amount = 1000
+
