@@ -357,7 +357,8 @@ def full_preprocess(prefix, src, trg, prev_train_prefix=None):
     print prefix + '.tok.clean.true.bpe.' + trg
 
 
-# convert the output of the bllip trees to the format we use for training the nmt system
+# convert the output of the bllip trees to the format we use for training the nmt system (remove POS tags, bpe, add tags
+# to closing brackets)
 def bllip_to_linearized(parse_trees_path, linearized_path, bpe_model_path):
     count = 0
     bpe_model = apply_bpe.BPE(bpe_model_path)
@@ -418,6 +419,7 @@ def remove_pos_tags_from_tree(tree):
     new_children = []
     for child in tree.children:
         if child.isleaf():
+            # return child since pos tags are the only nodes with leaf children + they have only one child
             return yoav_trees.Tree(child.label)
         else:
             new_children.append(remove_pos_tags_from_tree(child))
@@ -438,7 +440,7 @@ def split_hyphens_slashes(tree):
     return yoav_trees.Tree('TOP').from_sexpr(slash_split)
 
 
-# preprocessing + parse with bllip. english is ptb tokenized, german is "normally" tokenized
+# preprocessing + parse with bllip. trg is ptb tokenized, src is "normally" tokenized
 def preprocess_bllip(prefix, src, trg, train_prefix = None):
     is_train = False
     if train_prefix == None:
@@ -588,6 +590,7 @@ def delete_files(paths):
         os.system('rm {}'.format(path))
 
 
+# parse large file using multiple cores
 def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=200000):
     start = time.time()
     paths = divide_file(input_path, lines_per_sub_file)
@@ -621,7 +624,7 @@ def parallel_bllip_parse_large_file(input_path, output_path, lines_per_sub_file=
     print 'parsed sentences are in: {}'.format(output_path)
     return
 
-
+# not working on mac
 def bllip_parse(input_file, output_file):
     from bllipparser import RerankingParser
     rrp = RerankingParser.fetch_and_load('WSJ+Gigaword-v2', verbose=True)
@@ -820,7 +823,7 @@ def fill_missing_trees(words_file_path, trees_file_path, missing_words_file_path
     return
 
 
-# trees file contains POS tags as terminals
+# DEPRECATED, we now use bllip - trees file contains POS tags as terminals (xing shi's trees)
 def apply_bpe_on_trees(bpe_model_path, words_file_path, trees_file_path, bped_trees_file_path):
     # load bpe model
     bpe = apply_bpe.BPE(bpe_model_path)
@@ -903,6 +906,7 @@ def bpe_leaves(tree, bpe):
     return yoav_trees.Tree(tree.label, bped_children)
 
 
+# DEPRECATED - we don't use xing shi's trees anymore
 def get_shi_parse_tree_for_tokenized_wmt(sentences_file='../data/shi/Eng_Parse_3/8m.train.trainwords',
                                          trees_file='../data/shi/Eng_Parse_3/8m.train.trainline',
                                          wmt_file='/Users/roeeaharoni/Google Drive/de-en-wmt16/corpus.parallel.tok.en'):
@@ -997,7 +1001,7 @@ def clean_sent(sent):
         .replace(' ', '') \
         .lower()
 
-
+# DEPRECATED, we parse everything from scratch now, no need to "complete"
 def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
     # initialize bllip
     from bllipparser import RerankingParser
@@ -1040,7 +1044,7 @@ def complete_missing_parse_tress_with_bllip(sentences_file, trees_file):
                     print 'parsed {} missing trees, failed to parse {} missing trees'.format(fixed, failed)
     return
 
-
+# DEPRECATED, we parse everything from scratch now, no need to use xing trees
 def convert_bllip_tree_to_xing_tree(bllip_tree):
     # converts bllip tree (lexicalized, no labels on closing brackets) to xing tree (unlexicalized, labels on closing
     # brac.)
