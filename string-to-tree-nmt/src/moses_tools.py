@@ -2,8 +2,8 @@ import os
 import codecs
 import re
 
-BASE_PATH = '/Users/roeeaharoni'
-# BASE_PATH = '/home/nlp/aharonr6'
+# BASE_PATH = '/Users/roeeaharoni'
+BASE_PATH = '/home/nlp/aharonr6'
 MOSES_HOME = BASE_PATH + '/git/mosesdecoder'
 BPE_HOME = BASE_PATH + '/git/subword-nmt'
 NEMATUS_HOME = BASE_PATH + '/git/nematus'
