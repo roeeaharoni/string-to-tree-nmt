@@ -17,10 +17,6 @@ from shutil import copyfile
 from src import moses_tools
 
 
-# TTS TODO: use amunmt decoder? nice to have
-# TTS TODO: check how to manipulate decoder in nematus
-
-
 # BASE_PATH = '/Users/roeeaharoni'
 BASE_PATH = '/home/nlp/aharonr6'
 # BASE_PATH = '~'
@@ -28,7 +24,7 @@ MOSES_HOME = BASE_PATH + '/git/mosesdecoder'
 BPE_HOME = BASE_PATH + '/git/subword-nmt'
 NEMATUS_HOME = BASE_PATH + '/git/nematus'
 BPE_OPERATIONS = 45000
-MAX_SENT_LEN = 50
+MAX_SENT_LEN = 80
 
 
 def main():
@@ -49,29 +45,32 @@ def main():
     # preprocess_bllip(dev_prefix, 'ru', 'en', train_prefix=train_prefix)
     # preprocess_bllip(test_prefix, 'ru', 'en', train_prefix=train_prefix)
 
-    # preproc de_en_50
-    train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/train/news-commentary-v8.de-en'
-    dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/dev/newstest2015-deen'
-    test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/test/newstest2016-deen'
-    preprocess_bllip(train_prefix, 'de', 'en')
-    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
-    preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
+    # preproc de_en_50 ncv8
+    # train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/train/news-commentary-v8.de-en'
+    # dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/dev/newstest2015-deen'
+    # test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en-50/test/newstest2016-deen'
+    # preprocess_bllip(train_prefix, 'de', 'en')
+    # preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
+    # preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
 
-    return
+    # return
 
-    # preproc de_en
-    train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en'
-    dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen'
-    test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/test/newstest2016-deen'
-    preprocess_bllip(train_prefix, 'de', 'en')
-    preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
-    preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
-    return
+    # preproc de_en ncv8
+    # train_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/train/news-commentary-v8.de-en'
+    # dev_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/dev/newstest2015-deen'
+    # test_prefix = BASE_PATH + '/git/research/nmt/data/news-de-en/test/newstest2016-deen'
+    # preprocess_bllip(train_prefix, 'de', 'en')
+    # preprocess_bllip(dev_prefix, 'de', 'en', train_prefix=train_prefix)
+    # preprocess_bllip(test_prefix, 'de', 'en', train_prefix=train_prefix)
+    # return
 
-    train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/wmt16.train'
+    # preprocess de en raw 80k limit with existing bpe model (for consistency with dev/test)
+    train_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/train/80/wmt16.train'
     dev_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/dev/newstest-2013-2014-deen'
     test2015_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2015-deen'
     test2016_prefix = BASE_PATH + '/git/research/nmt/data/WMT16/de-en-raw/test/newstest2016-deen'
+    preprocess_bllip(train_prefix, 'de', 'en',
+                     bpe_model=BASE_PATH+'/git/research/string-to-tree-nmt/data/WMT16/de-en-raw/train/wmt16.train.tok.clean.true.bpemodel.deen')
     # preprocess_bllip(test2015_prefix, 'de', 'en', train_prefix=train_prefix)
     # preprocess_bllip(test2016_prefix, 'de', 'en', train_prefix=train_prefix)
     return
@@ -441,7 +440,7 @@ def split_hyphens_slashes(tree):
 
 
 # preprocessing + parse with bllip. trg is ptb tokenized, src is "normally" tokenized
-def preprocess_bllip(prefix, src, trg, train_prefix = None):
+def preprocess_bllip(prefix, src, trg, train_prefix = None, bpe_model = None):
     is_train = False
     if train_prefix == None:
         is_train = True
@@ -498,15 +497,21 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
 
     print 'training BPE...'
 
+    if bpe_model:
+        bpe_model_path = bpe_model
+    else:
+        bpe_model_path = train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg
+
     # BPE - train (on both sides together)
     # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
-    if is_train:
+    if is_train and not bpe_model:
         train_bpe(prefix + '.tok.penntrg.clean.true.' + src,
                   prefix + '.tok.penntrg.clean.true.' + trg,
                   BPE_OPERATIONS,
-                  prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+                  bpe_model_path)
         print 'trained BPE'
-
+    else:
+        print 'skipped BPE training, using {}'.format(bpe_model_path)
 
     # BPE - apply
 
@@ -514,16 +519,18 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None):
     # $subword_nmt/apply_bpe.py -c model/$SRC$TRG.bpe < data/$prefix.tc.$SRC > data/$prefix.bpe.$SRC
     apply_BPE(prefix + '.tok.penntrg.clean.true.' + src,
               prefix + '.tok.penntrg.clean.true.bpe.' + src,
-              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+              bpe_model_path)
 
     print 'applied BPE on source side'
 
     apply_BPE(prefix + '.tok.penntrg.clean.true.' + trg,
               prefix + '.tok.penntrg.clean.true.bpe.' + trg,
-              train_prefix + '.tok.penntrg.clean.true.bpemodel.' + src + trg)
+              bpe_model_path)
 
     print 'applied BPE on target side (for bpe2bpe model)'
 
+    # TODO: remove
+    return
     # prepare for BLLIP parsing:
 
     # de-escape special chars in target
