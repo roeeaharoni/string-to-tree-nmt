@@ -476,13 +476,14 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None, bpe_model = None):
 
     # train truecase
     if is_train:
+        print 'training truecasing...'
         train_moses_truecase(prefix + '.tok.penntrg.clean.' + src, prefix + '.tok.penntrg.clean.' + src + '.tcmodel')
         train_moses_truecase(prefix + '.tok.penntrg.clean.' + trg, prefix + '.tok.penntrg.clean.' + trg + '.tcmodel')
         print 'trained truecasing'
 
     # truecase - apply
     # $mosesdecoder/scripts/recaser/truecase.perl -model model/truecase-model.$SRC < data/$prefix.tok.clean.$SRC > data/$prefix.tc.$SRC
-
+    print 'applying truecasing...'
     # truecase source
     apply_moses_truecase(prefix + '.tok.penntrg.clean.' + src,
                          prefix + '.tok.penntrg.clean.true.' + src,
@@ -495,7 +496,6 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None, bpe_model = None):
 
     print 'finished truecasing'
 
-    print 'training BPE...'
 
     if bpe_model:
         bpe_model_path = bpe_model
@@ -505,6 +505,7 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None, bpe_model = None):
     # BPE - train (on both sides together)
     # cat data/corpus.tc.$SRC data/corpus.tc.$TRG | $subword_nmt/learn_bpe.py -s $bpe_operations > model/$SRC$TRG.bpe
     if is_train and not bpe_model:
+        print 'training BPE...'
         train_bpe(prefix + '.tok.penntrg.clean.true.' + src,
                   prefix + '.tok.penntrg.clean.true.' + trg,
                   BPE_OPERATIONS,
@@ -529,8 +530,6 @@ def preprocess_bllip(prefix, src, trg, train_prefix = None, bpe_model = None):
 
     print 'applied BPE on target side (for bpe2bpe model)'
 
-    # TODO: remove
-    return
     # prepare for BLLIP parsing:
 
     # de-escape special chars in target
